@@ -100,3 +100,48 @@ npm run lint:fix
 npm run format
 
 npm run format:check
+
+## Project Structure
+
+```text
+src/
+├── api/
+├── assets/
+├── components/
+├── constants/
+├── context/
+├── data/
+├── hooks/
+├── layouts/
+├── lib/
+├── pages/
+├── providers/
+├── routes/
+├── services/
+├── styles/
+├── types/
+└── utils/
+```
+
+The project follows a feature-ready architecture that promotes scalability, maintainability, and separation of concerns.
+
+## Folder responsibilities
+
+| Folder       | Purpose                                                                   |
+| ------------ | ------------------------------------------------------------------------- |
+| `api`        | API client configuration (Axios, interceptors, endpoints)                 |
+| `assets`     | Fonts, icons, images and static resources                                 |
+| `components` | Reusable UI components                                                    |
+| `constants`  | Application constants, enums and configuration values                     |
+| `context`    | React Context providers                                                   |
+| `data`       | Static mock data and seed data                                            |
+| `hooks`      | Custom React hooks                                                        |
+| `layouts`    | Shared application layouts                                                |
+| `lib`        | Third-party utilities and shared helpers (for example `cn()` from ShadCN) |
+| `pages`      | Route-level page components                                               |
+| `providers`  | Global application providers (QueryClient, Theme, etc.)                   |
+| `routes`     | Route definitions and route guards                                        |
+| `services`   | Business logic and API services                                           |
+| `styles`     | Global CSS, theme overrides and future design tokens                      |
+| `types`      | Shared TypeScript interfaces and types                                    |
+| `utils`      | Generic utility/helper functions                                          |
