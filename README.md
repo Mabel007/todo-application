@@ -145,3 +145,21 @@ The project follows a feature-ready architecture that promotes scalability, main
 | `styles`     | Global CSS, theme overrides and future design tokens                      |
 | `types`      | Shared TypeScript interfaces and types                                    |
 | `utils`      | Generic utility/helper functions                                          |
+
+## Continuous Integration
+
+This project uses GitHub Actions to automate quality checks for every push and pull request.
+
+### Workflow
+
+The CI pipeline performs the following tasks:
+
+- Installs project dependencies
+- Runs ESLint
+- Builds the application
+
+The workflow is located at:
+
+```text
+.github/workflows/ci.yml
+```
