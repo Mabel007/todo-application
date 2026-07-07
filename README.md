@@ -81,4 +81,22 @@ Components are generated into:
 src/components/ui
 ```
 
+## Code Quality
 
+This project enforces code quality using:
+
+- ESLint
+- Prettier
+- Husky
+- lint-staged
+- CodeRabbit
+
+### Available Scripts
+
+npm run lint
+
+npm run lint:fix
+
+npm run format
+
+npm run format:check
