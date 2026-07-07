@@ -1,89 +1,46 @@
 # Todo Application
 
-A modern task management application built with React, TypeScript, and Vite.
+A modern task management application built with **React**, **TypeScript**, **Vite**, and **ShadCN/UI**.
 
-## Tech Stack
+This project serves as both an **AltSchool Frontend Engineering Project** and a **professional portfolio** demonstrating modern frontend development, quality assurance, documentation, and deployment best practices.
+
+---
+
+## 📖 Project Overview
+
+Todo Application is built using a scalable architecture that emphasizes:
+
+- Maintainability
+- Accessibility (WCAG 2.1 AA)
+- Code Quality
+- Developer Experience
+- Performance
+- Responsive Design
+
+The project follows an industry-standard software development lifecycle using:
+
+- Jira
+- Confluence
+- GitHub
+- GitHub Actions
+- CodeRabbit
+- Vercel
+
+Comprehensive project documentation is available in the `docs/` directory.
+
+---
+
+## 🚀 Tech Stack
+
+### Frontend
 
 - React 19
 - TypeScript
 - Vite
+- Tailwind CSS v4
+- ShadCN/UI
 
-## Prerequisites
-
-- Node.js 22+
-- npm 10+
-
-## Getting Started
-
-### Install dependencies
-
-npm install
-
-### Start development server
-
-npm run dev
-
-### Build for production
-
-npm run build
-
-## Project Structure
-
-src/
-public/
-
-## Scripts
-
-npm run dev
-npm run build
-npm run preview
-
-## Branch Strategy
-
-main
-dev
-feature/*
-bugfix/*
-docs/*
-test/*
-
-## Jira
-
-Project Key: TA
-
-## License
-
-MIT
-
-## Styling
-
-This project uses Tailwind CSS v4 for utility-first styling.
-
-Global styles are located in:
-
-```
-src/index.css
-```
-
-## UI Component Library
-
-This project uses ShadCN/UI as its component library.
-
-### Generate a Component
-
-```bash
-npx shadcn@latest add button
-```
-
-Components are generated into:
-
-```text
-src/components/ui
-```
-
-## Code Quality
-
-This project enforces code quality using:
+### Code Quality
 
 - ESLint
 - Prettier
@@ -91,75 +48,140 @@ This project enforces code quality using:
 - lint-staged
 - CodeRabbit
 
-### Available Scripts
+### CI/CD
 
-npm run lint
+- GitHub Actions
+- Vercel
 
-npm run lint:fix
+### Testing
 
-npm run format
+- Manual Testing
+- Playwright _(Planned)_
+- React Testing Library _(Planned)_
+- Vitest _(Planned)_
 
-npm run format:check
+### Project Management
 
-## Project Structure
+- Jira
+- Confluence
 
-```text
-src/
-├── api/
-├── assets/
-├── components/
-├── constants/
-├── context/
-├── data/
-├── hooks/
-├── layouts/
-├── lib/
-├── pages/
-├── providers/
-├── routes/
-├── services/
-├── styles/
-├── types/
-└── utils/
+---
+
+## 📦 Getting Started
+
+### Prerequisites
+
+- Node.js 22+
+- npm 10+
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/Mabel007/todo-application.git
+
+cd todo-application
 ```
 
-The project follows a feature-ready architecture that promotes scalability, maintainability, and separation of concerns.
+### Install Dependencies
 
-## Folder responsibilities
+```bash
+npm install
+```
 
-| Folder       | Purpose                                                                   |
-| ------------ | ------------------------------------------------------------------------- |
-| `api`        | API client configuration (Axios, interceptors, endpoints)                 |
-| `assets`     | Fonts, icons, images and static resources                                 |
-| `components` | Reusable UI components                                                    |
-| `constants`  | Application constants, enums and configuration values                     |
-| `context`    | React Context providers                                                   |
-| `data`       | Static mock data and seed data                                            |
-| `hooks`      | Custom React hooks                                                        |
-| `layouts`    | Shared application layouts                                                |
-| `lib`        | Third-party utilities and shared helpers (for example `cn()` from ShadCN) |
-| `pages`      | Route-level page components                                               |
-| `providers`  | Global application providers (QueryClient, Theme, etc.)                   |
-| `routes`     | Route definitions and route guards                                        |
-| `services`   | Business logic and API services                                           |
-| `styles`     | Global CSS, theme overrides and future design tokens                      |
-| `types`      | Shared TypeScript interfaces and types                                    |
-| `utils`      | Generic utility/helper functions                                          |
+### Start the Development Server
 
-## Continuous Integration
+```bash
+npm run dev
+```
 
-This project uses GitHub Actions to automate quality checks for every push and pull request.
+The application will be available at:
 
-### Workflow
+```text
+http://localhost:5173
+```
 
-The CI pipeline performs the following tasks:
+### Build for Production
 
-- Installs project dependencies
+```bash
+npm run build
+```
+
+---
+
+## 📜 Available Scripts
+
+| Command                | Description                               |
+| ---------------------- | ----------------------------------------- |
+| `npm run dev`          | Start the Vite development server         |
+| `npm run build`        | Build the application for production      |
+| `npm run lint`         | Run ESLint                                |
+| `npm run lint:fix`     | Automatically fix linting issues          |
+| `npm run format`       | Format all supported files using Prettier |
+| `npm run format:check` | Check formatting without making changes   |
+
+---
+
+## 📚 Documentation
+
+Project documentation is organized under the `docs/` directory and includes:
+
+- Project Overview
+- Environment Setup
+- Development Workflow
+- Project Structure
+- Coding Standards
+- Git Workflow
+- Testing Strategy
+- Deployment Guide
+- Accessibility Checklist
+- Release Notes
+- Contribution Guidelines
+
+---
+
+## 🔄 Continuous Integration
+
+GitHub Actions automatically:
+
+- Installs dependencies
 - Runs ESLint
 - Builds the application
 
-The workflow is located at:
+Every Pull Request must pass the CI workflow before it can be merged.
 
-```text
-.github/workflows/ci.yml
-```
+---
+
+## ✅ Definition of Done
+
+A Jira ticket is considered complete only when:
+
+- Acceptance Criteria are met
+- ESLint passes
+- Prettier formatting passes
+- Production build succeeds
+- Manual testing is completed
+- CodeRabbit review is completed
+- Pull Request is approved
+- Branch is merged into `dev`
+- Jira ticket is updated
+- Documentation is updated (where applicable)
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License**.
+
+---
+
+## 👩‍💻 Author
+
+**Christiana Mabel Nyuma**
+
+Frontend Developer | QA Analyst
+
+**GitHub:**  
+https://github.com/Mabel007
+
+**LinkedIn:**  
+https://www.linkedin.com/in/christiana-mabel-nyuma/
