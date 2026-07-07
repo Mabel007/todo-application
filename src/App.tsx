@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { APP_NAME } from "@/constants/app";
 
 function App() {
@@ -20,6 +21,10 @@ function App() {
           <div className="rounded-lg bg-emerald-500 p-6 text-center text-white">
             Desktop
           </div>
+
+          <Button>
+            ShadCN configured Successfully!
+          </Button>
         </div>
       </section>
     </main>

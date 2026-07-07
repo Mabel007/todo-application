@@ -61,6 +61,24 @@ This project uses Tailwind CSS v4 for utility-first styling.
 
 Global styles are located in:
 
+```
 src/index.css
 ```
+
+## UI Component Library
+
+This project uses ShadCN/UI as its component library.
+
+### Generate a Component
+
+```bash
+npx shadcn@latest add button
+```
+
+Components are generated into:
+
+```text
+src/components/ui
+```
+
 
