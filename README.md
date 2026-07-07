@@ -54,5 +54,13 @@ Project Key: TA
 ## License
 
 MIT
+
+## Styling
+
+This project uses Tailwind CSS v4 for utility-first styling.
+
+Global styles are located in:
+
+src/index.css
 ```
 
