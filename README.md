@@ -1,23 +1,27 @@
 # Todo Application
 
-A modern task management application built with **React**, **TypeScript**, **Vite**, and **ShadCN/UI**.
+A modern task management application built with **React**, **TypeScript**, **Vite**, **Tailwind CSS v4**, and **ShadCN/UI**.
 
-This project serves as both an **AltSchool Frontend Engineering Project** and a **professional portfolio** demonstrating modern frontend development, quality assurance, documentation, and deployment best practices.
+This project serves as both an **AltSchool Frontend Engineering Project** and a **professional portfolio** demonstrating modern frontend engineering, quality assurance, documentation, accessibility, and deployment best practices.
 
 ---
 
 ## 📖 Project Overview
 
-Todo Application is built using a scalable architecture that emphasizes:
+Todo Application is designed using a scalable, maintainable, and production-ready architecture that supports future feature development, testing, and deployment.
 
-- Maintainability
+The project emphasizes:
+
+- Scalable Frontend Architecture
+- Modern UI/UX
 - Accessibility (WCAG 2.1 AA)
-- Code Quality
-- Developer Experience
 - Performance
+- Maintainability
+- Code Quality
 - Responsive Design
+- Developer Experience
 
-The project follows an industry-standard software development lifecycle using:
+Development follows an industry-standard workflow using:
 
 - Jira
 - Confluence
@@ -25,8 +29,6 @@ The project follows an industry-standard software development lifecycle using:
 - GitHub Actions
 - CodeRabbit
 - Vercel
-
-Comprehensive project documentation is available in the `docs/` directory.
 
 ---
 
@@ -39,6 +41,17 @@ Comprehensive project documentation is available in the `docs/` directory.
 - Vite
 - Tailwind CSS v4
 - ShadCN/UI
+
+### Design System
+
+The application uses a centralized design system built on:
+
+- Sora Variable (Headings)
+- Inter Variable (Body)
+- CSS Custom Properties (Design Tokens)
+- Lucide React
+- Tailwind CSS v4
+- Mobile-first Responsive Design
 
 ### Code Quality
 
@@ -74,7 +87,7 @@ Comprehensive project documentation is available in the `docs/` directory.
 - Node.js 22+
 - npm 10+
 
-### Clone the Repository
+### Clone Repository
 
 ```bash
 git clone https://github.com/Mabel007/todo-application.git
@@ -88,19 +101,19 @@ cd todo-application
 npm install
 ```
 
-### Start the Development Server
+### Start Development Server
 
 ```bash
 npm run dev
 ```
 
-The application will be available at:
+Application URL
 
 ```text
 http://localhost:5173
 ```
 
-### Build for Production
+### Build Application
 
 ```bash
 npm run build
@@ -110,32 +123,90 @@ npm run build
 
 ## 📜 Available Scripts
 
-| Command                | Description                               |
-| ---------------------- | ----------------------------------------- |
-| `npm run dev`          | Start the Vite development server         |
-| `npm run build`        | Build the application for production      |
-| `npm run lint`         | Run ESLint                                |
-| `npm run lint:fix`     | Automatically fix linting issues          |
-| `npm run format`       | Format all supported files using Prettier |
-| `npm run format:check` | Check formatting without making changes   |
+| Command                | Description                      |
+| ---------------------- | -------------------------------- |
+| `npm run dev`          | Start the development server     |
+| `npm run build`        | Build the application            |
+| `npm run lint`         | Run ESLint                       |
+| `npm run lint:fix`     | Automatically fix linting issues |
+| `npm run format`       | Format project files             |
+| `npm run format:check` | Verify formatting                |
+
+---
+
+## 🎨 Design System
+
+The application's branding foundation is centralized and reusable.
+
+### Typography
+
+- Sora Variable
+- Inter Variable
+
+### Color System
+
+- Navy Brand Primary
+- Teal Brand Accent
+- Semantic Design Tokens
+- Light & Dark Theme Support
+
+### Icons
+
+- Lucide React
+- SVG Brand Assets
+
+### Branding
+
+- Application Logo
+- Horizontal Logo
+- Logo Icon
+- Application Icons
+- Browser Favicon
 
 ---
 
 ## 📚 Documentation
 
-Project documentation is organized under the `docs/` directory and includes:
+Project documentation is organized under the **docs/** directory.
+
+### Project
 
 - Project Overview
+
+### Architecture
+
+- Project Structure
+
+### Development
+
 - Environment Setup
 - Development Workflow
-- Project Structure
-- Coding Standards
-- Git Workflow
-- Testing Strategy
-- Deployment Guide
-- Accessibility Checklist
-- Release Notes
 - Contribution Guidelines
+
+### Deployment
+
+- Deployment Guide
+
+### Design System
+
+- Application Theme
+- Typography
+- Color System
+- Design Tokens
+- Icons
+
+---
+
+## 📂 Project Structure
+
+```text
+docs/
+src/
+public/
+.github/
+```
+
+The application follows a modular architecture that separates documentation, application source code, assets, configuration, and workflows.
 
 ---
 
@@ -147,24 +218,24 @@ GitHub Actions automatically:
 - Runs ESLint
 - Builds the application
 
-Every Pull Request must pass the CI workflow before it can be merged.
+Every Pull Request must successfully complete the CI pipeline before being merged.
 
 ---
 
 ## ✅ Definition of Done
 
-A Jira ticket is considered complete only when:
+A Jira ticket is complete only when:
 
-- Acceptance Criteria are met
+- Acceptance Criteria satisfied
 - ESLint passes
-- Prettier formatting passes
+- Formatting passes
 - Production build succeeds
-- Manual testing is completed
-- CodeRabbit review is completed
-- Pull Request is approved
-- Branch is merged into `dev`
-- Jira ticket is updated
-- Documentation is updated (where applicable)
+- Manual testing completed
+- CodeRabbit review resolved
+- Pull Request approved
+- Branch merged into `dev`
+- Jira updated
+- Documentation updated where applicable
 
 ---
 
@@ -178,10 +249,12 @@ This project is licensed under the **MIT License**.
 
 **Christiana Mabel Nyuma**
 
-Frontend Developer | QA Analyst
+Frontend Developer & QA Analyst
 
-**GitHub:**  
+GitHub
+
 https://github.com/Mabel007
 
-**LinkedIn:**  
+LinkedIn
+
 https://www.linkedin.com/in/christiana-mabel-nyuma/
