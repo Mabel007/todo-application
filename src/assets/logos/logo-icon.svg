@@ -1,0 +1,1492 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import { Button } from "@/components/ui/button";
+import { APP_NAME } from "@/constants/app";
+
+import { Button } from "@/components/ui/button";
+import { APP_NAME } from "@/constants/app";
+
+function App() {
+  return (
+    <main className="flex min-h-screen items-center justify-center bg-slate-100 px-4">
+      <section className="w-full max-w-xl rounded-xl bg-white p-8 shadow-lg">
+        <h1 className="text-4xl font-bold text-slate-900">
+          {APP_NAME}
+        </h1>
+
+        <p className="mt-4 text-slate-600">
+          React 19 + TypeScript + Vite + Tailwind CSS
+        </p>
+
+        <div className="mt-8 grid gap-4 sm:grid-cols-2">
+          <div className="rounded-lg bg-blue-500 p-6 text-center text-white">
+            Mobile
+          </div>
+
+          <div className="rounded-lg bg-emerald-500 p-6 text-center text-white">
+            Desktop
+          </div>
+
+          <Button variant="default">
+            ShadCN configured Successfully!
+          </Button>
+        </div>
+      </section>
+    </main>
+  );
+}
+
+export default App;
+
+export default App;
+index.css
+@import "tailwindcss";
+
+@theme {
+  --font-sans: Inter, sans-serif;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #f8fafc;
+}
+
+ccheck this have i installed wrongly npx shadcn@4.12.0 init
+Need to install the following packages:
+shadcn@4.12.0
+Ok to proceed? (y) y
+
+√ A components.json file already exists. Would you like to overwrite it? ... yes
+√ Would you like to re-install existing UI components? ... yes
+√ Select a component library » Base
+√ Which preset would you like to use? » Nova
+✔ Preflight checks.
+✔ Verifying framework. Found Vite.
+✔ Validating Tailwind CSS. Found v4.
+✔ Validating import alias.
+✔ Writing components.json.
+✔ Checking registry.
+✔ Installing dependencies.
+✔ Created 2 files:
+  - @\components\ui\button.tsx
+  - @\lib\utils.ts
+✔ Updating src\index.css
+
+Project initialization completed.
+You may now add components.
+
+Now that TA-5 is complete, your workflow becomes much simpler. The goal is to let ESLint, Prettier, Husky, and lint-staged do their jobs automatically.
+
+Daily Development Workflow
+1. Start your work
+git checkout dev
+git pull origin dev
+git checkout -b feature/TA-XX-description
+2. Implement the ticket
+Work on only the files required for that Jira ticket.
+
+3. Before staging (recommended)
+Run:
+
+npm run lint
+If there are issues:
+
+npm run lint:fix
+Then:
+
+npm run format
+If you only edited a few files, you can also format just those files instead of the entire project:
+
+npx prettier src/components/Button.tsx --write
+or
+
+npx prettier src/pages/Home.tsx src/components/Navbar.tsx --write
+4. Verify the project builds
+npm run build
+This catches TypeScript and production build issues.
+
+5. Manual testing
+Run the application:
+
+npm run dev
+Verify the ticket meets its acceptance criteria.
+
+6. Stage your changes
+git add .
+or stage specific files if you prefer.
+
+7. Commit
+git commit -m "feat(TA-6): implement application layout"
+At this point Husky automatically runs:
+
+lint-staged
+├── ESLint --fix
+└── Prettier --write
+Only staged files are checked and formatted.
+
+If Husky finds an error, the commit is blocked. Fix the issue, stage the updated files again, and retry the commit.
+
+8. Push
+git push -u origin feature/TA-6-application-layout
+What you should not do anymore
+❌ You no longer need to:
+
+git restore .
+or
+
+npm run format
+just to undo formatting changes across the repository. Since TA-5 established the formatting baseline, only files you modify should be affected.
+
+Before every Pull Request
+I recommend running one final verification:
+
+npm run lint
+npm run build
+If both succeed and you've manually tested the feature, you're ready to create the PR.
+
+My recommended workflow for your Todo Application
+For every Jira ticket, follow this sequence:
+
+Checkout dev
+↓
+Create feature branch
+↓
+Implement ticket
+↓
+npm run lint
+↓
+npm run lint:fix (if needed)
+↓
+npm run build
+↓
+Manual testing
+↓
+git add .
+↓
+git commit
+(Husky + lint-staged run automatically)
+↓
+git push
+↓
+Create PR
+↓
+CodeRabbit review
+↓
+QA validation
+↓
+Merge into dev
+This aligns well with the development workflow you've defined for the project and is a common practice in professional React and TypeScript teams.
+
+
+so write the steps and command
+like so 
+1. add files
+2. npm run lint
+
+Since you now have Husky + lint-staged configured, this is the workflow I'd recommend for every Jira ticket.
+
+Before committing
+1. Stage your changes
+git add .
+or stage specific files:
+
+git add src/components/Button.tsx src/pages/Home.tsx
+2. Run ESLint (optional but recommended)
+npm run lint
+If there are errors:
+
+npm run lint:fix
+If lint:fix changes files, stage them again:
+
+git add .
+3. Verify the production build
+npm run build
+4. Commit
+git commit -m "feat(TA-XX): implement ticket description"
+During the commit, Husky automatically runs:
+
+npx lint-staged
+which:
+
+Runs ESLint on staged .ts, .tsx, .js, and .jsx files.
+
+Runs Prettier on staged supported files.
+
+Prevents the commit if there are remaining linting errors.
+
+5. Push
+git push -u origin feature/TA-XX-description
+Full Workflow
+1. Implement the Jira ticket
+
+2. git add .
+
+3. npm run lint
+
+4. If needed:
+   npm run lint:fix
+
+5. If files were modified:
+   git add .
+
+6. npm run build
+
+7. Manual testing
+
+8. git commit -m "feat(TA-XX): description"
+
+9. git push -u origin feature/TA-XX-description
+Do you need to run npm run format?
+No.
+
+Because you've configured lint-staged, Prettier runs automatically on all staged files during git commit.
+
+You only need to run npm run format manually if you want to format the entire project, such as after changing your Prettier configuration. For normal ticket development, it's unnecessary.
+
+
+format this prperly with markown and return
+# Todo Application
+
+A modern task management application built with React, TypeScript, Vite, and ShadCN/UI.
+
+The project serves as both an AltSchool Frontend Engineering project and a professional portfolio demonstrating modern frontend development, quality assurance, documentation, and deployment best practices.
+
+---
+
+## Project Overview
+
+Todo Application is built using a scalable architecture that emphasizes maintainability, accessibility, code quality, and developer experience.
+
+The project follows an industry-style software development lifecycle using Jira, Confluence, GitHub, GitHub Actions, CodeRabbit, and Vercel.
+
+For detailed project documentation, see the docs/ directory.
+
+---
+
+## Tech Stack
+
+### Frontend
+
+- React 19
+- TypeScript
+- Vite
+- Tailwind CSS v4
+- ShadCN/UI
+
+### Code Quality
+
+- ESLint
+- Prettier
+- Husky
+- lint-staged
+- CodeRabbit
+
+### CI/CD
+
+- GitHub Actions
+- Vercel
+
+### Testing
+
+- Manual Testing
+- Playwright (Planned)
+- React Testing Library (Planned)
+- Vitest (Planned)
+
+### Project Management
+
+- Jira
+- Confluence
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 22+
+- npm 10+
+
+### Clone Repository
+
+bash
+git clone https://github.com/<Mabel007>/todo-application.git
+
+cd todo-application
+
+Install Dependencies
+npm install
+Start Development Server
+npm run dev
+
+Application URL
+
+http://localhost:5173
+Build
+npm run build
+## Available Scripts
+npm run dev
+npm run build
+npm run lint
+npm run lint:fix
+npm run format
+npm run format:check
+Documentation
+
+Project documentation is organized under the docs/ directory.
+
+Project Overview
+Environment Setup
+Development Workflow
+Project Structure
+Deployment Guide
+Contribution Guidelines
+Continuous Integration
+
+GitHub Actions automatically:
+
+Installs dependencies
+Runs ESLint
+Builds the application
+
+Every pull request must pass the CI workflow before merging.
+
+Definition of Done
+
+A ticket is complete only when:
+
+Acceptance Criteria met
+Lint passes
+Format passes
+Build passes
+Manual testing completed
+CodeRabbit review completed
+Pull request approved
+Branch merged into dev
+Jira updated
+Documentation updated where applicable
+License
+
+MIT License
+
+Author
+
+Christiana Mabel Nyuma
+
+Frontend Developer & QA Analyst
+
+GitHub
+
+https://github.com/Mabel007
+
+LinkedIn
+
+https://www.linkedin.com/in/christiana-mabel-nyuma/
+
+# Todo Application
+
+A modern task management application built with **React**, **TypeScript**, **Vite**, and **ShadCN/UI**.
+
+This project serves as both an **AltSchool Frontend Engineering Capstone Project** and a **professional portfolio** demonstrating modern frontend development, quality assurance, documentation, and deployment best practices.
+
+---
+
+## 📖 Project Overview
+
+Todo Application is built using a scalable architecture that emphasizes:
+
+- Maintainability
+- Accessibility (WCAG 2.1 AA)
+- Code Quality
+- Developer Experience
+- Performance
+- Responsive Design
+
+The project follows an industry-standard software development lifecycle using:
+
+- Jira
+- Confluence
+- GitHub
+- GitHub Actions
+- CodeRabbit
+- Vercel
+
+Comprehensive project documentation is available in the `docs/` directory.
+
+---
+
+## 🚀 Tech Stack
+
+### Frontend
+
+- React 19
+- TypeScript
+- Vite
+- Tailwind CSS v4
+- ShadCN/UI
+
+### Code Quality
+
+- ESLint
+- Prettier
+- Husky
+- lint-staged
+- CodeRabbit
+
+### CI/CD
+
+- GitHub Actions
+- Vercel
+
+### Testing
+
+- Manual Testing
+- Playwright *(Planned)*
+- React Testing Library *(Planned)*
+- Vitest *(Planned)*
+
+### Project Management
+
+- Jira
+- Confluence
+
+---
+
+## 📦 Getting Started
+
+### Prerequisites
+
+- Node.js 22+
+- npm 10+
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/Mabel007/todo-application.git
+
+cd todo-application
+```
+
+### Install Dependencies
+
+```bash
+npm install
+```
+
+### Start the Development Server
+
+```bash
+npm run dev
+```
+
+The application will be available at:
+
+```text
+http://localhost:5173
+```
+
+### Build for Production
+
+```bash
+npm run build
+```
+
+---
+
+## 📜 Available Scripts
+
+| Command | Description |
+|----------|-------------|
+| `npm run dev` | Start the Vite development server |
+| `npm run build` | Build the application for production |
+| `npm run lint` | Run ESLint |
+| `npm run lint:fix` | Automatically fix linting issues |
+| `npm run format` | Format all supported files using Prettier |
+| `npm run format:check` | Check formatting without making changes |
+
+---
+
+## 📚 Documentation
+
+Project documentation is organized under the `docs/` directory and includes:
+
+- Project Overview
+- Environment Setup
+- Development Workflow
+- Project Structure
+- Coding Standards
+- Git Workflow
+- Testing Strategy
+- Deployment Guide
+- Accessibility Checklist
+- Release Notes
+- Contribution Guidelines
+
+---
+
+## 🔄 Continuous Integration
+
+GitHub Actions automatically:
+
+- Installs dependencies
+- Runs ESLint
+- Builds the application
+
+Every Pull Request must pass the CI workflow before it can be merged.
+
+---
+
+## ✅ Definition of Done
+
+A Jira ticket is considered complete only when:
+
+- Acceptance Criteria are met
+- ESLint passes
+- Prettier formatting passes
+- Production build succeeds
+- Manual testing is completed
+- CodeRabbit review is completed
+- Pull Request is approved
+- Branch is merged into `dev`
+- Jira ticket is updated
+- Documentation is updated (where applicable)
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License**.
+
+---
+
+## 👩‍💻 Author
+
+**Christiana Mabel Nyuma**
+
+Frontend Developer | QA Analyst
+
+**GitHub:**  
+https://github.com/Mabel007
+
+**LinkedIn:**  
+https://www.linkedin.com/in/christiana-mabel-nyuma/
+
+[plugin:@tailwindcss/vite:generate:serve] Can't resolve '@styles/topography.css' in 'C:\dev\todo-application\src'
+C:/dev/todo-application/src/index.css
+    at finishWithoutResolve (C:\dev\todo-application\node_modules\enhanced-resolve\lib\Resolver.js:942:18)
+    at C:\dev\todo-application\node_modules\enhanced-resolve\lib\Resolver.js:1034:14
+    at C:\dev\todo-application\node_modules\enhanced-resolve\lib\Resolver.js:1111:5
+    at eval (eval at create (C:\dev\todo-application\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)
+    at C:\dev\todo-application\node_modules\enhanced-resolve\lib\Resolver.js:1111:5
+    at eval (eval at create (C:\dev\todo-application\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:27:1)
+    at C:\dev\todo-application\node_modules\enhanced-resolve\lib\DescriptionFilePlugin.js:94:43
+    at C:\dev\todo-application\node_modules\enhanced-resolve\lib\Resolver.js:1111:5
+
+ this is typography.css
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+}
+
+body,
+button,
+input,
+textarea,
+select {
+  font-family: var(--font-body);
+} and this is index.css
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/sora";
+
+@import "@/styles/reset.css";
+@import "@/styles/tokens.css";
+@import "@/styles/theme.css";
+@import "@styles/topography.css";
+@import "@/styles/utilities.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  /* Typography */
+  --font-heading: var(--font-heading);
+  --font-sans: var(--font-body);
+
+  /* ShadCN Colors */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-destructive: var(--destructive);
+
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Sidebar */
+
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Charts */
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  /* Radius */
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    font-family: var(--font-body);
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
+  }
+}
+
+The error is actually telling you exactly what's wrong.
+
+Can't resolve '@styles/topography.css'
+But all your other imports use:
+
+@import "@/styles/reset.css";
+@import "@/styles/tokens.css";
+@import "@/styles/theme.css";
+@import "@/styles/utilities.css";
+Notice the difference?
+
+@import "@styles/topography.css";
+uses @styles, which is not an alias in your project.
+
+Fix
+If topography.css is inside:
+
+src/
+└── styles/
+    └── topography.css
+then change:
+
+@import "@styles/topography.css";
+to:
+
+@import "@/styles/topography.css";
+Also check the filename
+You wrote:
+
+topography.css
+
+Is the file actually named:
+
+topography.css
+or
+
+typography.css
+The contents:
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+}
+
+body,
+button,
+input,
+textarea,
+select {
+  font-family: var(--font-body);
+}
+look like typography styles, not topography.
+
+If the file on disk is:
+
+src/styles/typography.css
+then your import should be:
+
+@import "@/styles/typography.css";
+Verify your project
+Your structure should look like:
+
+src
+├── styles
+│   ├── reset.css
+│   ├── tokens.css
+│   ├── theme.css
+│   ├── typography.css   ← or topography.css if that is intentional
+│   └── utilities.css
+My guess
+From the error and the naming, I'm about 99% sure the issue is one of these:
+
+❌ @styles should be @/styles
+
+❌ The file is named typography.css, but you're importing topography.css
+
+Can you paste the output of:
+
+src/
+└── styles/
+(or a screenshot of the src/styles folder)? That will immediately confirm which of the two it is.
+
+
+where will this be applied  <head>
+  <meta charset="UTF-8" />
+
+  <link
+    rel="icon"
+    type="image/svg+xml"
+    href="/favicon.svg"
+  />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <meta
+    name="description"
+    content="A modern task management application built with React, TypeScript, and Vite."
+  />
+
+  <meta
+    name="theme-color"
+    content="#2563eb"
+  />
+
+  <meta
+    property="og:title"
+    content="Todo Application"
+  />
+
+  <meta
+    property="og:description"
+    content="A modern task management application."
+  />
+
+  <title>Todo Application</title>
+  </head> also where would I check to see that the color is applied
+
+All of those tags belong inside the <head> section of your index.html file.
+
+For a Vite project, that's typically:
+
+todo-application/
+├── index.html
+├── src/
+└── ...
+So your index.html should look like:
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="/favicon.svg"
+    />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+
+    <meta
+      name="description"
+      content="A modern task management application built with React, TypeScript, and Vite."
+    />
+
+    <meta
+      name="theme-color"
+      content="#2563eb"
+    />
+
+    <meta
+      property="og:title"
+      content="Todo Application"
+    />
+
+    <meta
+      property="og:description"
+      content="A modern task management application."
+    />
+
+    <title>Todo Application</title>
+  </head>
+
+  <body>
+    <div id="root"></div>
+
+    <script
+      type="module"
+      src="/src/main.tsx"
+    ></script>
+  </body>
+</html>
+What each tag does
+Favicon
+<link
+  rel="icon"
+  href="/favicon.svg"
+/>
+Displayed in:
+
+Browser tab
+
+Bookmarks
+
+Browser history
+
+Description
+<meta
+  name="description"
+  content="..."
+/>
+Used by:
+
+Google Search
+
+Bing
+
+SEO tools
+
+It may appear as the snippet beneath your page title in search results.
+
+Theme Color
+<meta
+  name="theme-color"
+  content="#2563eb"
+/>
+This tells supported browsers what color to use for the browser UI associated with your site.
+
+You'll notice it most in:
+
+Android Chrome: the browser toolbar/address bar often changes to this color.
+
+Installed PWAs: the app's title bar and splash screen use it.
+
+Some mobile browsers use it for the browser chrome.
+
+On desktop Chrome, you usually won't see any obvious change while browsing a normal website.
+
+How to verify it
+Open your app in Chrome on Android (or use device emulation in Chrome DevTools).
+
+Open Developer Tools → Elements.
+
+Inspect the <head> and confirm the tag is present.
+
+If you later make your app installable as a PWA, you'll see the theme color reflected in the installed app's UI.
+
+Open Graph Tags
+<meta property="og:title" ... />
+<meta property="og:description" ... />
+These are used when someone shares your site on platforms like:
+
+LinkedIn
+
+Facebook
+
+Slack
+
+Discord
+
+Microsoft Teams
+
+Without them, those platforms have to guess the page title and description.
+
+You'll likely add more later, such as:
+
+<meta property="og:image" content="..." />
+<meta property="og:url" content="..." />
+once your site is deployed.
+
+How to inspect these tags
+Open your app, then:
+
+Press F12 (or Ctrl + Shift + I).
+
+Go to the Elements tab.
+
+Expand the <head> element.
+
+You'll see:
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="theme-color" content="#2563eb">
+  ...
+</head>
+This confirms the browser has loaded the metadata.
+
+For your Todo Application
+For Epic 1, this setup is sufficient. Once you deploy to Vercel in a later epic, I'd enhance the metadata with:
+
+og:image
+
+og:url
+
+twitter:card
+
+twitter:title
+
+twitter:description
+
+twitter:image
+
+That will give your portfolio project rich previews when shared on social media or messaging platforms.
+
+
+can you hand code svg files for me if i give you and image refenrece?
+
+Yes. In fact, if your goal is to have clean, production-ready SVG assets for your Todo Application, hand-coding them is often better than using an auto-generated SVG.
+
+I can create:
+
+✅ Logos
+
+✅ Favicons
+
+✅ App icons
+
+✅ Brand marks
+
+✅ Loading spinners
+
+✅ Hero illustrations (simple/vector style)
+
+✅ UI icons
+
+✅ Social preview graphics (SVG)
+
+✅ Monochrome and colored variants
+
+✅ Optimized SVGs (small file size)
+
+✅ Accessible SVGs with proper <title> and <desc> tags if needed
+
+I can work from:
+a screenshot
+
+a hand sketch
+
+a PNG
+
+a JPEG
+
+another SVG
+
+a Figma export
+
+a logo you found online (I'll recreate it rather than copy the source file)
+
+What you'll receive
+Instead of an image, I'll give you the actual SVG code, for example:
+
+
+You can save it directly as:
+
+favicon.svg
+or
+
+logo.svg
+and use it immediately in your Vite project.
+
+If the design is complex
+If it's a simple or moderately detailed vector logo, I can recreate it by hand.
+
+If it's an extremely detailed illustration with hundreds of paths (like an Adobe Illustrator export), I can either:
+
+recreate it as a clean simplified vector, or
+
+recreate the important elements while keeping the visual style.
+
+This often results in a much smaller and cleaner SVG than an automated export.
+
+So yes, send me the reference image, and tell me:
+
+What it's for (favicon, logo, app icon, etc.).
+
+Whether you want it identical or inspired by the reference.
+
+Preferred size (for example, viewBox="0 0 256 256").
+
+I'll hand-code the SVG so you can drop it straight into your project.
+
+
+app-icon.png
+ChatGPT Image Jul 9, 2026, 10_34_49 AM.png
+ChatGPT Image Jul 9, 2026, 10_52_17 AM.png
+favicon.png
+logo.svg.png
+
+Save this as public/favicon.svg.
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 64 64"
+  fill="none"
+>
+  <defs>
+    <linearGradient id="teal" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#34D399" />
+      <stop offset="100%" stop-color="#14B8A6" />
+    </linearGradient>
+  </defs>
+
+  <!-- Document -->
+  <path
+    d="M16 8H42C45.314 8 48 10.686 48 14V36L38 46H16C12.686 46 10 43.314 10 40V14C10 10.686 12.686 8 16 8Z"
+    fill="white"
+    stroke="#0F2459"
+    stroke-width="3"
+    stroke-linejoin="round"
+  />
+
+  <!-- Fold -->
+  <path
+    d="M38 36H48L38 46Z"
+    fill="url(#teal)"
+  />
+
+  <!-- Check 1 -->
+  <circle
+    cx="20"
+    cy="18"
+    r="3"
+    fill="url(#teal)"
+  />
+  <path
+    d="M18.8 18L19.8 19L22 16.8"
+    stroke="white"
+    stroke-width="1.8"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <!-- Check 2 -->
+  <circle
+    cx="20"
+    cy="27"
+    r="3"
+    fill="url(#teal)"
+  />
+  <path
+    d="M18.8 27L19.8 28L22 25.8"
+    stroke="white"
+    stroke-width="1.8"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <!-- Empty circle -->
+  <circle
+    cx="20"
+    cy="36"
+    r="3"
+    fill="white"
+    stroke="#0F2459"
+    stroke-width="1.8"
+  />
+
+  <!-- Lines -->
+  <line
+    x1="26"
+    y1="18"
+    x2="40"
+    y2="18"
+    stroke="#0F2459"
+    stroke-width="2.5"
+    stroke-linecap="round"
+  />
+
+  <line
+    x1="26"
+    y1="27"
+    x2="40"
+    y2="27"
+    stroke="#0F2459"
+    stroke-width="2.5"
+    stroke-linecap="round"
+  />
+
+  <line
+    x1="26"
+    y1="36"
+    x2="34"
+    y2="36"
+    stroke="#0F2459"
+    stroke-width="2.5"
+    stroke-linecap="round"
+  />
+</svg>
+This is optimized for use as a favicon and scales cleanly from 16×16 up to 512×512.
+
+
+next app-icon.svg
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 512 512"
+  fill="none"
+>
+  <defs>
+    <linearGradient id="todoGradient" x1="64" y1="64" x2="448" y2="448">
+      <stop offset="0%" stop-color="#34D399"/>
+      <stop offset="100%" stop-color="#14B8A6"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect
+    x="24"
+    y="24"
+    width="464"
+    height="464"
+    rx="72"
+    fill="#0F2459"
+  />
+
+  <!-- Document -->
+  <path
+    d="M128 96
+       H352
+       C378.51 96 400 117.49 400 144
+       V320
+       L320 400
+       H128
+       C101.49 400 80 378.51 80 352
+       V144
+       C80 117.49 101.49 96 128 96Z"
+    fill="white"
+    stroke="white"
+    stroke-width="8"
+    stroke-linejoin="round"
+  />
+
+  <!-- Fold -->
+  <path
+    d="M320 320H400L320 400Z"
+    fill="url(#todoGradient)"
+  />
+
+  <!-- Check 1 -->
+  <circle
+    cx="156"
+    cy="168"
+    r="20"
+    fill="url(#todoGradient)"
+  />
+
+  <path
+    d="M146 168
+       L154 176
+       L170 160"
+    stroke="white"
+    stroke-width="8"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <!-- Check 2 -->
+  <circle
+    cx="156"
+    cy="236"
+    r="20"
+    fill="url(#todoGradient)"
+  />
+
+  <path
+    d="M146 236
+       L154 244
+       L170 228"
+    stroke="white"
+    stroke-width="8"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <!-- Empty circle -->
+  <circle
+    cx="156"
+    cy="304"
+    r="20"
+    fill="white"
+    stroke="#0F2459"
+    stroke-width="8"
+  />
+
+  <!-- Task lines -->
+  <line
+    x1="204"
+    y1="168"
+    x2="340"
+    y2="168"
+    stroke="#0F2459"
+    stroke-width="12"
+    stroke-linecap="round"
+  />
+
+  <line
+    x1="204"
+    y1="236"
+    x2="340"
+    y2="236"
+    stroke="#0F2459"
+    stroke-width="12"
+    stroke-linecap="round"
+  />
+
+  <line
+    x1="204"
+    y1="304"
+    x2="286"
+    y2="304"
+    stroke="#0F2459"
+    stroke-width="12"
+    stroke-linecap="round"
+  />
+</svg>
+Save this as:
+
+public/app-icon.svg
+This version is optimized for application icons (512×512), PWA manifests, and social previews while preserving the same visual style as your branding.
+
+
+next logo-icon.svg also show me where this should be currently it i in src/assets/
+
+For a React + Vite project, I recommend this structure:
+
+src/
+├── assets/
+│   ├── logos/
+│   │   ├── logo.svg
+│   │   ├── logo-horizontal.svg
+│   │   ├── logo-icon.svg
+│   │   ├── logo-monochrome.svg
+│   │   └── logo-outline.svg
+│   │
+│   ├── icons/
+│   │   ├── favicon.svg          ❌ No (see below)
+│   │   ├── app-icon.svg
+│   │   └── app-icon-rounded.svg
+│   │
+│   └── images/
+Exception
+favicon.svg should NOT live in src/assets.
+
+It should be here:
+
+public/
+└── favicon.svg
+because index.html references:
+
+<link rel="icon" href="/favicon.svg" />
+Vite serves everything in public directly.
+
+logo-icon.svg
+The icon you've shown is effectively the same graphic as the app icon without the colored background, so you can reuse the same design for branding.
+
+Save as:
+
+src/assets/logos/logo-icon.svg
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 512 512"
+  fill="none"
+>
+  <defs>
+    <linearGradient id="todoGradient" x1="96" y1="96" x2="416" y2="416">
+      <stop offset="0%" stop-color="#34D399"/>
+      <stop offset="100%" stop-color="#14B8A6"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Document -->
+  <path
+    d="M112 80
+       H368
+       C403.35 80 432 108.65 432 144
+       V320
+       L336 416
+       H112
+       C76.65 416 48 387.35 48 352
+       V144
+       C48 108.65 76.65 80 112 80Z"
+    fill="white"
+    stroke="#0F2459"
+    stroke-width="12"
+    stroke-linejoin="round"
+  />
+
+  <!-- Fold -->
+  <path
+    d="M336 320H432L336 416Z"
+    fill="url(#todoGradient)"
+  />
+
+  <!-- Check -->
+  <circle
+    cx="160"
+    cy="176"
+    r="24"
+    fill="url(#todoGradient)"
+  />
+
+  <path
+    d="M148 176
+       L158 186
+       L176 168"
+    stroke="white"
+    stroke-width="10"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <!-- Check -->
+  <circle
+    cx="160"
+    cy="256"
+    r="24"
+    fill="url(#todoGradient)"
+  />
+
+  <path
+    d="M148 256
+       L158 266
+       L176 248"
+    stroke="white"
+    stroke-width="10"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <!-- Empty -->
+  <circle
+    cx="160"
+    cy="336"
+    r="24"
+    fill="white"
+    stroke="#0F2459"
+    stroke-width="10"
+  />
+
+  <!-- Lines -->
+  <line
+    x1="224"
+    y1="176"
+    x2="368"
+    y2="176"
+    stroke="#0F2459"
+    stroke-width="14"
+    stroke-linecap="round"
+  />
+
+  <line
+    x1="224"
+    y1="256"
+    x2="368"
+    y2="256"
+    stroke="#0F2459"
+    stroke-width="14"
+    stroke-linecap="round"
+  />
+
+  <line
+    x1="224"
+    y1="336"
+    x2="304"
+    y2="336"
+    stroke="#0F2459"
+    stroke-width="14"
+    stroke-linecap="round"
+  />
+</svg>

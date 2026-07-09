@@ -1,0 +1,122 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 512 512"
+  fill="none"
+>
+  <defs>
+    <linearGradient id="todoGradient" x1="64" y1="64" x2="448" y2="448">
+      <stop offset="0%" stop-color="#34D399"/>
+      <stop offset="100%" stop-color="#14B8A6"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect
+    x="24"
+    y="24"
+    width="464"
+    height="464"
+    rx="72"
+    fill="#0F2459"
+  />
+
+  <!-- Document -->
+  <path
+    d="M128 96
+       H352
+       C378.51 96 400 117.49 400 144
+       V320
+       L320 400
+       H128
+       C101.49 400 80 378.51 80 352
+       V144
+       C80 117.49 101.49 96 128 96Z"
+    fill="white"
+    stroke="white"
+    stroke-width="8"
+    stroke-linejoin="round"
+  />
+
+  <!-- Fold -->
+  <path
+    d="M320 320H400L320 400Z"
+    fill="url(#todoGradient)"
+  />
+
+  <!-- Check 1 -->
+  <circle
+    cx="156"
+    cy="168"
+    r="20"
+    fill="url(#todoGradient)"
+  />
+
+  <path
+    d="M146 168
+       L154 176
+       L170 160"
+    stroke="white"
+    stroke-width="8"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <!-- Check 2 -->
+  <circle
+    cx="156"
+    cy="236"
+    r="20"
+    fill="url(#todoGradient)"
+  />
+
+  <path
+    d="M146 236
+       L154 244
+       L170 228"
+    stroke="white"
+    stroke-width="8"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <!-- Empty circle -->
+  <circle
+    cx="156"
+    cy="304"
+    r="20"
+    fill="white"
+    stroke="#0F2459"
+    stroke-width="8"
+  />
+
+  <!-- Task lines -->
+  <line
+    x1="204"
+    y1="168"
+    x2="340"
+    y2="168"
+    stroke="#0F2459"
+    stroke-width="12"
+    stroke-linecap="round"
+  />
+
+  <line
+    x1="204"
+    y1="236"
+    x2="340"
+    y2="236"
+    stroke="#0F2459"
+    stroke-width="12"
+    stroke-linecap="round"
+  />
+
+  <line
+    x1="204"
+    y1="304"
+    x2="286"
+    y2="304"
+    stroke="#0F2459"
+    stroke-width="12"
+    stroke-linecap="round"
+  />
+</svg>

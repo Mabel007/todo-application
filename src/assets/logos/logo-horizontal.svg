@@ -1,0 +1,139 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 760 220"
+  fill="none"
+>
+
+  <defs>
+    <linearGradient id="todoGradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#34D399"/>
+      <stop offset="100%" stop-color="#14B8A6"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Logo Icon -->
+
+  <g transform="translate(10 10)">
+
+    <rect
+      x="0"
+      y="0"
+      width="170"
+      height="170"
+      rx="42"
+      fill="#0F2459"
+    />
+
+    <path
+      d="M42 30H124
+         C136 30 146 40 146 52
+         V116
+         L116 146
+         H42
+         C30 146 20 136 20 124
+         V52
+         C20 40 30 30 42 30Z"
+      fill="white"
+    />
+
+    <path
+      d="M116 116H146L116 146Z"
+      fill="url(#todoGradient)"
+    />
+
+    <circle cx="54" cy="64" r="8" fill="url(#todoGradient)"/>
+    <circle cx="54" cy="88" r="8" fill="url(#todoGradient)"/>
+
+    <circle
+      cx="54"
+      cy="112"
+      r="8"
+      fill="white"
+      stroke="#0F2459"
+      stroke-width="3"
+    />
+
+    <path
+      d="M50 64L53 67L59 61"
+      stroke="white"
+      stroke-width="3"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+
+    <path
+      d="M50 88L53 91L59 85"
+      stroke="white"
+      stroke-width="3"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+
+    <line
+      x1="72"
+      y1="64"
+      x2="118"
+      y2="64"
+      stroke="#0F2459"
+      stroke-width="4"
+      stroke-linecap="round"
+    />
+
+    <line
+      x1="72"
+      y1="88"
+      x2="118"
+      y2="88"
+      stroke="#0F2459"
+      stroke-width="4"
+      stroke-linecap="round"
+    />
+
+    <line
+      x1="72"
+      y1="112"
+      x2="102"
+      y2="112"
+      stroke="#0F2459"
+      stroke-width="4"
+      stroke-linecap="round"
+    />
+
+  </g>
+
+  <!-- Wordmark -->
+
+  <text
+    x="220"
+    y="92"
+    font-size="68"
+    font-weight="800"
+    font-family="Inter, Arial, sans-serif"
+    fill="#0F2459"
+  >
+    Todo
+  </text>
+
+  <text
+    x="388"
+    y="92"
+    font-size="68"
+    font-weight="800"
+    font-family="Inter, Arial, sans-serif"
+    fill="url(#todoGradient)"
+  >
+    App
+  </text>
+
+  <text
+    x="222"
+    y="138"
+    font-size="20"
+    letter-spacing="4"
+    font-family="Inter, Arial, sans-serif"
+    fill="#64748B"
+  >
+    PLAN • FOCUS • GET THINGS DONE
+  </text>
+
+</svg>

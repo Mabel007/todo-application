@@ -1,0 +1,110 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 64 64"
+  fill="none"
+>
+  <defs>
+    <linearGradient id="brand" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#3EE7C1"/>
+      <stop offset="100%" stop-color="#19C8A6"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Document -->
+
+  <path
+    d="M14 6H43C46.9 6 50 9.1 50 13V36L39 48H14C10.1 48 7 44.9 7 41V13C7 9.1 10.1 6 14 6Z"
+    fill="white"
+    stroke="#0D235E"
+    stroke-width="3.5"
+    stroke-linejoin="round"
+  />
+
+  <!-- Fold -->
+
+  <path
+    d="M39 36H50L39 48Z"
+    fill="url(#brand)"
+  />
+
+  <!-- Check 1 -->
+
+  <circle
+    cx="20"
+    cy="18"
+    r="4"
+    fill="url(#brand)"
+  />
+
+  <path
+    d="M18.2 18
+       L19.8 19.8
+       L22.8 16.8"
+    stroke="white"
+    stroke-width="2.2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <!-- Check 2 -->
+
+  <circle
+    cx="20"
+    cy="29"
+    r="4"
+    fill="url(#brand)"
+  />
+
+  <path
+    d="M18.2 29
+       L19.8 30.8
+       L22.8 27.8"
+    stroke="white"
+    stroke-width="2.2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <!-- Empty -->
+
+  <circle
+    cx="20"
+    cy="40"
+    r="4"
+    fill="white"
+    stroke="#0D235E"
+    stroke-width="2.2"
+  />
+
+  <!-- Task Lines -->
+
+  <line
+    x1="28"
+    y1="18"
+    x2="41"
+    y2="18"
+    stroke="#0D235E"
+    stroke-width="3"
+    stroke-linecap="round"
+  />
+
+  <line
+    x1="28"
+    y1="29"
+    x2="41"
+    y2="29"
+    stroke="#0D235E"
+    stroke-width="3"
+    stroke-linecap="round"
+  />
+
+  <line
+    x1="28"
+    y1="40"
+    x2="36"
+    y2="40"
+    stroke="#0D235E"
+    stroke-width="3"
+    stroke-linecap="round"
+  />
+</svg>

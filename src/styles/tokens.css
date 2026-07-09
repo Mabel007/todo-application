@@ -1,0 +1,113 @@
+:root {
+  /* Typography */
+
+  --font-heading: "Sora Variable", sans-serif;
+  --font-body: "Inter Variable", sans-serif;
+
+  /* Radius */
+
+  --radius: 0.75rem;
+
+  /* Base */
+
+  --background: #f8fafc;
+  --foreground: #0f172a;
+
+  /* Brand */
+
+  --primary: #0d235e;
+  --primary-hover: #16357f;
+  --primary-foreground: #ffffff;
+
+  --secondary: #38d6b2;
+  --secondary-hover: #25c79f;
+  --secondary-foreground: #ffffff;
+
+  /* UI */
+
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+
+  --accent: #38d6b2;
+  --accent-foreground: #ffffff;
+
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+
+  --ring: #38d6b2;
+
+  /* Status */
+
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --destructive: #ef4444;
+
+  /* Charts */
+
+  --chart-1: #0d235e;
+  --chart-2: #38d6b2;
+  --chart-3: #16357f;
+  --chart-4: #25c79f;
+  --chart-5: #94a3b8;
+
+  /* Sidebar */
+
+  --sidebar: #ffffff;
+  --sidebar-foreground: #0f172a;
+
+  --sidebar-primary: #0d235e;
+  --sidebar-primary-foreground: #ffffff;
+
+  --sidebar-accent: #38d6b2;
+  --sidebar-accent-foreground: #ffffff;
+
+  --sidebar-border: #e2e8f0;
+  --sidebar-ring: #38d6b2;
+}
+
+.dark {
+  --background: #020817;
+  --foreground: #f8fafc;
+
+  --card: #0f172a;
+  --card-foreground: #f8fafc;
+
+  --popover: #0f172a;
+  --popover-foreground: #f8fafc;
+
+  --primary: #38d6b2;
+  --primary-hover: #25c79f;
+  --primary-foreground: #0d235e;
+
+  --secondary: #0d235e;
+  --secondary-hover: #16357f;
+  --secondary-foreground: #ffffff;
+
+  --muted: #1e293b;
+  --muted-foreground: #94a3b8;
+
+  --accent: #16357f;
+  --accent-foreground: #ffffff;
+
+  --border: rgb(255 255 255 / 12%);
+  --input: rgb(255 255 255 / 16%);
+  --ring: #38d6b2;
+
+  --sidebar: #0f172a;
+  --sidebar-foreground: #f8fafc;
+
+  --sidebar-primary: #38d6b2;
+  --sidebar-primary-foreground: #0d235e;
+
+  --sidebar-accent: #16357f;
+  --sidebar-accent-foreground: #ffffff;
+
+  --sidebar-border: rgb(255 255 255 / 12%);
+  --sidebar-ring: #38d6b2;
+}

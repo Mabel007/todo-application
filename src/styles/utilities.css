@@ -1,0 +1,19 @@
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.page-padding {
+  padding-inline: 1rem;
+}
+
+.section-padding {
+  padding-block: 4rem;
+}
