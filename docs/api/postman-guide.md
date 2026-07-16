@@ -139,6 +139,19 @@ postman/
 └── README.md
 ```
 
+# Environment Validation
+
+The Postman environment was validated using the following steps.
+
+- Configured the base URL.
+- Registered or logged in a test user.
+- Stored the access token.
+- Stored the refresh token.
+- Executed authenticated endpoints.
+- Verified environment variable substitution.
+- Confirmed protected endpoints returned successful responses.
+- Confirmed invalid authentication returned HTTP 401.
+
 ---
 
 # Related Documentation
