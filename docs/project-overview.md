@@ -53,6 +53,7 @@ The project demonstrates professional frontend engineering practices, quality as
 docs/
 ├── api/
 │   └── task-api-reference.md
+    └── authentication.md
 ├── architecture/
 │   └── project-structure.md
 ├── deployment/
