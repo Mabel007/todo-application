@@ -51,7 +51,17 @@ The project demonstrates professional frontend engineering practices, quality as
 
 ```text
 docs/
+├── api/
+│   └── task-api-reference.md
 ├── architecture/
+│   └── project-structure.md
+├── deployment/
+│   └── deployment-guide.md
 ├── development/
-└── deployment/
+│   ├── contribution-guidelines.md
+│   ├── development-workflow.md
+│   └── environment-setup.md
+├── project-overview.md
+└── releases/
+    └── v0.1.0.md
 ```
