@@ -1,0 +1,2183 @@
+{
+  "info": {
+    "_postman_id": "1e843c5f-f646-4928-a910-cd167007b787",
+    "name": "Todo Application API",
+    "description": "# Todo Application API\n\nA full-featured REST API for learning, teaching, and experimentation. It covers a wide range of common API patterns including authentication, resource management, real-time streaming, webhooks, and analytics.\n\n## Feature Areas\n\n**Authentication** — Register and log in users, manage sessions with JWT access and refresh tokens, and retrieve the current user's profile.\n\n**Tasks** — Create and manage todo items with support for priorities, statuses, pagination, search, and sorting. Tasks can be nested (parent/child relationships) and scoped to the authenticated user.\n\n**Posts** — Create and manage blog-style posts with categories, statuses (draft/published/archived), and slug-based lookup. Posts can be filtered, searched, and scoped to the current user.\n\n**Comments** — Add comments to posts, list comments per post, and manage individual comments (read, update, delete). Comments can also be scoped to the authenticated user.\n\n**Products** — Create and manage product listings with category, featured, and published filters. Products support pagination, search, and per-user scoping.\n\n**Webhooks** — Subscribe to API events and receive HTTP callbacks. Manage subscriptions (create, update, delete, test) and inspect delivery events with retry support.\n\n**Analytics** — Query request logs and aggregate counts across the API. Supports filtering by method, path, status code, and time range, with grouping options.\n\n**Server-Sent Events (SSE)** — Subscribe to real-time event streams for tasks, posts, products, and comments using the SSE protocol.\n\n## Getting Started\n\nSet the `baseUrl` environment variable to your server's base URL (e.g. `http://localhost:3000`). Register a user, log in to receive an `accessToken`, and use it as a Bearer token for authenticated requests. The `refreshToken` can be used to obtain a new `accessToken` when it expires.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "24282403",
+    "_collection_link": "https://go.postman.co/collection/24282403-1e843c5f-f646-4928-a910-cd167007b787?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "auth",
+      "item": [
+        {
+          "name": "register",
+          "item": [
+            {
+              "name": "Register a new user",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Response time is acceptable\", function () {",
+                      "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                      "});",
+                      "",
+                      "pm.test(\"Content-Type is application/json\", function () {",
+                      "    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+                      "});",
+                      "",
+                      "pm.test(\"Status code is 201\", function () {",
+                      "    pm.response.to.have.status(201);",
+                      "});",
+                      "",
+                      "pm.test(\"Response body has required fields\", function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.expect(jsonData).to.have.nested.property(\"data.user.id\");",
+                      "    pm.expect(jsonData).to.have.nested.property(\"data.user.email\");",
+                      "    pm.expect(jsonData).to.have.nested.property(\"data.accessToken\");",
+                      "    pm.expect(jsonData).to.have.nested.property(\"data.refreshToken\");",
+                      "    pm.expect(jsonData.data.user.id).to.be.a(\"string\");",
+                      "    pm.expect(jsonData.data.user.email).to.be.a(\"string\");",
+                      "    pm.expect(jsonData.data.accessToken).to.be.a(\"string\");",
+                      "    pm.expect(jsonData.data.refreshToken).to.be.a(\"string\");",
+                      "});",
+                      "",
+                      "pm.test(\"Capture auth tokens and userId\", function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.environment.set(\"accessToken\", jsonData.data.accessToken);",
+                      "    pm.environment.set(\"refreshToken\", jsonData.data.refreshToken);",
+                      "    pm.environment.set(\"userId\", jsonData.data.user.id);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"EejZ2Qg@vdMJTCqxShpgPtUGddohxt.gic\",\n  \"name\": \"string\",\n  \"password\": \"string\",\n  \"image\": \"string\",\n  \"emailVerified\": true,\n  \"isActive\": true,\n  \"lastLoginAt\": \"1972-07-28\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/auth/register",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["auth", "register"]
+                },
+                "description": "Creates a new user account. Accepts user details such as name, email, and password in the request body. Returns the created user object and initial JWT tokens (`accessToken` and `refreshToken`) on success."
+              },
+              "response": [
+                {
+                  "name": "User registered successfully",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"email\": \"EejZ2Qg@vdMJTCqxShpgPtUGddohxt.gic\",\n  \"name\": \"string\",\n  \"password\": \"string\",\n  \"image\": \"string\",\n  \"emailVerified\": true,\n  \"isActive\": true,\n  \"lastLoginAt\": \"1972-07-28\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/auth/register",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["auth", "register"]
+                    }
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"user\": {\n    \"id\": \"string\",\n    \"email\": \"string\",\n    \"name\": \"string\",\n    \"image\": \"string\",\n    \"emailVerified\": true,\n    \"isActive\": true,\n    \"lastLoginAt\": \"1974-12-06\",\n    \"createdAt\": \"2024-05-28\",\n    \"updatedAt\": \"2006-05-10\"\n  },\n  \"accessToken\": \"string\",\n  \"refreshToken\": \"string\"\n}"
+                },
+                {
+                  "name": "Email already exists",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"email\": \"EejZ2Qg@vdMJTCqxShpgPtUGddohxt.gic\",\n  \"name\": \"string\",\n  \"password\": \"string\",\n  \"image\": \"string\",\n  \"emailVerified\": true,\n  \"isActive\": true,\n  \"lastLoginAt\": \"1972-07-28\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/auth/register",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["auth", "register"]
+                    }
+                  },
+                  "status": "Conflict",
+                  "code": 409,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"message\": \"Email already exists\"\n}"
+                },
+                {
+                  "name": "Validation error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"email\": \"EejZ2Qg@vdMJTCqxShpgPtUGddohxt.gic\",\n  \"name\": \"string\",\n  \"password\": \"string\",\n  \"image\": \"string\",\n  \"emailVerified\": true,\n  \"isActive\": true,\n  \"lastLoginAt\": \"1972-07-28\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/auth/register",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["auth", "register"]
+                    }
+                  },
+                  "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                  "code": 422,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"message\": \"Validation error\"\n}"
+                }
+              ]
+            }
+          ],
+          "description": "Endpoint for registering a new user account. Accepts user details (e.g. name, email, password) and returns the created user along with initial tokens on success."
+        },
+        {
+          "name": "login",
+          "item": [
+            {
+              "name": "Login user",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Response time is acceptable', function () {",
+                      "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                      "})",
+                      "",
+                      "pm.test('Content-Type is application/json', function () {",
+                      "    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+                      "})",
+                      "",
+                      "pm.test('Status code is 200', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "})",
+                      "",
+                      "pm.test('Response body has required fields', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.expect(jsonData).to.have.nested.property('data.user.id');",
+                      "    pm.expect(jsonData).to.have.nested.property('data.user.email');",
+                      "    pm.expect(jsonData).to.have.nested.property('data.accessToken');",
+                      "    pm.expect(jsonData).to.have.nested.property('data.refreshToken');",
+                      "    pm.expect(jsonData.data.user.id).to.be.a('string');",
+                      "    pm.expect(jsonData.data.user.email).to.be.a('string');",
+                      "    pm.expect(jsonData.data.accessToken).to.be.a('string');",
+                      "    pm.expect(jsonData.data.refreshToken).to.be.a('string');",
+                      "})",
+                      "",
+                      "pm.test('Capture auth tokens and userId', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.environment.set('accessToken', jsonData.data.accessToken);",
+                      "    pm.environment.set('refreshToken', jsonData.data.refreshToken);",
+                      "    pm.environment.set('userId', jsonData.data.user.id);",
+                      "})"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"FCzSUXWOcmDHzmo@WStRyaUcNttsTWhk.asw\",\n  \"password\": \"st\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/auth/login",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["auth", "login"]
+                },
+                "description": "Authenticates a user with their email and password. Returns a JWT `accessToken` for use in the `Authorization` header and a `refreshToken` for obtaining new access tokens when the current one expires."
+              },
+              "response": [
+                {
+                  "name": "User logged in successfully",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"email\": \"FCzSUXWOcmDHzmo@WStRyaUcNttsTWhk.asw\",\n  \"password\": \"st\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/auth/login",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["auth", "login"]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"user\": {\n    \"id\": \"string\",\n    \"email\": \"string\",\n    \"name\": \"string\",\n    \"image\": \"string\",\n    \"emailVerified\": true,\n    \"isActive\": true,\n    \"lastLoginAt\": \"1974-12-06\",\n    \"createdAt\": \"2024-05-28\",\n    \"updatedAt\": \"2006-05-10\"\n  },\n  \"accessToken\": \"string\",\n  \"refreshToken\": \"string\"\n}"
+                },
+                {
+                  "name": "Invalid credentials",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"email\": \"FCzSUXWOcmDHzmo@WStRyaUcNttsTWhk.asw\",\n  \"password\": \"st\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/auth/login",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["auth", "login"]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"message\": \"Invalid credentials\"\n}"
+                },
+                {
+                  "name": "Validation error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"email\": \"FCzSUXWOcmDHzmo@WStRyaUcNttsTWhk.asw\",\n  \"password\": \"st\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/auth/login",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["auth", "login"]
+                    }
+                  },
+                  "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                  "code": 422,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"message\": \"Validation error\"\n}"
+                }
+              ]
+            }
+          ],
+          "description": "Endpoint for authenticating an existing user. Accepts email and password credentials and returns a JWT `accessToken` and `refreshToken` on success."
+        },
+        {
+          "name": "refresh",
+          "item": [
+            {
+              "name": "Refresh access token",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Response time is acceptable', function () {",
+                      "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                      "})",
+                      "",
+                      "pm.test('Content-Type is application/json', function () {",
+                      "    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+                      "})",
+                      "",
+                      "pm.test('Status code is 200', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "})",
+                      "",
+                      "pm.test('Response body has required fields', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.expect(jsonData).to.have.nested.property('data.accessToken');",
+                      "    pm.expect(jsonData).to.have.nested.property('data.refreshToken');",
+                      "    pm.expect(jsonData.data.accessToken).to.be.a('string');",
+                      "    pm.expect(jsonData.data.refreshToken).to.be.a('string');",
+                      "})",
+                      "",
+                      "pm.test('Capture refreshed tokens', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.environment.set('accessToken', jsonData.data.accessToken);",
+                      "    pm.environment.set('refreshToken', jsonData.data.refreshToken);",
+                      "})"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"refreshToken\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/auth/refresh",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["auth", "refresh"]
+                },
+                "description": "Exchanges a valid `refreshToken` for a new `accessToken`. Use this endpoint when the current access token has expired to maintain the user's session without requiring them to log in again."
+              },
+              "response": [
+                {
+                  "name": "Token refreshed successfully",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"refreshToken\": \"string\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/auth/refresh",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["auth", "refresh"]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"accessToken\": \"string\",\n  \"refreshToken\": \"string\"\n}"
+                },
+                {
+                  "name": "Invalid refresh token",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"refreshToken\": \"string\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/auth/refresh",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["auth", "refresh"]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"message\": \"Invalid refresh token\"\n}"
+                },
+                {
+                  "name": "Validation error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"refreshToken\": \"string\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/auth/refresh",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["auth", "refresh"]
+                    }
+                  },
+                  "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                  "code": 422,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"message\": \"Validation error\"\n}"
+                }
+              ]
+            }
+          ],
+          "description": "Endpoint for refreshing an expired access token. Send the `refreshToken` to receive a new `accessToken` without requiring the user to log in again."
+        },
+        {
+          "name": "me",
+          "item": [
+            {
+              "name": "Get current user profile",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Response time is acceptable', function () {",
+                      "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                      "})",
+                      "",
+                      "pm.test('Content-Type is application/json', function () {",
+                      "    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+                      "})",
+                      "",
+                      "pm.test('Status code is 200', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "})",
+                      "",
+                      "pm.test('Response body has required fields', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.expect(jsonData).to.have.nested.property('data.id');",
+                      "    pm.expect(jsonData).to.have.nested.property('data.email');",
+                      "    pm.expect(jsonData.data.id).to.be.a('string');",
+                      "    pm.expect(jsonData.data.email).to.be.a('string');",
+                      "})"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/auth/me",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["auth", "me"]
+                },
+                "description": "Returns the profile of the currently authenticated user. Requires a valid `accessToken` as a Bearer token in the `Authorization` header."
+              },
+              "response": [
+                {
+                  "name": "Current user profile",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/auth/me",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["auth", "me"]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"id\": \"string\",\n  \"email\": \"string\",\n  \"name\": \"string\",\n  \"image\": \"string\",\n  \"emailVerified\": true,\n  \"isActive\": true,\n  \"lastLoginAt\": \"1981-05-14\",\n  \"createdAt\": \"1979-06-13\",\n  \"updatedAt\": \"1967-03-21\"\n}"
+                },
+                {
+                  "name": "Authentication required",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/auth/me",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["auth", "me"]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"message\": \"Authentication required\"\n}"
+                }
+              ]
+            }
+          ],
+          "description": "Endpoint for retrieving the profile of the currently authenticated user. Requires a valid `accessToken` in the `Authorization` header."
+        }
+      ],
+      "description": "Endpoints for user authentication and session management. Covers registration, login, token refresh, and fetching the current user's profile. Authentication uses JWT-based access and refresh tokens — include the `accessToken` as a Bearer token in the `Authorization` header for protected routes."
+    },
+    {
+      "name": "tasks",
+      "item": [
+        {
+          "name": "me",
+          "item": [
+            {
+              "name": "/tasks/me",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Response time is acceptable', function () {",
+                      "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                      "})",
+                      "",
+                      "pm.test('Content-Type is application/json', function () {",
+                      "    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+                      "})",
+                      "",
+                      "pm.test('Status code is 200', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "})",
+                      "",
+                      "pm.test('Response body has required fields', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.expect(jsonData).to.have.property('data');",
+                      "    pm.expect(jsonData.data).to.be.an('array');",
+                      "    pm.expect(jsonData).to.have.property('meta');",
+                      "})"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/tasks/me?all=false&page=1&limit=10&status=DONE&priority=LOW&search=string&sort=DESC",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["tasks", "me"],
+                  "query": [
+                    {
+                      "key": "all",
+                      "value": "false"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "status",
+                      "value": "DONE"
+                    },
+                    {
+                      "key": "priority",
+                      "value": "LOW"
+                    },
+                    {
+                      "key": "search",
+                      "value": "string"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "DESC"
+                    }
+                  ]
+                },
+                "description": "Returns a paginated list of tasks belonging to the currently authenticated user. Supports the same query parameters as `GET /tasks`: `all`, `page`, `limit`, `status`, `priority`, `search`, and `sort`."
+              },
+              "response": [
+                {
+                  "name": "List of authenticated user's tasks",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/tasks/me?all=false&page=1&limit=10&status=DONE&priority=LOW&search=string&sort=DESC",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["tasks", "me"],
+                      "query": [
+                        {
+                          "key": "all",
+                          "value": "false"
+                        },
+                        {
+                          "key": "page",
+                          "value": "1"
+                        },
+                        {
+                          "key": "limit",
+                          "value": "10"
+                        },
+                        {
+                          "key": "status",
+                          "value": "DONE"
+                        },
+                        {
+                          "key": "priority",
+                          "value": "LOW"
+                        },
+                        {
+                          "key": "search",
+                          "value": "string"
+                        },
+                        {
+                          "key": "sort",
+                          "value": "DESC"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"start\": \"1988-04-30\",\n      \"end\": \"2001-11-15\",\n      \"duration\": 3646.3576459202727,\n      \"priority\": \"LOW\",\n      \"status\": \"CANCELLED\",\n      \"archived\": true,\n      \"isDefault\": true,\n      \"parentId\": \"string\",\n      \"children\": \"string\",\n      \"owner\": \"string\",\n      \"tags\": \"string\",\n      \"completedAt\": \"1961-03-10\",\n      \"createdAt\": \"1984-07-15\",\n      \"updatedAt\": \"1974-02-21\"\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"start\": \"2017-04-23\",\n      \"end\": \"2006-11-19\",\n      \"duration\": 7237.830135621596,\n      \"priority\": \"MEDIUM\",\n      \"status\": \"TODO\",\n      \"archived\": true,\n      \"isDefault\": true,\n      \"parentId\": \"string\",\n      \"children\": \"string\",\n      \"owner\": \"string\",\n      \"tags\": \"string\",\n      \"completedAt\": \"1995-08-25\",\n      \"createdAt\": \"1968-08-23\",\n      \"updatedAt\": \"1982-03-07\"\n    }\n  ],\n  \"meta\": {\n    \"total\": 7732.138516675246,\n    \"page\": 8684.743583442832,\n    \"limit\": 2505.7792740568852,\n    \"totalPages\": 3942.423978838919,\n    \"hasNextPage\": true,\n    \"hasPreviousPage\": false\n  }\n}"
+                },
+                {
+                  "name": "Authentication required",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/tasks/me?all=false&page=1&limit=10&status=DONE&priority=LOW&search=string&sort=DESC",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["tasks", "me"],
+                      "query": [
+                        {
+                          "key": "all",
+                          "value": "false"
+                        },
+                        {
+                          "key": "page",
+                          "value": "1"
+                        },
+                        {
+                          "key": "limit",
+                          "value": "10"
+                        },
+                        {
+                          "key": "status",
+                          "value": "DONE"
+                        },
+                        {
+                          "key": "priority",
+                          "value": "LOW"
+                        },
+                        {
+                          "key": "search",
+                          "value": "string"
+                        },
+                        {
+                          "key": "sort",
+                          "value": "DESC"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"message\": \"string\"\n}"
+                }
+              ]
+            }
+          ],
+          "description": "Endpoint for listing tasks belonging to the currently authenticated user. Supports the same filtering, pagination, search, and sort options as the global tasks list."
+        },
+        {
+          "name": "{id}",
+          "item": [
+            {
+              "name": "children",
+              "item": [
+                {
+                  "name": "/tasks/:id/children",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "type": "text/javascript",
+                        "exec": [
+                          "pm.test('Response time is acceptable', function () {",
+                          "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                          "})",
+                          "",
+                          "pm.test('Content-Type is application/json', function () {",
+                          "    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+                          "})",
+                          "",
+                          "pm.test('Status code is 200', function () {",
+                          "    pm.response.to.have.status(200);",
+                          "})",
+                          "",
+                          "pm.test('Response body has required fields', function () {",
+                          "    const jsonData = pm.response.json();",
+                          "    pm.expect(jsonData).to.have.property('data');",
+                          "    pm.expect(jsonData.data).to.be.an('array');",
+                          "    pm.expect(jsonData).to.have.property('meta');",
+                          "})"
+                        ]
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/tasks/:id/children?page=1&limit=10&all=false",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["tasks", ":id", "children"],
+                      "query": [
+                        {
+                          "key": "page",
+                          "value": "1"
+                        },
+                        {
+                          "key": "limit",
+                          "value": "10"
+                        },
+                        {
+                          "key": "all",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "4651e634-a530-4484-9b09-9616a28f35e3"
+                        }
+                      ]
+                    },
+                    "description": "Returns the child tasks (subtasks) of a specific parent task identified by `:id`. Supports the following query parameters:\n- `page` / `limit` — pagination controls\n- `all` — return all children without pagination when `true`"
+                  },
+                  "response": [
+                    {
+                      "name": "List of children tasks",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/tasks/:id/children?page=1&limit=10&all=false",
+                          "host": ["{{baseUrl}}"],
+                          "path": ["tasks", ":id", "children"],
+                          "query": [
+                            {
+                              "key": "page",
+                              "value": "1"
+                            },
+                            {
+                              "key": "limit",
+                              "value": "10"
+                            },
+                            {
+                              "key": "all",
+                              "value": "false"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "4651e634-a530-4484-9b09-9616a28f35e3"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"start\": \"1988-04-30\",\n      \"end\": \"2001-11-15\",\n      \"duration\": 3646.3576459202727,\n      \"priority\": \"LOW\",\n      \"status\": \"CANCELLED\",\n      \"archived\": true,\n      \"isDefault\": true,\n      \"parentId\": \"string\",\n      \"children\": \"string\",\n      \"owner\": \"string\",\n      \"tags\": \"string\",\n      \"completedAt\": \"1961-03-10\",\n      \"createdAt\": \"1984-07-15\",\n      \"updatedAt\": \"1974-02-21\"\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"start\": \"2017-04-23\",\n      \"end\": \"2006-11-19\",\n      \"duration\": 7237.830135621596,\n      \"priority\": \"MEDIUM\",\n      \"status\": \"TODO\",\n      \"archived\": true,\n      \"isDefault\": true,\n      \"parentId\": \"string\",\n      \"children\": \"string\",\n      \"owner\": \"string\",\n      \"tags\": \"string\",\n      \"completedAt\": \"1995-08-25\",\n      \"createdAt\": \"1968-08-23\",\n      \"updatedAt\": \"1982-03-07\"\n    }\n  ],\n  \"meta\": {\n    \"total\": 7732.138516675246,\n    \"page\": 8684.743583442832,\n    \"limit\": 2505.7792740568852,\n    \"totalPages\": 3942.423978838919,\n    \"hasNextPage\": true,\n    \"hasPreviousPage\": false\n  }\n}"
+                    }
+                  ]
+                }
+              ],
+              "description": "Endpoint for listing the child tasks (subtasks) of a specific parent task. Supports pagination and the `all` flag to retrieve all children without pagination."
+            },
+            {
+              "name": "/tasks/:id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Response time is acceptable', function () {",
+                      "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                      "})",
+                      "",
+                      "pm.test('Content-Type is application/json', function () {",
+                      "    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+                      "})",
+                      "",
+                      "pm.test('Status code is 200', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "})",
+                      "",
+                      "pm.test('Response body has required fields', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.expect(jsonData).to.have.nested.property('data.id');",
+                      "    pm.expect(jsonData).to.have.nested.property('data.title');",
+                      "    pm.expect(jsonData).to.have.nested.property('data.status');",
+                      "    pm.expect(jsonData).to.have.nested.property('data.priority');",
+                      "    pm.expect(jsonData.data.id).to.be.a('string');",
+                      "    pm.expect(jsonData.data.title).to.be.a('string');",
+                      "})"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/tasks/:id",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["tasks", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "4651e634-a530-4484-9b09-9616a28f35e3"
+                    }
+                  ]
+                },
+                "description": "Retrieves a single task by its `:id` path parameter. Returns the full task object including its status, priority, and metadata."
+              },
+              "response": [
+                {
+                  "name": "The requested task",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/tasks/:id",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["tasks", ":id"],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "4651e634-a530-4484-9b09-9616a28f35e3"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"description\": \"string\",\n  \"start\": \"1997-05-25\",\n  \"end\": \"1986-06-27\",\n  \"duration\": 9259.53422941075,\n  \"priority\": \"HIGH\",\n  \"status\": \"IN_PROGRESS\",\n  \"archived\": false,\n  \"isDefault\": true,\n  \"parentId\": \"string\",\n  \"children\": \"string\",\n  \"owner\": \"string\",\n  \"tags\": \"string\",\n  \"completedAt\": \"2013-06-03\",\n  \"createdAt\": \"1952-07-25\",\n  \"updatedAt\": \"1954-07-16\"\n}"
+                },
+                {
+                  "name": "Task not found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/tasks/:id",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["tasks", ":id"],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "4651e634-a530-4484-9b09-9616a28f35e3"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"message\": \"Not Found\"\n}"
+                },
+                {
+                  "name": "Invalid id error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/tasks/:id",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["tasks", ":id"],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "4651e634-a530-4484-9b09-9616a28f35e3"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                  "code": 422,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"success\": false,\n  \"error\": {\n    \"name\": \"ZodError\",\n    \"issues\": [\n      {\n        \"code\": \"invalid_type\",\n        \"path\": [\n          \"id\"\n        ],\n        \"message\": \"Invalid input: expected string, received undefined\"\n      }\n    ]\n  }\n}"
+                }
+              ]
+            },
+            {
+              "name": "/tasks/:id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Response time is acceptable', function () {",
+                      "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                      "})",
+                      "",
+                      "pm.test('Content-Type is application/json', function () {",
+                      "    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+                      "})",
+                      "",
+                      "pm.test('Status code is 200', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "})",
+                      "",
+                      "pm.test('Response body has required fields', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.expect(jsonData).to.have.nested.property('data.id');",
+                      "    pm.expect(jsonData).to.have.nested.property('data.title');",
+                      "    pm.expect(jsonData.data.id).to.be.a('string');",
+                      "    pm.expect(jsonData.data.title).to.be.a('string');",
+                      "})"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"string\",\n  \"description\": \"string\",\n  \"start\": \"1950-09-06\",\n  \"end\": \"2012-06-21\",\n  \"duration\": 3104.2994348644224,\n  \"priority\": \"LOW\",\n  \"status\": \"IN_PROGRESS\",\n  \"archived\": true,\n  \"isDefault\": true,\n  \"parentId\": \"string\",\n  \"children\": \"string\",\n  \"owner\": \"string\",\n  \"tags\": \"string\",\n  \"completedAt\": \"2011-10-28\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/tasks/:id",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["tasks", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "4651e634-a530-4484-9b09-9616a28f35e3"
+                    }
+                  ]
+                },
+                "description": "Partially updates a task identified by its `:id` path parameter. Only the fields provided in the request body will be updated (e.g. title, status, priority)."
+              },
+              "response": [
+                {
+                  "name": "The updated task",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"string\",\n  \"description\": \"string\",\n  \"start\": \"1950-09-06\",\n  \"end\": \"2012-06-21\",\n  \"duration\": 3104.2994348644224,\n  \"priority\": \"LOW\",\n  \"status\": \"IN_PROGRESS\",\n  \"archived\": true,\n  \"isDefault\": true,\n  \"parentId\": \"string\",\n  \"children\": \"string\",\n  \"owner\": \"string\",\n  \"tags\": \"string\",\n  \"completedAt\": \"2011-10-28\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/tasks/:id",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["tasks", ":id"],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "4651e634-a530-4484-9b09-9616a28f35e3"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"description\": \"string\",\n  \"start\": \"1997-05-25\",\n  \"end\": \"1986-06-27\",\n  \"duration\": 9259.53422941075,\n  \"priority\": \"HIGH\",\n  \"status\": \"IN_PROGRESS\",\n  \"archived\": false,\n  \"isDefault\": true,\n  \"parentId\": \"string\",\n  \"children\": \"string\",\n  \"owner\": \"string\",\n  \"tags\": \"string\",\n  \"completedAt\": \"2013-06-03\",\n  \"createdAt\": \"1952-07-25\",\n  \"updatedAt\": \"1954-07-16\"\n}"
+                },
+                {
+                  "name": "Authentication required to update this task",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"string\",\n  \"description\": \"string\",\n  \"start\": \"1950-09-06\",\n  \"end\": \"2012-06-21\",\n  \"duration\": 3104.2994348644224,\n  \"priority\": \"LOW\",\n  \"status\": \"IN_PROGRESS\",\n  \"archived\": true,\n  \"isDefault\": true,\n  \"parentId\": \"string\",\n  \"children\": \"string\",\n  \"owner\": \"string\",\n  \"tags\": \"string\",\n  \"completedAt\": \"2011-10-28\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/tasks/:id",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["tasks", ":id"],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "4651e634-a530-4484-9b09-9616a28f35e3"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"message\": \"string\"\n}"
+                },
+                {
+                  "name": "You can only update tasks you own",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"string\",\n  \"description\": \"string\",\n  \"start\": \"1950-09-06\",\n  \"end\": \"2012-06-21\",\n  \"duration\": 3104.2994348644224,\n  \"priority\": \"LOW\",\n  \"status\": \"IN_PROGRESS\",\n  \"archived\": true,\n  \"isDefault\": true,\n  \"parentId\": \"string\",\n  \"children\": \"string\",\n  \"owner\": \"string\",\n  \"tags\": \"string\",\n  \"completedAt\": \"2011-10-28\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/tasks/:id",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["tasks", ":id"],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "4651e634-a530-4484-9b09-9616a28f35e3"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"message\": \"string\"\n}"
+                },
+                {
+                  "name": "Task not found",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"string\",\n  \"description\": \"string\",\n  \"start\": \"1950-09-06\",\n  \"end\": \"2012-06-21\",\n  \"duration\": 3104.2994348644224,\n  \"priority\": \"LOW\",\n  \"status\": \"IN_PROGRESS\",\n  \"archived\": true,\n  \"isDefault\": true,\n  \"parentId\": \"string\",\n  \"children\": \"string\",\n  \"owner\": \"string\",\n  \"tags\": \"string\",\n  \"completedAt\": \"2011-10-28\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/tasks/:id",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["tasks", ":id"],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "4651e634-a530-4484-9b09-9616a28f35e3"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"message\": \"Not Found\"\n}"
+                },
+                {
+                  "name": "The validation error(s)",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"string\",\n  \"description\": \"string\",\n  \"start\": \"1950-09-06\",\n  \"end\": \"2012-06-21\",\n  \"duration\": 3104.2994348644224,\n  \"priority\": \"LOW\",\n  \"status\": \"IN_PROGRESS\",\n  \"archived\": true,\n  \"isDefault\": true,\n  \"parentId\": \"string\",\n  \"children\": \"string\",\n  \"owner\": \"string\",\n  \"tags\": \"string\",\n  \"completedAt\": \"2011-10-28\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/tasks/:id",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["tasks", ":id"],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "4651e634-a530-4484-9b09-9616a28f35e3"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                  "code": 422,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"success\": false,\n  \"error\": {\n    \"name\": \"ZodError\",\n    \"issues\": [\n      {\n        \"code\": \"invalid_type\",\n        \"path\": [\n          \"fieldName\"\n        ],\n        \"message\": \"Expected string, received undefined\"\n      }\n    ]\n  }\n}"
+                }
+              ]
+            },
+            {
+              "name": "/tasks/:id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Response time is acceptable', function () {",
+                      "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                      "})",
+                      "",
+                      "pm.test('Content-Type is application/json', function () {",
+                      "    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+                      "})",
+                      "",
+                      "pm.test('Status code is 200', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "})",
+                      "",
+                      "pm.test('Response body has success indicator', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    const hasData = jsonData.hasOwnProperty('data');",
+                      "    const hasMessage = jsonData.hasOwnProperty('message');",
+                      "    const hasSuccess = jsonData.hasOwnProperty('success');",
+                      "    pm.expect(hasData || hasMessage || hasSuccess).to.be.true;",
+                      "})"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/tasks/:id",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["tasks", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "4651e634-a530-4484-9b09-9616a28f35e3"
+                    }
+                  ]
+                },
+                "description": "Permanently deletes a task identified by its `:id` path parameter. This action is irreversible."
+              },
+              "response": [
+                {
+                  "name": "Default task removed successfully",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/tasks/:id",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["tasks", ":id"],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "4651e634-a530-4484-9b09-9616a28f35e3"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"success\": true,\n  \"message\": \"string\"\n}"
+                },
+                {
+                  "name": "Task deleted",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/tasks/:id",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["tasks", ":id"],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "4651e634-a530-4484-9b09-9616a28f35e3"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "No Content",
+                  "code": 204,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "body": ""
+                },
+                {
+                  "name": "Authentication required to delete this task",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/tasks/:id",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["tasks", ":id"],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "4651e634-a530-4484-9b09-9616a28f35e3"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"message\": \"string\"\n}"
+                },
+                {
+                  "name": "You can only delete tasks you own",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/tasks/:id",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["tasks", ":id"],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "4651e634-a530-4484-9b09-9616a28f35e3"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"message\": \"string\"\n}"
+                },
+                {
+                  "name": "Task not found",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/tasks/:id",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["tasks", ":id"],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "4651e634-a530-4484-9b09-9616a28f35e3"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"message\": \"Not Found\"\n}"
+                },
+                {
+                  "name": "Invalid id error",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/tasks/:id",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["tasks", ":id"],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "4651e634-a530-4484-9b09-9616a28f35e3"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                  "code": 422,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"success\": false,\n  \"error\": {\n    \"name\": \"ZodError\",\n    \"issues\": [\n      {\n        \"code\": \"invalid_type\",\n        \"path\": [\n          \"id\"\n        ],\n        \"message\": \"Invalid input: expected string, received undefined\"\n      }\n    ]\n  }\n}"
+                }
+              ]
+            }
+          ],
+          "description": "Endpoints for operating on a specific task identified by its `:id` path parameter. Supports retrieving, updating, and deleting the task. Also contains the `children` subfolder for accessing subtasks of this task."
+        },
+        {
+          "name": "/tasks",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Response time is acceptable', function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "})",
+                  "",
+                  "pm.test('Content-Type is application/json', function () {",
+                  "    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+                  "})",
+                  "",
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "})",
+                  "",
+                  "pm.test('Response body has required fields', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('data');",
+                  "    pm.expect(jsonData.data).to.be.an('array');",
+                  "    pm.expect(jsonData).to.have.nested.property('meta.total');",
+                  "    pm.expect(jsonData).to.have.nested.property('meta.page');",
+                  "    pm.expect(jsonData).to.have.nested.property('meta.limit');",
+                  "})"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/tasks?all=false&page=1&limit=10&status=DONE&priority=LOW&search=string&sort=DESC",
+              "host": ["{{baseUrl}}"],
+              "path": ["tasks"],
+              "query": [
+                {
+                  "key": "all",
+                  "value": "false"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "status",
+                  "value": "DONE"
+                },
+                {
+                  "key": "priority",
+                  "value": "LOW"
+                },
+                {
+                  "key": "search",
+                  "value": "string"
+                },
+                {
+                  "key": "sort",
+                  "value": "DESC"
+                }
+              ]
+            },
+            "description": "Returns a paginated list of all tasks. Supports the following query parameters:\n- `all` — return all results without pagination when `true`\n- `page` / `limit` — pagination controls\n- `status` — filter by task status (e.g. `DONE`)\n- `priority` — filter by priority level (e.g. `LOW`)\n- `search` — full-text search on task content\n- `sort` — sort order (`ASC` or `DESC`)"
+          },
+          "response": [
+            {
+              "name": "List of tasks",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/tasks?all=false&page=1&limit=10&status=DONE&priority=LOW&search=string&sort=DESC",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["tasks"],
+                  "query": [
+                    {
+                      "key": "all",
+                      "value": "false"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "status",
+                      "value": "DONE"
+                    },
+                    {
+                      "key": "priority",
+                      "value": "LOW"
+                    },
+                    {
+                      "key": "search",
+                      "value": "string"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "DESC"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"start\": \"1988-04-30\",\n      \"end\": \"2001-11-15\",\n      \"duration\": 3646.3576459202727,\n      \"priority\": \"LOW\",\n      \"status\": \"CANCELLED\",\n      \"archived\": true,\n      \"isDefault\": true,\n      \"parentId\": \"string\",\n      \"children\": \"string\",\n      \"owner\": \"string\",\n      \"tags\": \"string\",\n      \"completedAt\": \"1961-03-10\",\n      \"createdAt\": \"1984-07-15\",\n      \"updatedAt\": \"1974-02-21\"\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"start\": \"2017-04-23\",\n      \"end\": \"2006-11-19\",\n      \"duration\": 7237.830135621596,\n      \"priority\": \"MEDIUM\",\n      \"status\": \"TODO\",\n      \"archived\": true,\n      \"isDefault\": true,\n      \"parentId\": \"string\",\n      \"children\": \"string\",\n      \"owner\": \"string\",\n      \"tags\": \"string\",\n      \"completedAt\": \"1995-08-25\",\n      \"createdAt\": \"1968-08-23\",\n      \"updatedAt\": \"1982-03-07\"\n    }\n  ],\n  \"meta\": {\n    \"total\": 7732.138516675246,\n    \"page\": 8684.743583442832,\n    \"limit\": 2505.7792740568852,\n    \"totalPages\": 3942.423978838919,\n    \"hasNextPage\": true,\n    \"hasPreviousPage\": false\n  }\n}"
+            },
+            {
+              "name": "Invalid id error",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/tasks?all=false&page=1&limit=10&status=DONE&priority=LOW&search=string&sort=DESC",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["tasks"],
+                  "query": [
+                    {
+                      "key": "all",
+                      "value": "false"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "status",
+                      "value": "DONE"
+                    },
+                    {
+                      "key": "priority",
+                      "value": "LOW"
+                    },
+                    {
+                      "key": "search",
+                      "value": "string"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "DESC"
+                    }
+                  ]
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"success\": false,\n  \"error\": {\n    \"name\": \"ZodError\",\n    \"issues\": [\n      {\n        \"code\": \"invalid_type\",\n        \"path\": [\n          \"id\"\n        ],\n        \"message\": \"Invalid input: expected string, received undefined\"\n      }\n    ]\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "/tasks",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Response time is acceptable', function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "})",
+                  "",
+                  "pm.test('Content-Type is application/json', function () {",
+                  "    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+                  "})",
+                  "",
+                  "pm.test('Status code is 201', function () {",
+                  "    pm.response.to.have.status(201);",
+                  "})",
+                  "",
+                  "pm.test('Response body has required fields', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.nested.property('data.id');",
+                  "    pm.expect(jsonData).to.have.nested.property('data.title');",
+                  "    pm.expect(jsonData).to.have.nested.property('data.status');",
+                  "    pm.expect(jsonData).to.have.nested.property('data.priority');",
+                  "    pm.expect(jsonData.data.id).to.be.a('string');",
+                  "    pm.expect(jsonData.data.title).to.be.a('string');",
+                  "})",
+                  "",
+                  "pm.test('Capture taskId', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.environment.set('taskId', jsonData.data.id);",
+                  "})"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"string\",\n  \"status\": \"IN_PROGRESS\",\n  \"description\": \"string\",\n  \"start\": \"1953-08-03\",\n  \"end\": \"1961-12-01\",\n  \"duration\": 5616.020787018444,\n  \"priority\": \"HIGH\",\n  \"archived\": false,\n  \"isDefault\": false,\n  \"parentId\": \"string\",\n  \"children\": \"string\",\n  \"owner\": \"string\",\n  \"tags\": \"string\",\n  \"completedAt\": \"1972-05-02\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/tasks",
+              "host": ["{{baseUrl}}"],
+              "path": ["tasks"]
+            },
+            "description": "Creates a new task. Accepts task details (title, description, priority, status, parentId, etc.) in the request body. Returns the created task object."
+          },
+          "response": [
+            {
+              "name": "The created task",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"string\",\n  \"status\": \"IN_PROGRESS\",\n  \"description\": \"string\",\n  \"start\": \"1953-08-03\",\n  \"end\": \"1961-12-01\",\n  \"duration\": 5616.020787018444,\n  \"priority\": \"HIGH\",\n  \"archived\": false,\n  \"isDefault\": false,\n  \"parentId\": \"string\",\n  \"children\": \"string\",\n  \"owner\": \"string\",\n  \"tags\": \"string\",\n  \"completedAt\": \"1972-05-02\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/tasks",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["tasks"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"description\": \"string\",\n  \"start\": \"1997-05-25\",\n  \"end\": \"1986-06-27\",\n  \"duration\": 9259.53422941075,\n  \"priority\": \"HIGH\",\n  \"status\": \"IN_PROGRESS\",\n  \"archived\": false,\n  \"isDefault\": true,\n  \"parentId\": \"string\",\n  \"children\": \"string\",\n  \"owner\": \"string\",\n  \"tags\": \"string\",\n  \"completedAt\": \"2013-06-03\",\n  \"createdAt\": \"1952-07-25\",\n  \"updatedAt\": \"1954-07-16\"\n}"
+            },
+            {
+              "name": "The validation error(s)",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"string\",\n  \"status\": \"IN_PROGRESS\",\n  \"description\": \"string\",\n  \"start\": \"1953-08-03\",\n  \"end\": \"1961-12-01\",\n  \"duration\": 5616.020787018444,\n  \"priority\": \"HIGH\",\n  \"archived\": false,\n  \"isDefault\": false,\n  \"parentId\": \"string\",\n  \"children\": \"string\",\n  \"owner\": \"string\",\n  \"tags\": \"string\",\n  \"completedAt\": \"1972-05-02\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/tasks",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["tasks"]
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"success\": false,\n  \"error\": {\n    \"name\": \"ZodError\",\n    \"issues\": [\n      {\n        \"code\": \"invalid_type\",\n        \"path\": [\n          \"name\"\n        ],\n        \"message\": \"Invalid input: expected string, received undefined\"\n      },\n      {\n        \"code\": \"invalid_type\",\n        \"path\": [\n          \"status\"\n        ],\n        \"message\": \"Invalid input: expected nonoptional, received undefined\"\n      }\n    ]\n  }\n}"
+            }
+          ]
+        }
+      ],
+      "description": "Endpoints for creating and managing todo tasks. Supports listing all tasks or only the authenticated user's tasks, creating new tasks, and performing read/update/delete operations on individual tasks by ID. Tasks support priorities, statuses, pagination, search, and sort order. Tasks can also have child tasks (subtasks) accessible via the `children` subfolder."
+    }
+  ],
+  "event": [
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Ensure response is not a server error",
+          "pm.test(\"No server error (5xx)\", function () {",
+          "    pm.expect(pm.response.code).to.not.be.within(500, 599);",
+          "});"
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "/"
+    }
+  ]
+}
