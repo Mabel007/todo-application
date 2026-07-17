@@ -4,14 +4,14 @@
 
 ## Document Information
 
-| Field             | Value                                   |
-| ----------------- | --------------------------------------- |
-| **Category**      | Project Documentation                   |
-| **Related Epic**  | TA-2 API Investigation & Manual Testing |
-| **Related Story** | TA-11 Review Authentication API         |
-| **Status**        | Active                                  |
-| **Version**       | v0.1.0                                  |
-| **Last Updated**  | July 2026                               |
+| Field             | Value                                     |
+| ----------------- | ----------------------------------------- |
+| **Category**      | Project Documentation                     |
+| **Related Epic**  | TA-2 – API Investigation & Manual Testing |
+| **Related Story** | TA-11 – Review Authentication API         |
+| **Status**        | Active                                    |
+| **Version**       | v0.1.0                                    |
+| **Last Updated**  | July 2026                                 |
 
 ---
 
@@ -19,7 +19,7 @@
 
 This document describes the authentication architecture used by the Todo Application API.
 
-It documents the authentication endpoints, JWT token flow, request and response payloads, protected endpoints, authorization requirements, token lifecycle, and authentication strategy that will be implemented by the frontend application.
+It provides an overview of the authentication strategy, JWT token lifecycle, authentication endpoints, authorization requirements, protected resources, supported HTTP responses, implementation considerations, and the results of manual authentication validation.
 
 ---
 
@@ -33,44 +33,44 @@ https://api.oluwasetemi.dev
 
 # Authentication Strategy
 
-The API uses JSON Web Tokens (JWT) for authentication.
+The Todo Application API uses **JSON Web Token (JWT)** authentication.
 
-Two tokens are issued after successful registration or login:
+After a successful registration or login, the API issues two tokens:
 
-- Access Token
-- Refresh Token
+| Token             | Purpose                                                            |
+| ----------------- | ------------------------------------------------------------------ |
+| **Access Token**  | Authorizes requests to protected endpoints.                        |
+| **Refresh Token** | Generates new authentication tokens when the access token expires. |
 
-The access token is used to authorize protected API requests.
-
-The refresh token is used to obtain a new access token after expiration.
+The frontend is responsible for securely storing these tokens and attaching the access token to every protected request.
 
 ---
 
 # Authentication Flow
 
 ```text
-Register
-    │
-    ▼
+Register / Login
+        │
+        ▼
 Receive Access Token
 Receive Refresh Token
-    │
-    ▼
+        │
+        ▼
 Store Tokens
-    │
-    ▼
+        │
+        ▼
 Access Protected Endpoints
-    │
-    ▼
+        │
+        ▼
 Access Token Expires
-    │
-    ▼
+        │
+        ▼
 POST /auth/refresh
-    │
-    ▼
+        │
+        ▼
 Receive New Tokens
-    │
-    ▼
+        │
+        ▼
 Continue Using Application
 ```
 
@@ -78,22 +78,22 @@ Continue Using Application
 
 # Authentication Endpoints
 
-| Endpoint       | Method | Authentication | Purpose                             |
-| -------------- | ------ | -------------- | ----------------------------------- |
-| /auth/register | POST   | Public         | Register a new user                 |
-| /auth/login    | POST   | Public         | Authenticate a user                 |
-| /auth/refresh  | POST   | Refresh Token  | Generate new authentication tokens  |
-| /auth/me       | GET    | Access Token   | Retrieve current authenticated user |
+| Endpoint         | Method | Authentication | Purpose                                   |
+| ---------------- | ------ | -------------- | ----------------------------------------- |
+| `/auth/register` | POST   | Public         | Register a new user                       |
+| `/auth/login`    | POST   | Public         | Authenticate an existing user             |
+| `/auth/refresh`  | POST   | Refresh Token  | Generate new authentication tokens        |
+| `/auth/me`       | GET    | Access Token   | Retrieve the authenticated user's profile |
 
 ---
 
-# Endpoint Details
+# Endpoint Reference
 
 ## POST /auth/register
 
 ### Purpose
 
-Register a new user account.
+Registers a new user account.
 
 ### Authentication
 
@@ -103,8 +103,8 @@ Not Required
 
 | Field    | Required |
 | -------- | -------- |
-| email    | Yes      |
 | name     | Yes      |
+| email    | Yes      |
 | password | Yes      |
 
 ### Optional Fields
@@ -117,8 +117,6 @@ Not Required
 ### Success Response
 
 **201 Created**
-
-Returns:
 
 ```json
 {
@@ -141,7 +139,7 @@ Returns:
 
 ### Purpose
 
-Authenticate an existing user.
+Authenticates an existing user.
 
 ### Authentication
 
@@ -157,8 +155,6 @@ Not Required
 ### Success Response
 
 **200 OK**
-
-Returns:
 
 ```json
 {
@@ -181,7 +177,7 @@ Returns:
 
 ### Purpose
 
-Generate a new access token using a valid refresh token.
+Generates new authentication tokens using a valid refresh token.
 
 ### Authentication
 
@@ -196,8 +192,6 @@ Refresh Token Required
 ### Success Response
 
 **200 OK**
-
-Returns:
 
 ```json
 {
@@ -219,7 +213,7 @@ Returns:
 
 ### Purpose
 
-Retrieve the authenticated user's profile.
+Retrieves the authenticated user's profile.
 
 ### Authentication
 
@@ -235,7 +229,7 @@ Authorization: Bearer <access_token>
 
 **200 OK**
 
-Returns the authenticated user profile.
+Returns the authenticated user's profile.
 
 ### Error Responses
 
@@ -247,41 +241,31 @@ Returns the authenticated user profile.
 
 # JWT Token Lifecycle
 
-## Registration
+## Registration or Login
 
-User registers successfully.
-
-↓
-
-Access Token issued.
-
-↓
-
-Refresh Token issued.
-
-↓
-
-Tokens stored securely.
+1. User successfully authenticates.
+2. API returns:
+   - Access Token
+   - Refresh Token
+3. Frontend stores both tokens securely.
 
 ---
 
 ## Authenticated Requests
 
-Frontend sends:
+Protected requests include the following header:
 
 ```http
 Authorization: Bearer <access_token>
 ```
 
-with every protected request.
-
 ---
 
-## Token Expiration
+## Token Refresh
 
 When the access token expires:
 
-1. Frontend sends the refresh token to:
+1. Send the refresh token to:
 
 ```text
 POST /auth/refresh
@@ -298,14 +282,14 @@ POST /auth/refresh
 
 ## Logout
 
-The API currently exposes no logout endpoint.
+The current API does not expose a logout endpoint.
 
-Logout should therefore:
+Frontend logout should:
 
 - Remove the access token.
 - Remove the refresh token.
 - Clear the authenticated user state.
-- Redirect to the login screen.
+- Redirect the user to the login page.
 
 ---
 
@@ -315,16 +299,16 @@ The following endpoints require authentication.
 
 | Endpoint           | Requirement  |
 | ------------------ | ------------ |
+| GET /auth/me       | JWT Required |
 | GET /tasks/me      | JWT Required |
 | PATCH /tasks/{id}  | Task Owner   |
 | DELETE /tasks/{id} | Task Owner   |
-| GET /auth/me       | JWT Required |
 
 ---
 
-# Request Headers
+# Authorization Header
 
-Protected requests require:
+Protected endpoints require the following request header.
 
 ```http
 Authorization: Bearer <access_token>
@@ -337,11 +321,11 @@ Authorization: Bearer <access_token>
 | Status | Description             |
 | ------ | ----------------------- |
 | 200    | Success                 |
-| 201    | Resource created        |
+| 201    | Resource Created        |
 | 401    | Unauthorized            |
 | 403    | Forbidden               |
-| 409    | Resource already exists |
-| 422    | Validation error        |
+| 409    | Resource Already Exists |
+| 422    | Validation Error        |
 
 ---
 
@@ -352,38 +336,73 @@ The authentication system supports:
 - User registration
 - User login
 - JWT authentication
+- Access token authorization
 - Refresh token rotation
 - Current user retrieval
-- Protected endpoints
-- Token renewal
-- Authorization using Bearer tokens
+- Protected API endpoints
+- Bearer token authentication
 
 ---
 
 # Authentication Limitations
 
-The current API has the following limitations:
+Current limitations include:
 
 - No logout endpoint.
-- Password reset endpoint not available.
-- Email verification endpoint not available.
+- No password reset endpoint.
+- No email verification endpoint.
 - Refresh token is required to obtain a new access token.
-- Protected endpoints require a valid Bearer token.
-- Only task owners may modify or delete their tasks.
+- Protected endpoints require a valid bearer token.
+- Task updates and deletions are restricted to resource owners.
+
+---
+
+# Authentication Validation Summary
+
+Authentication endpoints were manually validated using the reusable Postman collection.
+
+## Validation Coverage
+
+| Area                      | Status |
+| ------------------------- | ------ |
+| User Registration         | Passed |
+| User Login                | Passed |
+| Token Refresh             | Passed |
+| Current User Endpoint     | Passed |
+| Protected Endpoint Access | Passed |
+| Invalid Authentication    | Passed |
+
+---
+
+# QA Findings
+
+The following observations were made during manual API testing:
+
+- JWT authentication behaved as documented.
+- Access and refresh tokens were generated successfully.
+- Protected endpoints correctly required bearer authentication.
+- Unauthorized requests returned the expected HTTP responses.
+- Token refresh successfully generated replacement tokens.
+- No authentication defects were identified during testing.
+
+---
+
+# Implementation Notes
+
+Frontend implementation should:
+
+- Securely store authentication tokens.
+- Automatically include the access token in protected requests.
+- Refresh expired access tokens using the refresh endpoint.
+- Clear authentication data during logout.
+- Handle unauthorized responses by redirecting users to the authentication flow when appropriate.
 
 ---
 
 # Related Documentation
 
-```text
-docs/
-├── api/
-│   ├── task-api-reference.md
-│   └── authentication.md
-├── architecture/
-├── deployment/
-├── development/
-├── design-system/
-├── project-overview.md
-└── releases/
-```
+- API Reference
+- Postman Collection
+- Manual API Validation
+- Manual API Test Cases
+- API Investigation Findings & QA Baseline
