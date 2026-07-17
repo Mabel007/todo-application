@@ -1,27 +1,71 @@
-# Manual API Validation Report
+# API Validation Report
 
 ---
 
 ## Document Information
 
-| Field             | Value                                          |
-| ----------------- | ---------------------------------------------- |
-| **Category**      | Project Documentation                          |
-| **Related Epic**  | TA-2 API Investigation & Manual Testing        |
-| **Related Story** | TA-14 Manually Validate All Todo API Endpoints |
-| **Status**        | Active                                         |
-| **Version**       | v0.1.0                                         |
-| **Last Updated**  | July 2026                                      |
+| Field             | Value                                            |
+| ----------------- | ------------------------------------------------ |
+| **Category**      | Quality Assurance                                |
+| **Document Type** | API Validation Report                            |
+| **Related Epic**  | TA-2 – API Investigation & Manual Testing        |
+| **Related Story** | TA-14 – Manually Validate All Todo API Endpoints |
+| **Status**        | Completed                                        |
+| **Version**       | v0.1.0                                           |
+| **Last Updated**  | July 2026                                        |
 
 ---
 
-# Summary
+# Overview
 
-Manual validation was performed against all Todo Application API endpoints using the reusable Postman collection.
+This report summarizes the results of the manual validation performed against the Todo Application API.
+
+Validation was conducted using the project's reusable Postman collection to verify endpoint functionality, request validation, authentication, authorization, filtering, pagination, search, and error handling.
+
+The purpose of this validation was to confirm that the API behaves according to the documented API contract before frontend integration and future API automation.
 
 ---
 
-# CRUD Validation
+# Validation Scope
+
+The following functional areas were validated:
+
+- Authentication
+- Task Management (CRUD)
+- Pagination
+- Search
+- Filtering
+- Validation Rules
+- Error Handling
+- Security & Authorization
+
+---
+
+# Validation Environment
+
+| Item            | Value                       |
+| --------------- | --------------------------- |
+| Environment     | Development                 |
+| API Base URL    | https://api.oluwasetemi.dev |
+| Validation Tool | Postman                     |
+| Test Type       | Manual API Testing          |
+
+---
+
+# Validation Results
+
+## Authentication
+
+| Validation            | Result |
+| --------------------- | ------ |
+| User Registration     | Pass   |
+| User Login            | Pass   |
+| Refresh Access Token  | Pass   |
+| Retrieve Current User | Pass   |
+
+---
+
+## Task Management (CRUD)
 
 | Endpoint           | Result |
 | ------------------ | ------ |
@@ -34,62 +78,119 @@ Manual validation was performed against all Todo Application API endpoints using
 
 ---
 
-# Authentication Validation
+## Pagination
 
-| Endpoint     | Result |
-| ------------ | ------ |
-| Register     | Pass   |
-| Login        | Pass   |
-| Refresh      | Pass   |
-| Current User | Pass   |
-
----
-
-# Pagination Validation
-
-| Scenario     | Result |
-| ------------ | ------ |
-| Default page | Pass   |
-| Custom page  | Pass   |
-| Limit        | Pass   |
+| Validation         | Result |
+| ------------------ | ------ |
+| Default Pagination | Pass   |
+| Custom Page        | Pass   |
+| Custom Page Size   | Pass   |
 
 ---
 
-# Search Validation
+## Search
 
-| Scenario             | Result |
-| -------------------- | ------ |
-| Search existing task | Pass   |
-| Search missing task  | Pass   |
-
----
-
-# Filtering Validation
-
-| Filter   | Result |
-| -------- | ------ |
-| Status   | Pass   |
-| Priority | Pass   |
+| Validation                | Result |
+| ------------------------- | ------ |
+| Search Existing Tasks     | Pass   |
+| Search Non-Existing Tasks | Pass   |
 
 ---
 
-# Error Handling
+## Filtering
 
-| Scenario     | Result |
-| ------------ | ------ |
-| Invalid UUID | Pass   |
-| Unauthorized | Pass   |
-| Validation   | Pass   |
-| Missing Task | Pass   |
+| Validation         | Result |
+| ------------------ | ------ |
+| Filter by Status   | Pass   |
+| Filter by Priority | Pass   |
 
 ---
 
-# Issues Found
+## Error Handling
 
-No issues identified during manual validation.
+| Validation             | Result |
+| ---------------------- | ------ |
+| Invalid UUID           | Pass   |
+| Missing Authentication | Pass   |
+| Validation Errors      | Pass   |
+| Resource Not Found     | Pass   |
 
 ---
 
-# Conclusion
+## Security & Authorization
 
-All documented API endpoints behaved as expected.
+| Validation          | Result |
+| ------------------- | ------ |
+| Protected Endpoints | Pass   |
+| JWT Authentication  | Pass   |
+| Owner Authorization | Pass   |
+
+---
+
+# Issues Identified
+
+No functional defects or blocking issues were identified during manual validation.
+
+No inconsistencies were observed between the documented API contract and the actual API behavior.
+
+---
+
+# Validation Summary
+
+| Functional Area | Status |
+| --------------- | ------ |
+| Authentication  | Passed |
+| CRUD Operations | Passed |
+| Pagination      | Passed |
+| Search          | Passed |
+| Filtering       | Passed |
+| Validation      | Passed |
+| Security        | Passed |
+| Error Handling  | Passed |
+
+---
+
+# QA Assessment
+
+The manual validation confirms that the Todo Application API behaves according to the documented API specification.
+
+All core functionality required for frontend development was successfully verified.
+
+The API is considered stable and suitable for continued development and testing.
+
+---
+
+# Deliverables Completed
+
+The following QA deliverables were completed as part of Epic TA-2:
+
+- API Reference
+- Authentication Documentation
+- Reusable Postman Collection
+- Reusable Postman Environment
+- API Test Case Repository
+- Manual API Test Cases
+- API Validation Report
+
+---
+
+# Recommendation
+
+The API is approved for:
+
+- Frontend Integration
+- Manual Regression Testing
+- Automated API Testing
+- End-to-End Testing
+
+---
+
+# Related Documentation
+
+- API Reference
+- Authentication
+- API Test Cases
+- API Test Case Repository
+- Postman Collection
+- Manual Testing Repository
+- Release Notes
