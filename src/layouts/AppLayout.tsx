@@ -1,21 +1,20 @@
-import { Link, Outlet } from "react-router";
+import { Outlet } from "react-router";
 
-import { routePaths } from "@/routes/routePaths";
+import Footer from "@/components/shared/Footer";
+import Header from "@/components/shared/Header";
 
 export default function AppLayout() {
   return (
-    <main className="flex-center min-h-screen">
-      <section className="space-y-8 text-center">
-        <h1 className="text-4xl font-bold">Welcome</h1>
+    <div className="grid min-h-screen grid-rows-[auto_1fr_auto]">
+      <Header />
 
-        <nav>
-          <Link to={routePaths.home}>Home</Link> | <Link to={routePaths.tasks}>Tasks</Link>
-        </nav>
-
-        <div className="layout-content">
+      <main className="w-full px-6 py-8">
+        <div className="w-full lg:mx-auto lg:max-w-4xl">
           <Outlet />
         </div>
-      </section>
-    </main>
+      </main>
+
+      <Footer />
+    </div>
   );
 }
