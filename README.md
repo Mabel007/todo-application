@@ -181,11 +181,10 @@ Project documentation is organized under the **docs/** directory.
 
 ### Architecture
 
-### Architecture
-
 - Project Structure
 - Application Routing
 - Application Layout
+- Application Providers
 
 ### Development
 
