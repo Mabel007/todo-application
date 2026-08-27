@@ -42,6 +42,12 @@ Development follows an industry-standard workflow using:
 - Tailwind CSS v4
 - ShadCN/UI
 
+### Application Foundation
+
+- React Router - Client-side routing and route composition
+- TanStack Query - Server-state management and caching
+- Axios - REST API communication
+
 ### Design System
 
 The application uses a centralized design system built on:
@@ -175,13 +181,18 @@ Project documentation is organized under the **docs/** directory.
 
 ### Architecture
 
+### Architecture
+
 - Project Structure
+- Application Routing
+- Application Layout
 
 ### Development
 
 - Environment Setup
 - Development Workflow
 - Contribution Guidelines
+- Runtime Dependencies
 
 ### Deployment
 
@@ -199,12 +210,35 @@ Project documentation is organized under the **docs/** directory.
 
 ## 📂 Project Structure
 
-```text
 docs/
+├── api/
+├── architecture/
+├── deployment/
+├── design-system/
+├── development/
+├── releases/
+└── testing/
+
 src/
+├── api/
+├── assets/
+├── components/
+├── constants/
+├── context/
+├── data/
+├── hooks/
+├── layouts/
+├── lib/
+├── pages/
+├── providers/
+├── routes/
+├── services/
+├── styles/
+├── types/
+└── utils/
+
 public/
 .github/
-```
 
 The application follows a modular architecture that separates documentation, application source code, assets, configuration, and workflows.
 
