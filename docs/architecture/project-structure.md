@@ -36,6 +36,17 @@ src/
 └── utils/
 ```
 
+### `src/types`
+
+Contains reusable TypeScript contracts shared across application layers.
+
+Current shared infrastructure types include:
+
+```text
+src/types/
+└── api.ts
+```
+
 ---
 
 ## Design Principles
