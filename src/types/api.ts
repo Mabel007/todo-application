@@ -30,18 +30,24 @@ export interface SingleResponse<T> {
 }
 
 /**
- * 4. VALIDATED STANDARD ERROR RECOVERY STRUCTURE
+ * 4. NESTED VALIDATION ISSUE FORMAT
+ * Captures specific Zod runtime validation failure context.
+ */
+export interface ApiValidationIssue {
+  path: Array<string | number>;
+  message: string;
+  code: string;
+}
+
+/**
+ * 5. VALIDATED STANDARD ERROR RECOVERY STRUCTURE
  * Matches standard Hono/Zod-OpenAPI field error response shapes used by the server.
  */
 export interface ApiErrorResponse {
   success: boolean;
   message: string;
   error?: {
-    issues: Array<{
-      path: Array<string | number>;
-      message: string;
-      code: string;
-    }>;
+    issues: ApiValidationIssue[];
     name: string;
   };
 }
