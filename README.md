@@ -93,7 +93,7 @@ The pre-commit hook runs lint-staged against staged supported files. Do not comm
 
 ## Release status
 
-Epic 3 / TA-20 Application Foundation is implemented and validated for `v0.3.0` and is undergoing release preparation. Production deployment configuration remains part of the later deployment epic.
+Epic 3 / TA-20 Application Foundation was released as `v0.3.0` on 2026-09-02. The release completed post-merge validation, Git tagging, GitHub Release publication, and Vercel Production deployment. Broader production-readiness improvements remain part of the later Deployment & Production Readiness epic.
 
 ## License
 
