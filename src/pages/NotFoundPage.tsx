@@ -5,7 +5,7 @@ import { routePaths } from "@/routes/routePaths";
 
 export default function NotFoundPage() {
   return (
-    <main className="flex-center min-h-screen">
+    <div className="flex-center">
       <section className="space-y-8 text-center">
         <h1 className="text-4xl font-bold">404</h1>
         <h2>Page Not Found</h2>
@@ -18,6 +18,6 @@ export default function NotFoundPage() {
           Go Back Home
         </Link>
       </section>
-    </main>
+    </div>
   );
 }
