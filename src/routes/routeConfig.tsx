@@ -1,6 +1,7 @@
 import ErrorBoundary from "@/components/shared/ApplicationErrorBoundary";
 import AppLayout from "@/layouts/AppLayout";
 import Home from "@/pages/Home";
+import NotFoundPage from "@/pages/NotFoundPage";
 import Tasks from "@/pages/Tasks";
 
 import { routePaths } from "./routePaths";
@@ -21,6 +22,10 @@ export const routeConfig = [
       {
         path: routePaths.tasks,
         element: <Tasks />,
+      },
+      {
+        path: "*",
+        element: <NotFoundPage />,
       },
     ],
   },
