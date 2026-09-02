@@ -7,7 +7,7 @@
 | Category      | Project Documentation                                                         |
 | Related epics | TA-1 Project Foundation; TA-2 API Investigation; TA-20 Application Foundation |
 | Status        | Active                                                                        |
-| Version       | v0.3.0 (release preparation)                                                  |
+| Version       | v0.3.0 (released 2026-09-02)                                                  |
 | Last updated  | September 2026                                                                |
 
 ## Overview
@@ -42,7 +42,7 @@ It intentionally does not provide task CRUD, authentication, protected routes, t
 
 ## Release status
 
-`v0.3.0` is the release being prepared for the Application Foundation. Implementation and repository documentation are in final TA-41 validation. The release has not been declared published or deployed, and final canonical Confluence reconciliation remains pending.
+`v0.3.0` is the released Application Foundation milestone. Epic 3 implementation, TA-41 validation, dev-to-main integration, post-merge validation, Git tagging, GitHub Release publication, and Vercel Production deployment were completed on 2026-09-02. Final Jira and canonical Confluence release-state reconciliation follows the completed repository release workflow.
 
 Completed release records remain available in:
 
