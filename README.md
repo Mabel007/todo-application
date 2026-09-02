@@ -93,7 +93,7 @@ The pre-commit hook runs lint-staged against staged supported files. Do not comm
 
 ## Release status
 
-Epic 3 / TA-20 Application Foundation is implemented for `v0.3.0` and is undergoing final TA-41 repository and Confluence reconciliation. Production deployment configuration remains part of the later deployment epic.
+Epic 3 / TA-20 Application Foundation is implemented and validated for `v0.3.0` and is undergoing release preparation. Production deployment configuration remains part of the later deployment epic.
 
 ## License
 
