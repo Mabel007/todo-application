@@ -287,9 +287,7 @@ Responsible for:
 
 ### API Layer
 
-Will later consume the validated API base URL.
-
-Axios configuration is not part of TA-34.
+The shared Axios client now consumes the validated API base URL through `src/api/client.ts`, as implemented by TA-35. Axios configuration remains a separate responsibility from the TA-34 configuration module.
 
 ### Feature Code
 
@@ -319,7 +317,7 @@ TA-35 Axios API Client
 
 TA-34 creates the configuration boundary required by TA-35.
 
-TA-35 can consume the validated API base URL without introducing direct Vite environment access into the shared HTTP client.
+TA-35 consumes the validated API base URL without introducing direct Vite environment access into the shared HTTP client.
 
 ---
 
@@ -388,7 +386,7 @@ Later tickets may extend the runtime configuration contract when additional appr
 
 New values should be added deliberately rather than creating independent `import.meta.env` access throughout the application.
 
-TA-35 will consume the validated API base URL when configuring the shared Axios API client.
+TA-35 consumes the validated API base URL in the shared Axios API client.
 
 Production Vercel environment configuration remains outside TA-34 and will be handled during the appropriate deployment scope.
 

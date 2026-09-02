@@ -174,7 +174,7 @@ This means failed queries are not automatically retried by the global configurat
 
 The decision is deliberate.
 
-The Application Foundation does not yet contain the complete centralized API error-normalization infrastructure required to make reliable status-aware retry decisions globally.
+The Application Foundation now includes centralized API error normalization. The global retry policy nevertheless remains deliberately conservative: feature query hooks do not yet consume normalized errors, and automatic retry behavior has not been approved for the foundation.
 
 Rather than blindly retrying failures, TA-33 establishes a conservative baseline where automatic retries are disabled.
 
@@ -194,7 +194,7 @@ Future Retry Refinement
 
 Disabling global retries does not mean the Todo Application can never retry requests.
 
-Later architecture may introduce more deliberate retry behavior once API errors can be reliably classified and normalized.
+Later feature work may introduce more deliberate retry behavior by consuming the normalized API error contract.
 
 Future retry decisions may distinguish between:
 
