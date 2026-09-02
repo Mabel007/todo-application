@@ -45,9 +45,11 @@ Development follows an industry-standard workflow using:
 ### Application Foundation
 
 - React Router - Client-side routing and route composition
+- Application Error Boundary - Route-level render failure containment and fallback UI
 - TanStack Query - Server-state management and caching
 - Runtime Configuration - Centralized typed frontend environment configuration and validation
 - Axios - REST API communication
+- Application Error Boundary - Provides a controlled, accessible fallback and recovery action for unexpected React render failures in the routed application UI.
 
 ### Design System
 
@@ -186,6 +188,7 @@ Project documentation is organized under the **docs/** directory.
 - Application Routing
 - Application Layout
 - Application Providers
+- Application Error Boundary
 - Runtime Configuration
 
 ### Development
