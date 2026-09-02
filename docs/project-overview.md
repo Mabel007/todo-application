@@ -1,260 +1,62 @@
 # Project Overview
 
----
+## Document information
 
-## Document Information
+| Field         | Value                                                                         |
+| ------------- | ----------------------------------------------------------------------------- |
+| Category      | Project Documentation                                                         |
+| Related epics | TA-1 Project Foundation; TA-2 API Investigation; TA-20 Application Foundation |
+| Status        | Active                                                                        |
+| Version       | v0.3.0 (release preparation)                                                  |
+| Last updated  | September 2026                                                                |
 
-| Field             | Value                                                           |
-| ----------------- | --------------------------------------------------------------- |
-| **Category**      | Project Documentation                                           |
-| **Related Epic**  | TA-1 – Project Foundation                                       |
-| **Related Story** | TA-8 – Create Project Documentation and Verify Foundation Setup |
-| **Status**        | Active                                                          |
-| **Version**       | v0.2.0                                                          |
-| **Last Updated**  | July 2026                                                       |
+## Overview
 
----
+Todo Application is a React and TypeScript task-management application and portfolio project. Work is delivered incrementally through Jira, documented in the repository and Confluence, validated through GitHub Actions and manual QA, and prepared for later Vercel deployment.
 
-# Overview
+## Current technology
 
-Todo Application is a modern task management application built with React, TypeScript, Vite, Tailwind CSS, and ShadCN/UI.
-
-The project serves as both an AltSchool Frontend Engineering capstone project and a professional portfolio demonstrating modern frontend engineering, quality assurance, API investigation, documentation, and CI/CD best practices.
-
-Development follows an industry-standard software development lifecycle using GitHub, Jira, Confluence, GitHub Actions, Postman, and Vercel. Each epic delivers a complete, documented milestone that progressively expands the application's functionality while maintaining code quality and testing standards.
-
----
-
-# Project Objectives
-
-The project aims to:
-
-- Build a scalable and maintainable frontend architecture.
-- Implement modern React development best practices.
-- Demonstrate structured API investigation and QA workflows.
-- Produce comprehensive technical and project documentation.
-- Establish a reusable testing strategy for manual and automated testing.
-- Showcase a production-ready portfolio project.
-
----
-
-# Technology Stack
-
-## Frontend
-
-- React 19
-- TypeScript
-- Vite
+- React 19, TypeScript, and Vite
 - React Router
-- Tailwind CSS v4
-- ShadCN/UI
-
----
-
-## Data Fetching
-
-- Axios
 - TanStack Query
+- Axios
+- Tailwind CSS v4 and shadcn/ui
+- ESLint, Prettier, Husky, and lint-staged
+- Postman assets and manual API testing
+- GitHub Actions for install, lint, and build validation
 
----
+React Testing Library, Vitest, and Playwright are planned; the repository does not currently expose an automated application test script. React Hook Form and Zod are future feature dependencies and are not installed in the current foundation.
 
-## Forms & Validation
+## Current state
 
-- React Hook Form
-- Zod
+| Milestone                                                            | Status                              |
+| -------------------------------------------------------------------- | ----------------------------------- |
+| Project Foundation                                                   | Completed                           |
+| API Investigation and Manual Testing                                 | Completed                           |
+| Application Foundation (TA-20 / Epic 3)                              | Implemented; final TA-41 validation |
+| Task features, authentication, automation, and production deployment | Future roadmap work                 |
 
----
+The Application Foundation provides centralized client-side routing, a shared application layout and provider composition, one shared TanStack Query client, validated runtime configuration, a shared Axios client, shared API contracts, centralized API error normalization, an application Error Boundary, wildcard 404 handling, and Home/Tasks foundation pages.
 
-## Development Tools
+It intentionally does not provide task CRUD, authentication, protected routes, token management, or production deployment configuration.
 
-- ESLint
-- Prettier
-- Husky
-- lint-staged
-- CodeRabbit
+## Release status
 
----
+`v0.3.0` is the release being prepared for the Application Foundation. Implementation and repository documentation are in final TA-41 validation. The release has not been declared published or deployed, and final canonical Confluence reconciliation remains pending.
 
-## Testing
+Completed release records remain available in:
 
-- Postman
-- Newman
-- Manual API Testing
-- React Testing Library _(planned)_
-- Vitest _(planned)_
-- Playwright _(planned)_
+- `docs/releases/v0.1.0.md`
+- `docs/releases/v0.2.0.md`
 
----
+## Documentation map
 
-## CI/CD
+- `docs/architecture/` — application structure and foundation decisions
+- `docs/development/` — local setup, workflow, dependencies, and runtime configuration
+- `docs/api/` and `postman/` — Epic 2 API investigation and manual-testing assets
+- `docs/design-system/` — current visual foundation
+- `docs/deployment/` — existing high-level deployment direction; production implementation is future scope
+- `docs/releases/` — published historical release records
+- `docs/testing/` — manual API validation records
 
-- GitHub Actions
-- Vercel
-
----
-
-# Documentation Structure
-
-```text
-docs/
-├── api/
-│   ├── task-api-reference.md
-│   ├── authentication.md
-│   └── postman-guide.md
-│
-├── architecture/
-│   └── project-structure.md
-│
-├── deployment/
-│   └── deployment-guide.md
-│
-├── design-system/
-│   ├── application-theme.md
-│   ├── colors.md
-│   ├── design-tokens.md
-│   ├── icons.md
-│   └── typography.md
-│
-├── development/
-│   ├── contribution-guidelines.md
-│   ├── development-workflow.md
-│   └── environment-setup.md
-│
-├── testing/
-│   ├── api-test-cases.md
-│   ├── manual-api-validation.md
-│   └── manual-test-cases.md
-│
-├── project-overview.md
-│
-├── releases/
-│   ├── v0.1.0.md
-│   └── v0.2.0.md
-│
-postman/
-├──todo-applicatiom.postman_collection.json
-├── todo-application.postman_environment.json
-└── README.md
-```
-
----
-
-# Project Roadmap
-
-| Epic                                       | Status    |
-| ------------------------------------------ | --------- |
-| TA-1 Project Foundation                    | Completed |
-| TA-2 API Investigation & Manual Testing    | Completed |
-| TA-3 Application Foundation                | Planned   |
-| TA-4 Task Management Core                  | Planned   |
-| TA-5 Task Experience & CRUD                | Planned   |
-| TA-6 Authentication                        | Planned   |
-| TA-7 UI Components & Design System         | Planned   |
-| TA-8 Accessibility & User Experience       | Planned   |
-| TA-9 QA Automation                         | Planned   |
-| TA-10 Deployment & Production Readiness    | Planned   |
-| TA-11 Documentation & Portfolio Completion | Planned   |
-
----
-
-# Current Project Status
-
-## Epic 1 — Project Foundation
-
-**Status:** Completed
-
-### Key Deliverables
-
-- React + TypeScript + Vite project initialized
-- Tailwind CSS configured
-- ShadCN/UI configured
-- Development tooling established
-- Code quality standards configured
-- Git workflow established
-- CI/CD pipeline configured
-- Initial documentation completed
-
----
-
-## Epic 2 — API Investigation & Manual Testing
-
-**Status:** Completed
-
-This epic established the QA baseline for frontend development through API investigation, manual validation, reusable Postman assets, and technical documentation.
-
-### Deliverables
-
-- API Reference
-- Authentication Documentation
-- API Investigation Findings & QA Baseline
-- API Validation Report
-- API Test Cases
-- API Test Case Repository
-- Postman Collection
-- Postman Environment
-
----
-
-## Epic Readiness Summary
-
-| Requirement                    | Status   |
-| ------------------------------ | -------- |
-| API endpoints reviewed         | Complete |
-| Authentication investigated    | Complete |
-| CRUD operations validated      | Complete |
-| Pagination validated           | Complete |
-| Search validated               | Complete |
-| Filtering validated            | Complete |
-| Error handling validated       | Complete |
-| Postman collection completed   | Complete |
-| Postman environment configured | Complete |
-| QA baseline established        | Complete |
-| Documentation completed        | Complete |
-| No blocking issues identified  | Complete |
-
----
-
-# Current Release
-
-**Current Version:** v0.2.0
-
-Completed releases:
-
-- v0.1.0 — Project Foundation
-- v0.2.0 — API Investigation & Manual Testing
-
-The project has completed its technical foundation and API investigation.
-
-The application is ready to begin frontend implementation in Epic 3.
-
----
-
-# Related Documentation
-
-## API Documentation
-
-- API Reference
-- Authentication
-- API Investigation Findings & QA Baseline
-- API Validation Report
-- API Test Cases
-- API Test Case Repository
-- Postman Collection
-- Postman Environment
-
----
-
-## Development Documentation
-
-- Development Workflow
-- Environment Setup
-- Frontend Architecture
-- Folder Structure
-- Deployment Guide
-
----
-
-## Release Documentation
-
-- Release v0.1.0
-- Release v0.2.0
+The root `README.md` is the repository entry point. Detailed architecture remains in the topic-specific documents rather than being duplicated here.
