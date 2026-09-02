@@ -532,7 +532,7 @@ Future API services can import these shared types when their response structures
 
 Feature-specific models should remain separately defined and supplied through generic parameters where appropriate.
 
-TA-37 will build on the validated error structures when implementing centralized API error normalization.
+TA-37 builds on the validated error structures through the centralized API error normalization in `src/api/errors.ts`.
 
 Any future changes to these shared interfaces should be based on verified backend contract changes rather than frontend assumptions.
 

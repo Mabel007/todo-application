@@ -1,298 +1,107 @@
 # Todo Application
 
-A modern task management application built with **React**, **TypeScript**, **Vite**, **Tailwind CSS v4**, and **ShadCN/UI**.
+A React and TypeScript task-management application. Release `v0.3.0` establishes the application foundation: routing, shared layouts and providers, server-state infrastructure, validated runtime configuration, API infrastructure, shared contracts, and controlled error experiences. Task CRUD and authentication remain future work.
 
-This project serves as both an **AltSchool Frontend Engineering Project** and a **professional portfolio** demonstrating modern frontend engineering, quality assurance, documentation, accessibility, and deployment best practices.
+## Stack
 
----
+- React 19, TypeScript, and Vite
+- React Router
+- TanStack Query
+- Axios
+- Tailwind CSS v4 and shadcn/ui
+- ESLint, Prettier, Husky, and lint-staged
 
-## 📖 Project Overview
+## Getting started
 
-Todo Application is designed using a scalable, maintainable, and production-ready architecture that supports future feature development, testing, and deployment.
-
-The project emphasizes:
-
-- Scalable Frontend Architecture
-- Modern UI/UX
-- Accessibility (WCAG 2.1 AA)
-- Performance
-- Maintainability
-- Code Quality
-- Responsive Design
-- Developer Experience
-
-Development follows an industry-standard workflow using:
-
-- Jira
-- Confluence
-- GitHub
-- GitHub Actions
-- CodeRabbit
-- Vercel
-
----
-
-## 🚀 Tech Stack
-
-### Frontend
-
-- React 19
-- TypeScript
-- Vite
-- Tailwind CSS v4
-- ShadCN/UI
-
-### Application Foundation
-
-- React Router - Client-side routing and route composition
-- Application Error Boundary - Route-level render failure containment and fallback UI
-- TanStack Query - Server-state management and caching
-- Runtime Configuration - Centralized typed frontend environment configuration and validation
-- Axios - REST API communication
-- Application Error Boundary - Provides a controlled, accessible fallback and recovery action for unexpected React render failures in the routed application UI.
-
-### Design System
-
-The application uses a centralized design system built on:
-
-- Sora Variable (Headings)
-- Inter Variable (Body)
-- CSS Custom Properties (Design Tokens)
-- Lucide React
-- Tailwind CSS v4
-- Mobile-first Responsive Design
-
-### Code Quality
-
-- ESLint
-- Prettier
-- Husky
-- lint-staged
-- CodeRabbit
-
-### CI/CD
-
-- GitHub Actions
-- Vercel
-
-### Testing
-
-- Manual Testing
-- Playwright _(Planned)_
-- React Testing Library _(Planned)_
-- Vitest _(Planned)_
-
-### Project Management
-
-- Jira
-- Confluence
-
----
-
-## 📦 Getting Started
-
-### Prerequisites
-
-- Node.js 22+
-- npm 10+
-
-### Clone Repository
+Prerequisites: Node.js 22+ and npm 10+.
 
 ```bash
 git clone https://github.com/Mabel007/todo-application.git
-
 cd todo-application
-```
-
-### Install Dependencies
-
-```bash
 npm install
 ```
 
-### Start Development Server
+Copy `.env.example` to `.env` and provide the required public API base URL:
 
-```bash
-npm run dev
+```env
+VITE_API_BASE_URL=https://example.com
 ```
 
-Application URL
+`VITE_API_BASE_URL` must be a valid HTTP or HTTPS URL. Vite exposes `VITE_` variables to browser code, so do not put secrets in them.
+
+Start the development server with `npm run dev`. Vite normally serves the application at `http://localhost:5173`.
+
+## Commands
+
+| Command                | Purpose                                  |
+| ---------------------- | ---------------------------------------- |
+| `npm run dev`          | Start the Vite development server        |
+| `npm run build`        | Type-check and create a production build |
+| `npm run preview`      | Preview the production build locally     |
+| `npm run lint`         | Run ESLint                               |
+| `npm run lint:fix`     | Apply ESLint fixes                       |
+| `npm run format`       | Format supported repository files        |
+| `npm run format:check` | Verify formatting without writing files  |
+
+There is no automated application test suite yet. The current repository gates are lint, formatting, TypeScript/build, and targeted manual validation. GitHub Actions runs `npm ci`, lint, and build for pushes and pull requests to `dev` and `main`.
+
+## Application foundation
+
+The current routes are:
+
+- `/` — Home foundation page
+- `/tasks` — Tasks foundation placeholder; no CRUD behavior yet
+- `*` — Not-found experience with recovery navigation
+
+`src/main.tsx` owns the single `RouterProvider` and composes it inside `AppProviders`. The shared `QueryClient` is created once in `src/lib/queryClient.ts`. Route configuration is centralized in `src/routes`, with `AppLayout` rendering child pages through `Outlet`. The route tree is wrapped by the application Error Boundary.
+
+Runtime configuration is read and validated through `src/config/env.ts`. The shared Axios client consumes that validated configuration. Shared API response contracts live in `src/types/api.ts`, while `src/api/errors.ts` converts Axios and API failures into the application error union in `src/types/errors.ts`.
+
+## Project structure
 
 ```text
-http://localhost:5173
+.github/             CI workflow and pull-request template
+docs/                Architecture, development, API, design, release, and testing docs
+postman/             API investigation assets
+src/
+  api/               Shared Axios client and error normalization
+  assets/            Brand and application assets
+  components/        Shared, layout, and UI components
+  config/            Validated runtime configuration
+  layouts/           Shared routed layout
+  lib/               Shared infrastructure and utilities
+  pages/             Current foundation pages
+  providers/         Global provider composition
+  routes/            Route paths, configuration, and router creation
+  styles/            Global style layers and design tokens
+  types/             Shared API and application error contracts
 ```
 
-### Build Application
+Detailed documentation is under `docs/`, including the canonical architecture documents for routing, providers, layout, server state, runtime configuration, API infrastructure, error handling, and not-found behavior.
+
+## Development workflow
+
+Before review, run:
 
 ```bash
+npm run format
+npm run lint
 npm run build
 ```
 
----
+The pre-commit hook runs lint-staged against staged supported files. Do not commit a local `.env` file.
 
-## 📜 Available Scripts
+## Release status
 
-| Command                | Description                      |
-| ---------------------- | -------------------------------- |
-| `npm run dev`          | Start the development server     |
-| `npm run build`        | Build the application            |
-| `npm run lint`         | Run ESLint                       |
-| `npm run lint:fix`     | Automatically fix linting issues |
-| `npm run format`       | Format project files             |
-| `npm run format:check` | Verify formatting                |
+Epic 3 / TA-20 Application Foundation is implemented for `v0.3.0` and is undergoing final TA-41 repository and Confluence reconciliation. Production deployment configuration remains part of the later deployment epic.
 
----
+## License
 
-## 🎨 Design System
+This project is licensed under the MIT License.
 
-The application's branding foundation is centralized and reusable.
+## Author
 
-### Typography
+Christiana Mabel Nyuma — Frontend Developer and QA Analyst
 
-- Sora Variable
-- Inter Variable
-
-### Color System
-
-- Navy Brand Primary
-- Teal Brand Accent
-- Semantic Design Tokens
-- Light & Dark Theme Support
-
-### Icons
-
-- Lucide React
-- SVG Brand Assets
-
-### Branding
-
-- Application Logo
-- Horizontal Logo
-- Logo Icon
-- Application Icons
-- Browser Favicon
-
----
-
-## 📚 Documentation
-
-Project documentation is organized under the **docs/** directory.
-
-### Project
-
-- Project Overview
-
-### Architecture
-
-- Project Structure
-- Application Routing
-- Application Layout
-- Application Providers
-- Application Error Boundary
-- Runtime Configuration
-
-### Development
-
-- Environment Setup
-- Development Workflow
-- Contribution Guidelines
-- Runtime Dependencies
-
-### Deployment
-
-- Deployment Guide
-
-### Design System
-
-- Application Theme
-- Typography
-- Color System
-- Design Tokens
-- Icons
-
----
-
-## 📂 Project Structure
-
-docs/
-├── api/
-├── architecture/
-├── deployment/
-├── design-system/
-├── development/
-├── releases/
-└── testing/
-
-src/
-├── api/
-├── assets/
-├── components/
-├── constants/
-├── context/
-├── data/
-├── hooks/
-├── layouts/
-├── lib/
-├── pages/
-├── providers/
-├── routes/
-├── services/
-├── styles/
-├── types/
-└── utils/
-
-public/
-.github/
-
-The application follows a modular architecture that separates documentation, application source code, assets, configuration, and workflows.
-
----
-
-## 🔄 Continuous Integration
-
-GitHub Actions automatically:
-
-- Installs dependencies
-- Runs ESLint
-- Builds the application
-
-Every Pull Request must successfully complete the CI pipeline before being merged.
-
----
-
-## ✅ Definition of Done
-
-A Jira ticket is complete only when:
-
-- Acceptance Criteria satisfied
-- ESLint passes
-- Formatting passes
-- Production build succeeds
-- Manual testing completed
-- CodeRabbit review resolved
-- Pull Request approved
-- Branch merged into `dev`
-- Jira updated
-- Documentation updated where applicable
-
----
-
-## 📄 License
-
-This project is licensed under the **MIT License**.
-
----
-
-## 👩‍💻 Author
-
-**Christiana Mabel Nyuma**
-
-Frontend Developer & QA Analyst
-
-GitHub
-
-https://github.com/Mabel007
-
-LinkedIn
-
-https://www.linkedin.com/in/christiana-mabel-nyuma/
+- [GitHub](https://github.com/Mabel007)
+- [LinkedIn](https://www.linkedin.com/in/christiana-mabel-nyuma/)
