@@ -1,171 +1,75 @@
 # Todo API Postman Guide
 
----
-
 ## Document Information
 
-| Field             | Value                                                     |
-| ----------------- | --------------------------------------------------------- |
-| **Category**      | Project Documentation                                     |
-| **Related Epic**  | TA-2 API Investigation & Manual Testing                   |
-| **Related Story** | TA-12 Create Reusable Postman Collection for the Todo API |
-| **Status**        | Active                                                    |
-| **Version**       | v0.1.0                                                    |
-| **Last Updated**  | July 2026                                                 |
+| Field          | Value                                                      |
+| -------------- | ---------------------------------------------------------- |
+| Category       | Project Documentation                                      |
+| Related Story  | TA-203 Reconcile Postman assets with verified API contract |
+| Status         | Active                                                     |
+| Release Target | v0.3.1                                                     |
+| Last Updated   | September 2026                                             |
 
----
+## Purpose
 
-# Overview
+The permanent Postman assets provide a runnable verified success flow and a focused negative/error regression subset. Canonical scenario definitions remain in `docs/testing/manual-api-test-cases.md`; Postman request descriptions carry concise `API-xxx` traceability.
 
-This document describes how to import, configure, and use the Todo Application Postman Collection for manual API testing.
+Historical v0.2.0 manual validation, the August 2026 API Error Contract Discovery Audit, and this TA-203 maintenance reconciliation are separate evidence timelines.
 
----
+## Import and configuration
 
-# Requirements
+Import:
 
-- Postman Desktop
-- Todo Application Postman Collection
-- Todo Application Environment
-- Internet connection
+- `postman/todo-application.postman_collection.json`
+- `postman/todo-application.postman_environment.json`
 
----
+Select **Todo App - Local**. The canonical environment variables are:
 
-# Import the Collection
+| Variable       | Purpose                                        | Exported value                |
+| -------------- | ---------------------------------------------- | ----------------------------- |
+| `baseURL`      | Todo API origin                                | `https://api.oluwasetemi.dev` |
+| `accessToken`  | Bearer token for protected requests            | Empty                         |
+| `refreshToken` | Token consumed by `/auth/refresh`              | Empty                         |
+| `taskId`       | ID captured from successful task creation      | Empty                         |
+| `userId`       | ID captured from registration/login            | Empty                         |
+| `parentId`     | Optional parent task ID for manual exploration | Empty                         |
 
-1. Open Postman.
-2. Select **Import**.
-3. Import:
+Do not add `baseUrl` or `bearerToken` aliases. Do not export runtime tokens, passwords, authorization headers, or personal data.
 
-```
-todo-application.postman_collection.json
-```
+## Automated wiring
 
----
+Run the collection in order:
 
-# Import the Environment
+1. Primary registration generates a unique synthetic identity, clears stale auth/task values, and captures top-level `accessToken`, `refreshToken`, and `user.id`.
+2. Login and refresh assert and replace the same canonical token variables.
+3. Protected requests use Postman Bearer Auth with `{{accessToken}}`.
+4. Task creation expects HTTP 200, asserts a top-level task object, and stores `response.id` as `taskId`.
+5. Later task requests consume `{{taskId}}`.
+6. A second synthetic user supports repeatable cross-user 403 checks; cleanup restores the primary identity and deletes its task.
 
-1. Select **Import**.
-2. Import:
+Setup assertions fail clearly when required response values are absent, preventing stale-state false positives.
 
-```
-todo-application.postman_environment.json
-```
+## Negative/error regression
 
-3. Select:
+The maintained subset covers API-100, API-101, API-103, API-104, API-105, API-110, API-111, API-401, and API-402. It targets stable status and response-family behavior without duplicating the full manual repository.
 
-```
-Todo Application - Local
-```
+HTTP 422 checks are scenario-specific. Structured Zod validation scenarios assert `success: false`, `error.name`, and `error.issues`; the audit's message-based password-validation family is not treated as having that shape.
 
-from the environment dropdown.
+Expired access token coverage remains **NOT EXECUTED** because no safely reproducible expired token is available. Missing, malformed, and invalid token behavior is not used as a substitute.
 
----
+## Newman
 
-# Configure the Environment
+The repository does not pin Newman or expose a package script. The supported maintenance command uses the existing documented `npx newman` convention without changing application dependencies:
 
-After importing the environment, configure the following variables.
-
-| Variable     | Description                                   |
-| ------------ | --------------------------------------------- |
-| baseURL      | Base URL of the Todo API                      |
-| accessToken  | JWT access token used for protected endpoints |
-| refreshToken | JWT refresh token                             |
-| taskId       | Existing task identifier used for testing     |
-| userId       | Existing user identifier                      |
-| parentId     | Existing parent task identifier               |
-
-Only **baseURL** should have a predefined value.
-
-The remaining variables should be populated after authenticating with the API or after creating test data.
-
----
-
-# Authentication
-
-1. Execute **POST /auth/register** to create a user.
-
-or
-
-2. Execute **POST /auth/login**.
-
-3. Copy the returned **accessToken**.
-
-4. Copy the returned **refreshToken**.
-
-5. Update the Postman environment variables:
-
-- accessToken
-- refreshToken
-
-Protected endpoints will now automatically use the configured Bearer token.
-
----
-
-# Running Requests
-
-1. Select **Todo Application - Local**.
-2. Ensure `baseURL` is configured.
-3. Authenticate using the Login endpoint.
-4. Save the returned tokens.
-5. Execute the required requests.
-6. Update `taskId`, `userId`, and `parentId` as needed during testing.
-
----
-
-# Exporting the Collection
-
-Export the collection using **Collection v2.1**.
-
-Save as:
-
-```
-todo-application.postman_collection.json
+```powershell
+npx --yes newman run postman/todo-application.postman_collection.json -e postman/todo-application.postman_environment.json
 ```
 
-Export the environment as:
+Only synthetic QA identities and tasks may be used. Review console output before sharing it because runtime values are held in memory during execution.
 
-```
-todo-application.postman_environment.json
-```
+## Evidence
 
----
-
-# Repository Structure
-
-```text
-postman/
-├── todo-application.postman_collection.json
-├── todo-application.postman_environment.json
-└── README.md
-```
-
-# Environment Validation
-
-The Postman environment was validated using the following steps.
-
-- Configured the base URL.
-- Registered or logged in a test user.
-- Stored the access token.
-- Stored the refresh token.
-- Executed authenticated endpoints.
-- Verified environment variable substitution.
-- Confirmed protected endpoints returned successful responses.
-- Confirmed invalid authentication returned HTTP 401.
-
----
-
-# Related Documentation
-
-```text
-docs/
-├── api/
-│   ├── authentication.md
-│   ├── postman-guide.md
-│   └── task-api-reference.md
-├── architecture/
-├── deployment/
-├── development/
-├── design-system/
-├── project-overview.md
-└── releases/
-```
+- Historical validation: `docs/testing/manual-api-validation.md`
+- Canonical cases: `docs/testing/manual-api-test-cases.md`
+- August discovery evidence: `postman/reports/api-error-contract-audit.md` and `.json`
+- TA-203 maintenance evidence: `postman/reports/ta-203-postman-reconciliation.md`

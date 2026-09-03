@@ -93,12 +93,15 @@ The test suite covers authentication, CRUD operations, pagination, search, filte
 
 # Negative Test Cases
 
-| ID      | Scenario                    | Priority | Expected Result            |
-| ------- | --------------------------- | -------- | -------------------------- |
-| API-100 | Login with invalid password | High     | Unauthorized response      |
-| API-101 | Missing bearer token        | High     | Unauthorized response      |
-| API-102 | Invalid task ID             | Medium   | Appropriate error returned |
-| API-103 | Missing required fields     | High     | Validation errors returned |
+| ID      | Scenario                     | Priority | Expected Result           |
+| ------- | ---------------------------- | -------- | ------------------------- |
+| API-100 | Login with invalid password  | High     | HTTP 401                  |
+| API-101 | Missing bearer token         | High     | HTTP 401                  |
+| API-103 | Task missing required fields | High     | HTTP 422 validation error |
+| API-104 | Duplicate registration email | High     | HTTP 409                  |
+| API-105 | Registration missing fields  | High     | HTTP 422 validation error |
+| API-110 | Malformed task UUID          | Medium   | HTTP 422 validation error |
+| API-111 | Valid nonexistent task UUID  | Medium   | HTTP 404                  |
 
 ---
 
@@ -125,12 +128,18 @@ The test suite covers authentication, CRUD operations, pagination, search, filte
 
 # Security Test Cases
 
-| ID      | Scenario                   | Priority | Expected Result       |
-| ------- | -------------------------- | -------- | --------------------- |
-| API-400 | Access another user's task | High     | Access denied         |
-| API-401 | Update another user's task | High     | Request rejected      |
-| API-402 | Delete another user's task | High     | Request rejected      |
-| API-403 | Expired access token       | High     | Unauthorized response |
+| ID      | Scenario                   | Priority | Expected Result                                               |
+| ------- | -------------------------- | -------- | ------------------------------------------------------------- |
+| API-400 | Access another user's task | High     | Access denied                                                 |
+| API-401 | Update another user's task | High     | Request rejected                                              |
+| API-402 | Delete another user's task | High     | Request rejected                                              |
+| API-403 | Expired access token       | High     | NOT EXECUTED - no safely reproducible expired token available |
+
+---
+
+## Postman Regression Traceability
+
+TA-203 maintains API-100, API-101, API-103, API-104, API-105, API-110, API-111, API-401, and API-402 in the permanent Postman collection. The collection complements this canonical repository rather than replacing it. API-403 remains **NOT EXECUTED** for the reason recorded above.
 
 ---
 
