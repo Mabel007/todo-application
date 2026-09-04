@@ -1,6 +1,6 @@
 # Todo Application
 
-A React and TypeScript task-management application. Release `v0.3.0` establishes the application foundation: routing, shared layouts and providers, server-state infrastructure, validated runtime configuration, API infrastructure, shared contracts, and controlled error experiences. Task CRUD and authentication remain future work.
+A React and TypeScript task-management application. Release `v0.3.0` established the application foundation: routing, shared layouts and providers, server-state infrastructure, validated runtime configuration, API infrastructure, shared contracts, and controlled error experiences. The `v0.3.1` maintenance release hardens that foundation through verified Postman/API contract reconciliation and centralized application logging. Task CRUD and authentication remain future work.
 
 ## Stack
 
@@ -93,7 +93,11 @@ The pre-commit hook runs lint-staged against staged supported files. Do not comm
 
 ## Release status
 
-Epic 3 / TA-20 Application Foundation was released as `v0.3.0` on 2026-09-02. The release completed post-merge validation, Git tagging, GitHub Release publication, and Vercel Production deployment. Broader production-readiness improvements remain part of the later Deployment & Production Readiness epic.
+`v0.3.0` / Epic 3 / TA-20 Application Foundation was released on 2026-09-02.
+
+`v0.3.1` is the Foundation Hardening & QA Maintenance release containing TA-203 and TA-204. Its implementation and QA work are complete on `dev` and are being prepared for release. The maintenance release reconciles the permanent Postman assets with the verified API contract and introduces the centralized application logging foundation required before Task Management Core development begins.
+
+Task CRUD, authentication, protected routes, feature-specific business state, frontend QA automation infrastructure, and broader production-readiness work remain outside this maintenance release.
 
 ## License
 
