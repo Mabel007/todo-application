@@ -44,7 +44,7 @@ It intentionally does not provide task CRUD, authentication, protected routes, t
 
 `v0.3.0` is the released Application Foundation milestone. Epic 3 implementation, TA-41 validation, dev-to-main integration, post-merge validation, Git tagging, GitHub Release publication, Vercel Production deployment, and final repository/Jira/Confluence reconciliation were completed on 2026-09-02.
 
-`v0.3.1` is the Foundation Hardening & QA Maintenance release currently being prepared from `dev`. It contains:
+`v0.3.1` is the released Foundation Hardening & QA Maintenance milestone. It was released on 2026-09-04 and contains:
 
 - TA-203 - Reconcile Postman assets with verified API contract.
 - TA-204 - Establish Centralized Application Logging Foundation.

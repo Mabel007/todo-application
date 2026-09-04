@@ -95,7 +95,7 @@ The pre-commit hook runs lint-staged against staged supported files. Do not comm
 
 `v0.3.0` / Epic 3 / TA-20 Application Foundation was released on 2026-09-02.
 
-`v0.3.1` is the Foundation Hardening & QA Maintenance release containing TA-203 and TA-204. Its implementation and QA work are complete on `dev` and are being prepared for release. The maintenance release reconciles the permanent Postman assets with the verified API contract and introduces the centralized application logging foundation required before Task Management Core development begins.
+`v0.3.1` / Foundation Hardening & QA Maintenance was released on 2026-09-04. The release contains TA-203 and TA-204, reconciling the permanent Postman assets with the verified API contract and establishing the centralized application logging foundation required before Task Management Core development begins.
 
 Task CRUD, authentication, protected routes, feature-specific business state, frontend QA automation infrastructure, and broader production-readiness work remain outside this maintenance release.
 
