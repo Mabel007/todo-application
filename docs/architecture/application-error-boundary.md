@@ -167,13 +167,19 @@ public componentDidCatch(
   error: Error,
   errorInfo: React.ErrorInfo,
 ): void {
-  console.error("Uncaught render error:", error, errorInfo);
+  logger.error("APPLICATION_RUNTIME", "app.error_boundary.caught", {
+  error: {
+    name: error.name,
+    message: error.message,
+  },
+  componentStack: errorInfo.componentStack,
+});
 }
 ```
 
 `componentDidCatch` handles technical reporting for the caught failure.
 
-The current implementation sends the error and React error information to `console.error` for development and manual QA purposes.
+The current implementation sends selected render-failure diagnostics through the centralized application logger. The logger applies environment-aware output and sanitization before writing technical diagnostics, while the user-facing fallback remains unchanged.
 
 Technical information is not rendered to the user.
 
@@ -574,7 +580,7 @@ This is intentional under the current TA-38 architecture.
 
 ### Observability
 
-The current implementation uses `console.error` for technical debugging.
+The current implementation uses the centralized application logger for technical debugging. Render failures are logged through `logger.error()` using the `APPLICATION_RUNTIME` category, while the Error Boundary continues to render the same safe user-facing fallback.
 
 Production monitoring, telemetry, and external observability integrations are outside TA-38.
 
@@ -593,7 +599,7 @@ TA-38 establishes the following decisions:
 | Provider coverage              | Intentionally excluded                                       |
 | Fallback                       | Self-contained full-screen application fallback              |
 | Recovery                       | Reset boundary state and retry rendering                     |
-| Technical logging              | `console.error`                                              |
+| Technical logging              | Centralized `logger.error()` through `src/utils/logger.ts`   |
 | User-visible technical details | Not exposed                                                  |
 | API/query failures             | Remain outside Error Boundary responsibility                 |
 | Separate fallback component    | Not introduced at current scope                              |
