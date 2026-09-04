@@ -7,7 +7,7 @@
 | Category      | Project Documentation                                                         |
 | Related epics | TA-1 Project Foundation; TA-2 API Investigation; TA-20 Application Foundation |
 | Status        | Active                                                                        |
-| Version       | v0.3.1 (Foundation Hardening & QA Maintenance - release preparation)          |
+| Version       | v0.3.1 (Foundation Hardening & QA Maintenance - released 2026-09-04)          |
 | Last updated  | September 2026                                                                |
 
 ## Overview
