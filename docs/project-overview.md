@@ -7,7 +7,7 @@
 | Category      | Project Documentation                                                         |
 | Related epics | TA-1 Project Foundation; TA-2 API Investigation; TA-20 Application Foundation |
 | Status        | Active                                                                        |
-| Version       | v0.3.0 (released 2026-09-02)                                                  |
+| Version       | v0.3.1 (Foundation Hardening & QA Maintenance - release preparation)          |
 | Last updated  | September 2026                                                                |
 
 ## Overview
@@ -42,12 +42,23 @@ It intentionally does not provide task CRUD, authentication, protected routes, t
 
 ## Release status
 
-`v0.3.0` is the released Application Foundation milestone. Epic 3 implementation, TA-41 validation, dev-to-main integration, post-merge validation, Git tagging, GitHub Release publication, and Vercel Production deployment were completed on 2026-09-02. Final Jira and canonical Confluence release-state reconciliation follows the completed repository release workflow.
+`v0.3.0` is the released Application Foundation milestone. Epic 3 implementation, TA-41 validation, dev-to-main integration, post-merge validation, Git tagging, GitHub Release publication, Vercel Production deployment, and final repository/Jira/Confluence reconciliation were completed on 2026-09-02.
+
+`v0.3.1` is the Foundation Hardening & QA Maintenance release currently being prepared from `dev`. It contains:
+
+- TA-203 - Reconcile Postman assets with verified API contract.
+- TA-204 - Establish Centralized Application Logging Foundation.
+
+The maintenance scope strengthens the existing Application Foundation without introducing Task Management Core functionality. TA-203 reconciles the permanent Postman collection, environment, execution scripts, API test documentation, and maintenance evidence with the verified API contract. TA-204 establishes centralized structured application logging, sanitization, environment-aware output, Axios diagnostics, and Error Boundary logging.
+
+Task CRUD, authentication, protected routes, feature-specific business state, frontend QA automation infrastructure, and broader production-readiness work remain future-roadmap scope.
 
 Completed release records remain available in:
 
 - `docs/releases/v0.1.0.md`
 - `docs/releases/v0.2.0.md`
+- `docs/releases/v0.3.0.md`
+- `docs/releases/v0.3.1.md` - Foundation Hardening & QA Maintenance release record
 
 ## Documentation map
 
