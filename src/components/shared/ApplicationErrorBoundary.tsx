@@ -1,5 +1,7 @@
 import React, { Component, type ReactNode } from "react";
 
+import { logger } from "@/utils/logger";
+
 interface Props {
   children: ReactNode;
 }
@@ -29,7 +31,13 @@ export default class ErrorBoundary extends Component<Props, State> {
 
   // Log technical details for debugging without showing them to the user.
   public componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
-    console.error("Uncaught render error:", error, errorInfo);
+    logger.error("APPLICATION_RUNTIME", "app.error_boundary.caught", {
+      error: {
+        name: error.name,
+        message: error.message,
+      },
+      componentStack: errorInfo.componentStack,
+    });
   }
 
   // Clear the error state and try rendering the application again.
