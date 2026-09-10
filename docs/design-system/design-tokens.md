@@ -241,9 +241,12 @@ Keeping chart colors centralized ensures visual consistency across analytics and
 
 ## Dark Theme Tokens
 
-The design token system includes a dedicated dark theme.
+The repository includes a pre-TA-205 dark override block as future-facing groundwork, not as
+implemented user-facing dark mode.
 
-Dark mode overrides token values while preserving their semantic names.
+Runtime activation, preference storage, system-preference handling, and final dark palette
+approval are deferred to a separately scoped future Jira ticket. The light token set is the
+implemented TA-205 visual reference.
 
 Example:
 

@@ -122,12 +122,13 @@ typography.md
 
 ## Color System
 
-The application's visual identity is built around two primary brand colors.
+The application's visual identity is anchored by canonical navy with a restrained teal family.
 
-| Token     | Value   | Purpose                                    |
-| --------- | ------- | ------------------------------------------ |
-| Primary   | #0D235E | Primary actions, navigation, branding      |
-| Secondary | #38D6B2 | Accent color, highlights, success emphasis |
+| Token      | Value   | Purpose                                |
+| ---------- | ------- | -------------------------------------- |
+| Primary    | #0F2458 | Primary actions, navigation, branding  |
+| Brand Teal | #38D6B2 | Restrained brand highlights            |
+| UI Teal    | #0F766E | Focus and accessible teal interactions |
 
 Supporting interface colors provide consistency throughout the application.
 
@@ -305,6 +306,12 @@ When creating new components:
 - Follow the established spacing and border radius tokens.
 
 ---
+
+## TA-205 Scope Boundary
+
+TA-205 reconciles application tokens and the existing Header and Footer. Button and component
+standardization remains owned by TA-24 / Epic 7. Systematic accessibility hardening remains owned
+by TA-25 / Epic 8. Runtime theme switching requires a separately scoped future Jira ticket.
 
 ## Future Improvements
 

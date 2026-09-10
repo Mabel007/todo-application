@@ -1,23 +1,41 @@
-import { Link } from "react-router";
+import { Link, NavLink } from "react-router";
 
 import { routePaths } from "@/routes/routePaths";
 
 import { AppLogo } from "../layout/AppLogo";
+
+const navigationLinkClassName = ({ isActive }: { isActive: boolean }) =>
+  [
+    "focus-visible:ring-ring focus-visible:ring-offset-ring-offset relative rounded-sm px-1 py-2 font-medium transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none",
+    isActive
+      ? "text-navigation-active after:bg-navigation-active-indicator font-semibold after:absolute after:inset-x-1 after:bottom-0 after:h-0.5 after:rounded-full"
+      : "text-navigation-foreground hover:text-navigation-hover",
+  ].join(" ");
+
 export default function Header() {
   return (
-    <header className="mt-4 w-full px-6">
-      <div className="flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between">
-        <Link to={routePaths.home}>
-          <AppLogo className="h-12 w-auto" />
+    <header className={"bg-card border-divider w-full border-b px-6 py-4"}>
+      <div
+        className={
+          "mx-auto flex w-full max-w-4xl flex-col items-start gap-4 md:flex-row md:items-center md:justify-between"
+        }
+      >
+        <Link
+          to={routePaths.home}
+          className={
+            "focus-visible:ring-ring focus-visible:ring-offset-ring-offset rounded-md focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+          }
+        >
+          <AppLogo className={"h-12 w-auto"} />
         </Link>
 
-        <nav className="flex gap-4">
-          <Link to={routePaths.home} className="font-medium text-gray-600 hover:text-[#0F2459]">
+        <nav aria-label={"Primary navigation"} className={"flex gap-4"}>
+          <NavLink to={routePaths.home} end className={navigationLinkClassName}>
             Home
-          </Link>
-          <Link to={routePaths.tasks} className="font-medium text-gray-600 hover:text-[#0F2459]">
+          </NavLink>
+          <NavLink to={routePaths.tasks} className={navigationLinkClassName}>
             Tasks
-          </Link>
+          </NavLink>
         </nav>
       </div>
     </header>
