@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 import { taskQueryKeys } from "@/constants/taskQueryKeys";
 import { getTasks } from "@/services/taskService";
@@ -9,5 +9,6 @@ export const useTasks = (params: TaskReadParams = {}) => {
   return useQuery({
     queryKey: taskQueryKeys.list(params),
     queryFn: () => getTasks(params),
+    placeholderData: keepPreviousData,
   });
 };
