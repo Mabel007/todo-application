@@ -1,21 +1,12 @@
-import type { Task, TaskPriority, TaskStatus } from "@/types/tasks";
+import { Link } from "react-router";
+
+import { priorityLabels, statusLabels } from "@/constants/taskLabels";
+import { routePaths } from "@/routes/routePaths";
+import type { Task } from "@/types/tasks";
 
 interface TaskListProps {
   tasks: Task[];
 }
-
-const statusLabels: Record<TaskStatus, string> = {
-  TODO: "To Do",
-  IN_PROGRESS: "In Progress",
-  DONE: "Done",
-  CANCELLED: "Cancelled",
-};
-
-const priorityLabels: Record<TaskPriority, string> = {
-  LOW: "Low",
-  MEDIUM: "Medium",
-  HIGH: "High",
-};
 
 export function TaskList({ tasks }: TaskListProps) {
   if (tasks.length === 0) {
@@ -27,12 +18,13 @@ export function TaskList({ tasks }: TaskListProps) {
       {tasks.map((task) => (
         <li key={task.id} className="min-w-0 p-4 sm:p-5">
           <article aria-labelledby={`task-${task.id}-name`}>
-            <h2
+            <Link
+              to={`${routePaths.tasks}/${task.id}`}
               id={`task-${task.id}-name`}
               className="text-card-foreground text-base font-semibold wrap-break-word"
             >
               {task.name}
-            </h2>
+            </Link>
 
             {task.description && (
               <p className="text-muted-foreground mt-2 line-clamp-2 text-sm leading-6 wrap-break-word">

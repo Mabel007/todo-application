@@ -2,6 +2,7 @@ import ErrorBoundary from "@/components/shared/ApplicationErrorBoundary";
 import AppLayout from "@/layouts/AppLayout";
 import Home from "@/pages/Home";
 import NotFoundPage from "@/pages/NotFoundPage";
+import { TaskDetails } from "@/pages/TaskDetails";
 import Tasks from "@/pages/Tasks";
 
 import { routePaths } from "./routePaths";
@@ -22,6 +23,10 @@ export const routeConfig = [
       {
         path: routePaths.tasks,
         element: <Tasks />,
+      },
+      {
+        path: routePaths.taskDetails,
+        element: <TaskDetails />,
       },
       {
         path: "*",
