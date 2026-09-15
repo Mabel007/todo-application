@@ -1,8 +1,10 @@
 import { useState, type ChangeEvent } from "react";
 
+import { TaskFilters } from "@/components/tasks/TaskFilters";
 import { TaskList } from "@/components/tasks/TaskList";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useTasks } from "@/hooks/useTasks";
+import type { TaskPriority, TaskStatus } from "@/types/tasks";
 
 const initialTaskParams = {
   limit: 10,
@@ -11,6 +13,8 @@ const initialTaskParams = {
 export default function Tasks() {
   const [page, setPage] = useState(1);
   const [searchInput, setSearchInput] = useState("");
+  const [status, setStatus] = useState<TaskStatus | undefined>();
+  const [priority, setPriority] = useState<TaskPriority | undefined>();
 
   const debouncedSearch = useDebounce(searchInput, 500);
   const search = debouncedSearch.trim();
@@ -19,6 +23,8 @@ export default function Tasks() {
     page,
     limit: initialTaskParams.limit,
     search: search || undefined,
+    status,
+    priority,
   });
 
   const hasSearch = search.length > 0;
@@ -26,6 +32,16 @@ export default function Tasks() {
 
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchInput(event.target.value);
+    setPage(1);
+  };
+
+  const handleStatusChange = (nextStatus: TaskStatus | undefined) => {
+    setStatus(nextStatus);
+    setPage(1);
+  };
+
+  const handlePriorityChange = (nextPriority: TaskPriority | undefined) => {
+    setPriority(nextPriority);
     setPage(1);
   };
 
@@ -53,6 +69,13 @@ export default function Tasks() {
           className="border-border bg-background text-foreground placeholder:text-muted-foreground focus-visible:ring-ring w-full rounded-md border px-3 py-2 text-sm outline-none focus-visible:ring-2"
         />
       </div>
+
+      <TaskFilters
+        status={status}
+        priority={priority}
+        onStatusChange={handleStatusChange}
+        onPriorityChange={handlePriorityChange}
+      />
 
       {isLoading && <p role="status">Loading tasks…</p>}
 
