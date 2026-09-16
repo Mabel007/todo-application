@@ -1,4 +1,5 @@
-import { useState, type ChangeEvent } from "react";
+import { useEffect, useState, type ChangeEvent } from "react";
+import { useSearchParams } from "react-router";
 
 import { TaskFilters } from "@/components/tasks/TaskFilters";
 import { TaskList } from "@/components/tasks/TaskList";
@@ -11,15 +12,91 @@ const initialTaskParams = {
   limit: 10,
 } as const;
 
-export default function Tasks() {
-  const [page, setPage] = useState(1);
-  const [searchInput, setSearchInput] = useState("");
-  const [status, setStatus] = useState<TaskStatus | undefined>();
-  const [priority, setPriority] = useState<TaskPriority | undefined>();
-  const [sort, setSort] = useState<TaskOrder>("DESC");
+const taskStatuses: TaskStatus[] = ["TODO", "IN_PROGRESS", "DONE", "CANCELLED"];
 
+const taskPriorities: TaskPriority[] = ["LOW", "MEDIUM", "HIGH"];
+
+const parsePage = (value: string | null): number => {
+  if (value === null) {
+    return 1;
+  }
+
+  const parsedPage = Number(value);
+
+  if (!Number.isInteger(parsedPage) || parsedPage < 1) {
+    return 1;
+  }
+
+  return parsedPage;
+};
+
+const parseStatus = (value: string | null): TaskStatus | undefined => {
+  if (value === null) {
+    return undefined;
+  }
+
+  return taskStatuses.find((status) => status === value);
+};
+
+const parsePriority = (value: string | null): TaskPriority | undefined => {
+  if (value === null) {
+    return undefined;
+  }
+
+  return taskPriorities.find((priority) => priority === value);
+};
+
+const parseSort = (value: string | null): TaskOrder => {
+  if (value === "ASC" || value === "DESC") {
+    return value;
+  }
+
+  return "DESC";
+};
+
+interface TaskSearchInputProps {
+  initialSearch: string;
+  onSearchChange: (search: string) => void;
+}
+
+function TaskSearchInput({ initialSearch, onSearchChange }: TaskSearchInputProps) {
+  const [searchInput, setSearchInput] = useState(initialSearch);
   const debouncedSearch = useDebounce(searchInput, 500);
-  const search = debouncedSearch.trim();
+
+  useEffect(() => {
+    onSearchChange(debouncedSearch.trim());
+  }, [debouncedSearch, onSearchChange]);
+
+  const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearchInput(event.target.value);
+  };
+
+  return (
+    <div className="space-y-2">
+      <label htmlFor="task-search" className="text-foreground text-sm font-medium">
+        Search tasks
+      </label>
+
+      <input
+        id="task-search"
+        type="search"
+        value={searchInput}
+        onChange={handleSearchChange}
+        placeholder="Search tasks..."
+        className="border-border bg-background text-foreground placeholder:text-muted-foreground focus-visible:ring-ring w-full rounded-md border px-3 py-2 text-sm outline-none focus-visible:ring-2"
+      />
+    </div>
+  );
+}
+
+export default function Tasks() {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const page = parsePage(searchParams.get("page"));
+  const status = parseStatus(searchParams.get("status"));
+  const priority = parsePriority(searchParams.get("priority"));
+  const sort = parseSort(searchParams.get("sort"));
+  const search = searchParams.get("search")?.trim() ?? "";
 
   const { data, isError, isLoading, isPlaceholderData } = useTasks({
     page,
@@ -33,24 +110,76 @@ export default function Tasks() {
   const hasSearch = search.length > 0;
   const hasNoSearchResults = hasSearch && data?.meta.total === 0;
 
-  const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearchInput(event.target.value);
-    setPage(1);
+  const updatePage = (nextPage: number) => {
+    const nextSearchParams = new URLSearchParams(searchParams);
+
+    if (nextPage <= 1) {
+      nextSearchParams.delete("page");
+    } else {
+      nextSearchParams.set("page", String(nextPage));
+    }
+
+    setSearchParams(nextSearchParams);
+  };
+
+  const handleSearchChange = (nextSearch: string) => {
+    if (nextSearch === search) {
+      return;
+    }
+
+    const nextSearchParams = new URLSearchParams(searchParams);
+
+    if (nextSearch === "") {
+      nextSearchParams.delete("search");
+    } else {
+      nextSearchParams.set("search", nextSearch);
+    }
+
+    nextSearchParams.delete("page");
+
+    setSearchParams(nextSearchParams, { replace: true });
   };
 
   const handleStatusChange = (nextStatus: TaskStatus | undefined) => {
-    setStatus(nextStatus);
-    setPage(1);
+    const nextSearchParams = new URLSearchParams(searchParams);
+
+    if (nextStatus === undefined) {
+      nextSearchParams.delete("status");
+    } else {
+      nextSearchParams.set("status", nextStatus);
+    }
+
+    nextSearchParams.delete("page");
+
+    setSearchParams(nextSearchParams);
   };
 
   const handlePriorityChange = (nextPriority: TaskPriority | undefined) => {
-    setPriority(nextPriority);
-    setPage(1);
+    const nextSearchParams = new URLSearchParams(searchParams);
+
+    if (nextPriority === undefined) {
+      nextSearchParams.delete("priority");
+    } else {
+      nextSearchParams.set("priority", nextPriority);
+    }
+
+    nextSearchParams.delete("page");
+
+    setSearchParams(nextSearchParams);
   };
 
   const handleSortChange = (nextSort: TaskOrder) => {
-    setSort(nextSort);
-    setPage(1);
+    const nextSearchParams = new URLSearchParams(searchParams);
+
+    if (nextSort === "DESC") {
+      nextSearchParams.delete("sort");
+    } else {
+      nextSearchParams.set("sort", nextSort);
+    }
+
+    nextSearchParams.delete("page");
+
+    setSearchParams(nextSearchParams);
   };
 
   return (
@@ -63,20 +192,7 @@ export default function Tasks() {
         <p className="text-muted-foreground">Review your tasks and their current progress.</p>
       </header>
 
-      <div className="space-y-2">
-        <label htmlFor="task-search" className="text-foreground text-sm font-medium">
-          Search tasks
-        </label>
-
-        <input
-          id="task-search"
-          type="search"
-          value={searchInput}
-          onChange={handleSearchChange}
-          placeholder="Search tasks..."
-          className="border-border bg-background text-foreground placeholder:text-muted-foreground focus-visible:ring-ring w-full rounded-md border px-3 py-2 text-sm outline-none focus-visible:ring-2"
-        />
-      </div>
+      <TaskSearchInput key={search} initialSearch={search} onSearchChange={handleSearchChange} />
 
       <div className="grid gap-4 lg:grid-cols-3">
         <TaskFilters
@@ -115,7 +231,7 @@ export default function Tasks() {
                 <button
                   type="button"
                   disabled={isPlaceholderData || !data.meta.hasPreviousPage}
-                  onClick={() => setPage((currentPage) => Math.max(1, currentPage - 1))}
+                  onClick={() => updatePage(Math.max(1, page - 1))}
                   className="border-border bg-background text-foreground hover:bg-primary hover:text-primary-foreground rounded-md border px-4 py-2 text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   Previous
@@ -128,9 +244,7 @@ export default function Tasks() {
                 <button
                   type="button"
                   disabled={isPlaceholderData || !data.meta.hasNextPage}
-                  onClick={() =>
-                    setPage((currentPage) => Math.min(data.meta.totalPages, currentPage + 1))
-                  }
+                  onClick={() => updatePage(Math.min(data.meta.totalPages, page + 1))}
                   className="border-border bg-background text-foreground hover:bg-primary hover:text-primary-foreground rounded-md border px-4 py-2 text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   Next
