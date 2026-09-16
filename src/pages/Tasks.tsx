@@ -2,9 +2,10 @@ import { useState, type ChangeEvent } from "react";
 
 import { TaskFilters } from "@/components/tasks/TaskFilters";
 import { TaskList } from "@/components/tasks/TaskList";
+import { TaskSort } from "@/components/tasks/TaskSort";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useTasks } from "@/hooks/useTasks";
-import type { TaskPriority, TaskStatus } from "@/types/tasks";
+import type { TaskOrder, TaskPriority, TaskStatus } from "@/types/tasks";
 
 const initialTaskParams = {
   limit: 10,
@@ -15,6 +16,7 @@ export default function Tasks() {
   const [searchInput, setSearchInput] = useState("");
   const [status, setStatus] = useState<TaskStatus | undefined>();
   const [priority, setPriority] = useState<TaskPriority | undefined>();
+  const [sort, setSort] = useState<TaskOrder>("DESC");
 
   const debouncedSearch = useDebounce(searchInput, 500);
   const search = debouncedSearch.trim();
@@ -25,6 +27,7 @@ export default function Tasks() {
     search: search || undefined,
     status,
     priority,
+    sort,
   });
 
   const hasSearch = search.length > 0;
@@ -45,9 +48,14 @@ export default function Tasks() {
     setPage(1);
   };
 
+  const handleSortChange = (nextSort: TaskOrder) => {
+    setSort(nextSort);
+    setPage(1);
+  };
+
   return (
-    <section className="space-y-6" aria-labelledby="tasks-heading">
-      <header className="mb-4 space-y-2">
+    <section className="mx-auto w-full max-w-7xl space-y-6" aria-labelledby="tasks-heading">
+      <header className="space-y-2">
         <h1 id="tasks-heading" className="text-foreground text-3xl font-bold tracking-tight">
           Tasks
         </h1>
@@ -70,12 +78,16 @@ export default function Tasks() {
         />
       </div>
 
-      <TaskFilters
-        status={status}
-        priority={priority}
-        onStatusChange={handleStatusChange}
-        onPriorityChange={handlePriorityChange}
-      />
+      <div className="grid gap-4 lg:grid-cols-3">
+        <TaskFilters
+          status={status}
+          priority={priority}
+          onStatusChange={handleStatusChange}
+          onPriorityChange={handlePriorityChange}
+        />
+
+        <TaskSort sort={sort} onSortChange={handleSortChange} />
+      </div>
 
       {isLoading && <p role="status">Loading tasks…</p>}
 
