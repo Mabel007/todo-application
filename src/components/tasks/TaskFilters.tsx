@@ -55,7 +55,7 @@ export function TaskFilters({
   };
 
   return (
-    <div className="grid gap-4 sm:grid-cols-2">
+    <div className="grid gap-4 sm:grid-cols-2 lg:col-span-2">
       <div className="space-y-2">
         <label htmlFor="task-status-filter" className="text-foreground text-sm font-medium">
           Status
