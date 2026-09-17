@@ -99,7 +99,7 @@ export default function Tasks() {
   const sort = parseSort(searchParams.get("sort"));
   const search = searchParams.get("search")?.trim() ?? "";
 
-  const { data, isError, isLoading, isPlaceholderData } = useTasks({
+  const { data, isError, isLoading, isFetching, isPlaceholderData, refetch } = useTasks({
     page,
     limit: initialTaskParams.limit,
     search: search || undefined,
@@ -114,6 +114,9 @@ export default function Tasks() {
 
   const hasNoResults = hasNoTasks && hasActiveCriteria;
   const hasEmptyCollection = hasNoTasks && !hasActiveCriteria;
+
+  const hasBlockingError = isError && !data;
+  const isRetrying = hasBlockingError && isFetching;
 
   const updatePage = (nextPage: number) => {
     const nextSearchParams = new URLSearchParams(searchParams);
@@ -217,13 +220,24 @@ export default function Tasks() {
         />
       )}
 
-      {isError && (
-        <p role="alert" className="text-destructive">
-          Tasks could not be loaded.
-        </p>
+      {hasBlockingError && (
+        <TaskCollectionState
+          role="alert"
+          title="Unable to load tasks"
+          description="We couldn't retrieve your tasks. Please try again."
+        >
+          <button
+            type="button"
+            onClick={() => void refetch()}
+            disabled={isRetrying}
+            className="bg-primary text-primary-foreground hover:bg-primary/90 focus-visible:ring-ring rounded-md px-4 py-2 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {isRetrying ? "Trying again..." : "Try again"}
+          </button>
+        </TaskCollectionState>
       )}
 
-      {data && !isLoading && !isError && (
+      {data && !isLoading && (
         <div className="space-y-3">
           <p className="text-muted-foreground text-sm">
             {data.meta.total} {data.meta.total === 1 ? "task" : "tasks"}
