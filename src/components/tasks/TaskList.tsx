@@ -9,10 +9,6 @@ interface TaskListProps {
 }
 
 export function TaskList({ tasks }: TaskListProps) {
-  if (tasks.length === 0) {
-    return <p>No tasks are available.</p>;
-  }
-
   return (
     <ul className="divide-divider border-border bg-card divide-y overflow-hidden rounded-xl border">
       {tasks.map((task) => (
