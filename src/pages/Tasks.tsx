@@ -1,6 +1,7 @@
 import { useEffect, useState, type ChangeEvent } from "react";
 import { useSearchParams } from "react-router";
 
+import { TaskCollectionState } from "@/components/tasks/TaskCollectionState";
 import { TaskFilters } from "@/components/tasks/TaskFilters";
 import { TaskList } from "@/components/tasks/TaskList";
 import { TaskSort } from "@/components/tasks/TaskSort";
@@ -107,8 +108,12 @@ export default function Tasks() {
     sort,
   });
 
-  const hasSearch = search.length > 0;
-  const hasNoSearchResults = hasSearch && data?.meta.total === 0;
+  const hasActiveCriteria = search.length > 0 || status !== undefined || priority !== undefined;
+
+  const hasNoTasks = data?.meta.total === 0;
+
+  const hasNoResults = hasNoTasks && hasActiveCriteria;
+  const hasEmptyCollection = hasNoTasks && !hasActiveCriteria;
 
   const updatePage = (nextPage: number) => {
     const nextSearchParams = new URLSearchParams(searchParams);
@@ -205,7 +210,12 @@ export default function Tasks() {
         <TaskSort sort={sort} onSortChange={handleSortChange} />
       </div>
 
-      {isLoading && <p role="status">Loading tasks…</p>}
+      {isLoading && (
+        <TaskCollectionState
+          title="Loading tasks"
+          description="Please wait while your tasks are being loaded."
+        />
+      )}
 
       {isError && (
         <p role="alert" className="text-destructive">
@@ -219,10 +229,16 @@ export default function Tasks() {
             {data.meta.total} {data.meta.total === 1 ? "task" : "tasks"}
           </p>
 
-          {hasNoSearchResults ? (
-            <p role="status" className="text-muted-foreground">
-              No tasks match your search.
-            </p>
+          {hasNoResults ? (
+            <TaskCollectionState
+              title="No matching tasks"
+              description="No tasks match your current search or filters."
+            />
+          ) : hasEmptyCollection ? (
+            <TaskCollectionState
+              title="No tasks yet"
+              description="Your task collection is currently empty."
+            />
           ) : (
             <>
               <TaskList tasks={data.data} />
