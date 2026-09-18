@@ -26,7 +26,7 @@ export default function Header() {
             "focus-visible:ring-ring focus-visible:ring-offset-ring-offset rounded-md focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
           }
         >
-          <AppLogo className={"h-12 w-auto"} />
+          <AppLogo className={"h-5 w-auto"} />
         </Link>
 
         <nav aria-label={"Primary navigation"} className={"flex gap-4"}>

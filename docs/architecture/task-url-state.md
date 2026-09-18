@@ -296,12 +296,29 @@ The active filters are preserved.
 
 ---
 
+## Runtime Value Ownership
+
+The Task domain responsibility split is:
+
+types/tasks.ts
+→ canonical type-level TaskStatus and TaskPriority unions
+
+constants/taskValues.ts
+→ canonical ordered runtime values for URL validation and filter options
+
+constants/taskLabels.ts
+→ canonical display mappings
+
+The runtime arrays are not redefined in this page; the parser imports the shared values.
+
+---
+
 ## Status Parsing
 
 Supported Status values are:
 
 ```ts
-const taskStatuses: TaskStatus[] = ["TODO", "IN_PROGRESS", "DONE", "CANCELLED"];
+import { taskStatuses } from "@/constants/taskValues";
 ```
 
 The URL parser validates the external value:
@@ -370,7 +387,7 @@ Clearing the filter:
 Supported Priority values are:
 
 ```ts
-const taskPriorities: TaskPriority[] = ["LOW", "MEDIUM", "HIGH"];
+import { taskPriorities } from "@/constants/taskValues";
 ```
 
 The URL parser is:
@@ -732,7 +749,7 @@ page removed
 effective page = 1
 ```
 
-This aligns pagination reconciliation with the actual search criterion used by the API.
+This aligns pagination reconciliation with the actual search criterion used by the API. Server metadata also reconciles a syntactically valid but out-of-range page through replacement navigation.
 
 ---
 
@@ -748,7 +765,7 @@ TA-50 establishes:
 | Priority change | Reset to page 1     |
 | Sort change     | Reset to page 1     |
 
-This prevents stale page selections from carrying into newly constrained or reordered collections.
+This prevents stale page selections from carrying into newly constrained or reordered collections. If the API reports page > totalPages, the current URL page is replaced with totalPages; page 1 remains omitted, and totalPages = 0 is not reconciled to page 0.
 
 ---
 

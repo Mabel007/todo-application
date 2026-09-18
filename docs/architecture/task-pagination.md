@@ -131,10 +131,10 @@ Can navigate backward?
 
 ## Page State
 
-The Tasks page maintains the selected page:
+The Tasks page derives the selected page from the URL:
 
 ```ts
-const [page, setPage] = useState(1);
+const page = parsePage(searchParams.get("page"));
 ```
 
 The page begins at:
@@ -156,16 +156,16 @@ useTasks({
 
 ## Page-State Flow
 
-Changing page state causes React to re-render.
+Changing the URL page parameter causes React to re-render.
 
-The new page is included in `TaskReadParams`.
+The URL-derived page is included in TaskReadParams.
 
 Conceptually:
 
 ```text
-setPage()
+setSearchParams()
    ↓
-React re-render
+URL update and React re-render
    ↓
 useTasks receives new page
    ↓
@@ -206,11 +206,7 @@ TA-46 reuses this existing architecture.
 
 ## Previous Navigation
 
-Previous navigation updates local page state:
-
-```ts
-setPage((currentPage) => currentPage - 1);
-```
+Previous navigation updates the URL page parameter through setSearchParams.
 
 Availability is controlled by:
 
@@ -232,11 +228,7 @@ hasPreviousPage = false
 
 ## Next Navigation
 
-Next navigation updates local page state:
-
-```ts
-setPage((currentPage) => currentPage + 1);
-```
+Next navigation updates the URL page parameter through setSearchParams.
 
 Availability is controlled by:
 
@@ -419,17 +411,13 @@ The selected page is no longer valid.
 
 TA-46 reconciles this condition:
 
-```ts
-if (page > totalPages) {
-  setPage(totalPages);
+````ts
+if (totalPages > 0 && page > totalPages) {
+  const nextSearchParams = new URLSearchParams(searchParams);
+  nextSearchParams.set("page", String(totalPages));
+  setSearchParams(nextSearchParams, { replace: true });
 }
-```
-
-The resulting state becomes:
-
-```text
-page = 6
-```
+The resulting URL becomes /tasks?page=6, which causes the existing URL-derived query state to request page 6. Automatic correction uses replacement navigation.
 
 ---
 
@@ -439,7 +427,7 @@ Reconciliation only occurs when:
 
 ```text
 selected page > server totalPages
-```
+````
 
 For example:
 

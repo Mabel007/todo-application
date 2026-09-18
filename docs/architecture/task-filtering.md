@@ -196,6 +196,15 @@ This keeps the component reusable and prevents it from owning Task server state.
 
 The responsibility split is:
 
+types/tasks.ts
+→ owns canonical type-level TaskStatus and TaskPriority unions
+
+constants/taskValues.ts
+→ owns canonical ordered runtime values used by filter options and URL validation
+
+constants/taskLabels.ts
+→ owns canonical display-label mappings
+
 ```text
 Tasks.tsx
 → owns filter state

@@ -1,4 +1,4 @@
-import logo from "@/assets/logos/logo.svg";
+import logo from "@/assets/logos/logo-on-light.svg";
 
 type AppLogoProps = {
   className?: string;
