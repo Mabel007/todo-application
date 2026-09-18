@@ -1,6 +1,6 @@
 # Todo Application
 
-A React and TypeScript task-management application. The released v0.3.1 baseline provides the application foundation; the current working tree contains unreleased v0.4.0 read-only Task Management Core work from TA-42 through TA-53. Task CRUD and authentication remain future work.
+A React and TypeScript task-management application. v0.4.0 Task Management Core is the current released version, following the v0.3.1 Foundation Hardening and QA Maintenance release. Task CRUD and authentication remain future work.
 
 ## Stack
 
@@ -93,11 +93,11 @@ The pre-commit hook runs lint-staged against staged supported files. Do not comm
 
 ## Release status
 
-The current release candidate is v0.4.0 Task Management Core. It is in release preparation and is not yet merged to main, tagged, published, or deployed.
+v0.4.0 Task Management Core was released on 2026-09-18 through the main branch release workflow.
 
 `v0.3.0` / Epic 3 / TA-20 Application Foundation was released on 2026-09-02.
 
-The release contains TA-203 and TA-204 and established the v0.3.1 foundation baseline. The current unreleased v0.4.0 release preparation contains the completed Epic 4 Task Management Core work from TA-42 through TA-53.
+The v0.3.1 release contained TA-203 and TA-204 and remains the previous Foundation Hardening and QA Maintenance release. v0.4.0 now contains the completed Epic 4 Task Management Core work from TA-42 through TA-53.
 
 Task CRUD, authentication, protected routes, frontend QA automation infrastructure, PWA work, and broader production-readiness work remain future scope beyond the current read-only Task Management Core.
 
