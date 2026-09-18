@@ -1,3 +1,7 @@
+## TA-53 Cleanup 8 resolution
+
+Cleanup 8 branding integration: The horizontal application wordmark uses logo-on-light.svg or logo-on-dark.svg. The approved Todo brand mark is the check-circle symbol extracted from the wordmark artwork. The obsolete app-icon.svg and app-icon-rounded.svg assets were removed. public/favicon.svg is the single active browser favicon and uses the extracted check-circle mark. Header sizing is consumer-specific: Header constrains the wordmark height and preserves automatic width. The broader PNG, Apple Touch, Android, and manifest favicon suite is deferred to Epic 10 Production Readiness.
+
 # Icons
 
 ---
@@ -89,14 +93,9 @@ Custom branding assets are stored separately from Lucide icons.
 ```text
 src/
 └── assets/
-    ├── icons/
-    │   ├── app-icon.svg
-    │   └── app-icon-rounded.svg
-    │
     └── logos/
-        ├── logo.svg
-        ├── logo-horizontal.svg
-        └── logo-icon.svg
+        ├── logo-on-light.svg
+        └── logo-on-dark.svg
 
 public/
 └── favicon.svg
@@ -106,79 +105,68 @@ public/
 
 ## Asset Purpose
 
-| Asset                | Purpose                                                |
-| -------------------- | ------------------------------------------------------ |
-| favicon.svg          | Browser tab favicon                                    |
-| app-icon.svg         | Primary application icon                               |
-| app-icon-rounded.svg | Rounded application icon for future PWA/mobile support |
-| logo-icon.svg        | Compact branding for sidebars and navigation           |
-| logo-horizontal.svg  | Primary application logo                               |
-| logo.svg             | Master logo asset                                      |
+| Asset             | Purpose                                                        |
+| ----------------- | -------------------------------------------------------------- |
+| favicon.svg       | Browser tab favicon                                            |
+| logo-on-light.svg | Navy `#0F2458` logo for light backgrounds; current Header logo |
+| logo-on-dark.svg  | White approved logo for dark backgrounds                       |
 
 ---
 
-## Asset Exports
-
-Brand assets are exported from a single barrel file.
-
-Location:
+## Logo Background Rule
 
 ```text
-src/assets/index.ts
+Light background
+→ logo-on-light.svg
+→ navy #0F2458 artwork
+
+Dark background
+→ logo-on-dark.svg
+→ white artwork
 ```
 
-Example:
+The application currently runs in light theme only. `AppLogo` directly imports and renders `logo-on-light.svg` because the Header uses the light `bg-card` surface.
 
-```ts
-export { default as AppIcon } from "./icons/app-icon.svg";
-export { default as AppIconRounded } from "./icons/app-icon-rounded.svg";
+`logo-on-dark.svg` is the approved counterpart for a dark surface. Runtime dark-theme switching is not implemented, and the presence of the asset does not imply that theme switching is available.
 
-export { default as Logo } from "./logos/logo.svg";
-export { default as LogoHorizontal } from "./logos/logo-horizontal.svg";
-export { default as LogoIcon } from "./logos/logo-icon.svg";
-```
+---
 
-Importing assets becomes straightforward:
+## Asset Imports
+
+No asset barrel is currently required. Application code directly imports the specific asset it consumes:
 
 ```tsx
-import { LogoHorizontal } from "@/assets";
+import logo from "@/assets/logos/logo-on-light.svg";
 ```
 
-instead of:
-
-```tsx
-import LogoHorizontal from "@/assets/logos/logo-horizontal.svg";
-```
+Direct imports are the current repository convention. They make the selected background-context variant explicit and avoid exporting unused assets.
 
 ---
 
 ## Naming Conventions
 
-Use descriptive names that reflect the asset's purpose.
+Logo filenames describe the background on which the artwork is intended to appear:
 
-Examples:
+```text
+logo-on-light.svg
+logo-on-dark.svg
+```
+
+Application icons retain their purpose-based names:
 
 ```text
 app-icon.svg
-
 app-icon-rounded.svg
-
-logo.svg
-
-logo-horizontal.svg
-
-logo-icon.svg
 ```
 
 Avoid ambiguous names such as:
 
 ```text
+logo-light.svg
+logo-dark.svg
 icon.svg
-
 logo-new.svg
-
 logo-final.svg
-
 image.svg
 ```
 
@@ -249,7 +237,7 @@ Logos should include meaningful alternative text.
 Example:
 
 ```tsx
-<img src={LogoHorizontal} alt="Todo Application logo" />
+<img src={logo} alt="Todo Application" />
 ```
 
 ---

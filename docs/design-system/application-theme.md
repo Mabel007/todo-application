@@ -1,3 +1,7 @@
+## TA-53 Cleanup 8 resolution
+
+Cleanup 8 branding integration: The horizontal wordmark uses logo-on-light.svg or logo-on-dark.svg. The approved Todo brand mark is the check-circle symbol extracted from the wordmark artwork, and public/favicon.svg uses that mark for the browser favicon. The obsolete app-icon.svg and app-icon-rounded.svg assets were removed. Header owns consumer-specific wordmark sizing with constrained height and automatic width. Broader device favicon variants remain deferred to Epic 10 Production Readiness.
+
 # Application Theme
 
 ---
@@ -212,19 +216,14 @@ icons.md
 
 ## Brand Assets
 
-All branding assets are centralized under the assets directory.
+Branding assets are stored by purpose under the assets directory.
 
 ```text
 src/
 └── assets/
-    ├── icons/
-    │   ├── app-icon.svg
-    │   └── app-icon-rounded.svg
-    │
     └── logos/
-        ├── logo.svg
-        ├── logo-horizontal.svg
-        └── logo-icon.svg
+        ├── logo-on-light.svg
+        └── logo-on-dark.svg
 
 public/
 └── favicon.svg
@@ -232,14 +231,27 @@ public/
 
 Asset usage standards:
 
-| Asset                | Usage                        |
-| -------------------- | ---------------------------- |
-| favicon.svg          | Browser tab                  |
-| app-icon.svg         | Application icon             |
-| app-icon-rounded.svg | Rounded application icon     |
-| logo-icon.svg        | Compact branding             |
-| logo-horizontal.svg  | Navigation and documentation |
-| logo.svg             | Master logo                  |
+| Asset             | Usage                                                        |
+| ----------------- | ------------------------------------------------------------ |
+| favicon.svg       | Browser tab favicon                                          |
+| logo-on-light.svg | Navy `#0F2458` artwork for light backgrounds; current Header |
+| logo-on-dark.svg  | White artwork for dark backgrounds                           |
+
+The canonical background rule is:
+
+```text
+Light background
+→ logo-on-light.svg
+→ navy #0F2458 artwork
+
+Dark background
+→ logo-on-dark.svg
+→ white artwork
+```
+
+The application currently runs in light theme only, and `AppLogo` directly imports `logo-on-light.svg`. `logo-on-dark.svg` is the approved counterpart for dark surfaces, but runtime dark-theme switching is not implemented.
+
+No asset barrel is currently required. Direct imports are the repository convention and make the selected logo context explicit.
 
 ---
 
@@ -301,7 +313,7 @@ When creating new components:
 - Use `--font-heading` for headings.
 - Use `--font-body` for body content.
 - Use Lucide React icons.
-- Use SVG assets from the centralized asset library.
+- Directly import the specific SVG asset required for its usage context.
 - Reuse existing utility classes before creating new ones.
 - Follow the established spacing and border radius tokens.
 

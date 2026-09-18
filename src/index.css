@@ -8,7 +8,7 @@
 @import "@/styles/reset.css";
 @import "@/styles/tokens.css";
 @import "@/styles/theme.css";
-@import "@/styles/topography.css";
+@import "@/styles/typography.css";
 @import "@/styles/utilities.css";
 
 @custom-variant dark (&:is(.dark *));

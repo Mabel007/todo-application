@@ -2,6 +2,7 @@ import { ArrowLeft } from "lucide-react";
 import { Link, useParams } from "react-router";
 
 import { TaskCollectionState } from "@/components/tasks/TaskCollectionState";
+import { Button } from "@/components/ui/button";
 import { priorityLabels, statusLabels } from "@/constants/taskLabels";
 import { useTask } from "@/hooks/useTask";
 import { routePaths } from "@/routes/routePaths";
@@ -74,14 +75,9 @@ export const TaskDetails = () => {
           description="We couldn't retrieve this task. Please try again."
         >
           <div className="flex flex-wrap items-center justify-center gap-3">
-            <button
-              type="button"
-              onClick={() => void refetch()}
-              disabled={isRetrying}
-              className="bg-primary text-primary-foreground hover:bg-primary/90 focus-visible:ring-ring rounded-md px-4 py-2 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
-            >
+            <Button type="button" onClick={() => void refetch()} disabled={isRetrying}>
               {isRetrying ? "Trying again..." : "Try again"}
-            </button>
+            </Button>
 
             <Link
               to={routePaths.tasks}

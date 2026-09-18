@@ -5,6 +5,8 @@ import { TaskCollectionState } from "@/components/tasks/TaskCollectionState";
 import { TaskFilters } from "@/components/tasks/TaskFilters";
 import { TaskList } from "@/components/tasks/TaskList";
 import { TaskSort } from "@/components/tasks/TaskSort";
+import { Button } from "@/components/ui/button";
+import { taskPriorities, taskStatuses } from "@/constants/taskValues";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useTasks } from "@/hooks/useTasks";
 import type { TaskOrder, TaskPriority, TaskStatus } from "@/types/tasks";
@@ -12,10 +14,6 @@ import type { TaskOrder, TaskPriority, TaskStatus } from "@/types/tasks";
 const initialTaskParams = {
   limit: 10,
 } as const;
-
-const taskStatuses: TaskStatus[] = ["TODO", "IN_PROGRESS", "DONE", "CANCELLED"];
-
-const taskPriorities: TaskPriority[] = ["LOW", "MEDIUM", "HIGH"];
 
 const parsePage = (value: string | null): number => {
   if (value === null) {
@@ -107,6 +105,24 @@ export default function Tasks() {
     priority,
     sort,
   });
+
+  useEffect(() => {
+    const totalPages = data?.meta.totalPages ?? 0;
+
+    if (totalPages <= 0 || page <= totalPages) {
+      return;
+    }
+
+    const nextSearchParams = new URLSearchParams(searchParams);
+
+    if (totalPages === 1) {
+      nextSearchParams.delete("page");
+    } else {
+      nextSearchParams.set("page", String(totalPages));
+    }
+
+    setSearchParams(nextSearchParams, { replace: true });
+  }, [data, page, searchParams, setSearchParams]);
 
   const hasActiveCriteria = search.length > 0 || status !== undefined || priority !== undefined;
 
@@ -226,14 +242,9 @@ export default function Tasks() {
           title="Unable to load tasks"
           description="We couldn't retrieve your tasks. Please try again."
         >
-          <button
-            type="button"
-            onClick={() => void refetch()}
-            disabled={isRetrying}
-            className="bg-primary text-primary-foreground hover:bg-primary/90 focus-visible:ring-ring rounded-md px-4 py-2 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
-          >
+          <Button type="button" onClick={() => void refetch()} disabled={isRetrying}>
             {isRetrying ? "Trying again..." : "Try again"}
-          </button>
+          </Button>
         </TaskCollectionState>
       )}
 

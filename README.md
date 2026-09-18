@@ -1,6 +1,6 @@
 # Todo Application
 
-A React and TypeScript task-management application. Release `v0.3.0` established the application foundation: routing, shared layouts and providers, server-state infrastructure, validated runtime configuration, API infrastructure, shared contracts, and controlled error experiences. The `v0.3.1` maintenance release hardens that foundation through verified Postman/API contract reconciliation and centralized application logging. Task CRUD and authentication remain future work.
+A React and TypeScript task-management application. The released v0.3.1 baseline provides the application foundation; the current working tree contains unreleased v0.4.0 read-only Task Management Core work from TA-42 through TA-53. Task CRUD and authentication remain future work.
 
 ## Stack
 
@@ -43,14 +43,14 @@ Start the development server with `npm run dev`. Vite normally serves the applic
 | `npm run format`       | Format supported repository files        |
 | `npm run format:check` | Verify formatting without writing files  |
 
-There is no automated application test suite yet. The current repository gates are lint, formatting, TypeScript/build, and targeted manual validation. GitHub Actions runs `npm ci`, lint, and build for pushes and pull requests to `dev` and `main`.
+There is no permanent automated application test suite yet. The current repository gates are lint, formatting, TypeScript/build, and targeted manual validation. The TA-53 manual integrated regression record contains 92 cases; the current reconciliation records most as PASS, with MR-009 fixed pending retest and MR-052, MR-057, and MR-075 still requiring manual confirmation.
 
 ## Application foundation
 
 The current routes are:
 
 - `/` — Home foundation page
-- `/tasks` — Tasks foundation placeholder; no CRUD behavior yet
+- /tasks - read-only Task Management Core with list/detail views, pagination, search, status/priority filters, sorting, URL-backed state, and controlled loading, empty, no-results, retrieval-error, and not-found states
 - `*` — Not-found experience with recovery navigation
 
 `src/main.tsx` owns the single `RouterProvider` and composes it inside `AppProviders`. The shared `QueryClient` is created once in `src/lib/queryClient.ts`. Route configuration is centralized in `src/routes`, with `AppLayout` rendering child pages through `Outlet`. The route tree is wrapped by the application Error Boundary.
@@ -97,7 +97,7 @@ The pre-commit hook runs lint-staged against staged supported files. Do not comm
 
 `v0.3.1` / Foundation Hardening & QA Maintenance was released on 2026-09-04. The release contains TA-203 and TA-204, reconciling the permanent Postman assets with the verified API contract and establishing the centralized application logging foundation required before Task Management Core development begins.
 
-Task CRUD, authentication, protected routes, feature-specific business state, frontend QA automation infrastructure, and broader production-readiness work remain outside this maintenance release.
+Task CRUD, authentication, protected routes, frontend QA automation infrastructure, PWA work, and broader production-readiness work remain future scope beyond the current read-only Task Management Core.
 
 ## License
 

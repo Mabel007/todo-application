@@ -21,15 +21,6 @@ export interface PaginatedResponse<T> {
 }
 
 /**
- * 3. STANDARD SINGLE RESOURCE RESPONSE
- * Used when requesting a single entity by ID instead of a list.
- */
-
-export interface SingleResponse<T> {
-  data: T;
-}
-
-/**
  * 4. NESTED VALIDATION ISSUE FORMAT
  * Captures specific Zod runtime validation failure context.
  */

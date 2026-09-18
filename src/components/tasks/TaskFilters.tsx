@@ -1,4 +1,5 @@
 import { priorityLabels, statusLabels } from "@/constants/taskLabels";
+import { taskPriorities, taskStatuses } from "@/constants/taskValues";
 import type { TaskPriority, TaskStatus } from "@/types/tasks";
 
 import type { ChangeEvent } from "react";
@@ -9,10 +10,6 @@ interface TaskFiltersProps {
   onStatusChange: (status: TaskStatus | undefined) => void;
   onPriorityChange: (priority: TaskPriority | undefined) => void;
 }
-
-const taskStatuses: TaskStatus[] = ["TODO", "IN_PROGRESS", "DONE", "CANCELLED"];
-
-const taskPriorities: TaskPriority[] = ["LOW", "MEDIUM", "HIGH"];
 
 const isTaskStatus = (value: string): value is TaskStatus => {
   return taskStatuses.some((status) => status === value);
