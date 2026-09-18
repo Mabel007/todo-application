@@ -50,7 +50,7 @@ There is no permanent automated application test suite yet. The current reposito
 The current routes are:
 
 - `/` — Home foundation page
-- /tasks - read-only Task Management Core with list/detail views, pagination, search, status/priority filters, sorting, URL-backed state, and controlled loading, empty, no-results, retrieval-error, and not-found states
+- /tasks — read-only Task Management Core: Task collection and detail retrieval, pagination, debounced search, status and priority filtering, sorting, URL-synchronized state, loading, empty, no-results, normalized retrieval errors, retry/recovery, Task-specific not-found handling, and generic route 404 separation
 - `*` — Not-found experience with recovery navigation
 
 `src/main.tsx` owns the single `RouterProvider` and composes it inside `AppProviders`. The shared `QueryClient` is created once in `src/lib/queryClient.ts`. Route configuration is centralized in `src/routes`, with `AppLayout` rendering child pages through `Outlet`. The route tree is wrapped by the application Error Boundary.
@@ -93,9 +93,11 @@ The pre-commit hook runs lint-staged against staged supported files. Do not comm
 
 ## Release status
 
+The current release candidate is v0.4.0 Task Management Core. It is in release preparation and is not yet merged to main, tagged, published, or deployed.
+
 `v0.3.0` / Epic 3 / TA-20 Application Foundation was released on 2026-09-02.
 
-`v0.3.1` / Foundation Hardening & QA Maintenance was released on 2026-09-04. The release contains TA-203 and TA-204, reconciling the permanent Postman assets with the verified API contract and establishing the centralized application logging foundation required before Task Management Core development begins.
+The release contains TA-203 and TA-204 and established the v0.3.1 foundation baseline. The current unreleased v0.4.0 release preparation contains the completed Epic 4 Task Management Core work from TA-42 through TA-53.
 
 Task CRUD, authentication, protected routes, frontend QA automation infrastructure, PWA work, and broader production-readiness work remain future scope beyond the current read-only Task Management Core.
 

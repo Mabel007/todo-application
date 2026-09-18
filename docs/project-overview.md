@@ -7,7 +7,7 @@
 | Category      | Project Documentation                                                         |
 | Related epics | TA-1 Project Foundation; TA-2 API Investigation; TA-20 Application Foundation |
 | Status        | Active                                                                        |
-| Version       | v0.3.1 (Foundation Hardening & QA Maintenance - released 2026-09-04)          |
+| Version       | v0.4.0 (Task Management Core - release preparation)                           |
 | Last updated  | September 2026                                                                |
 
 ## Overview
@@ -43,6 +43,16 @@ It intentionally does not provide task CRUD, authentication, protected routes, t
 
 ## Release status
 
+Release progression:
+
+- v0.1.0 - Project Foundation (released).
+- v0.2.0 - API Investigation and Manual Testing (released).
+- v0.3.0 - Application Foundation (released).
+- v0.3.1 - Foundation Hardening and QA Maintenance (released).
+- v0.4.0 - Task Management Core (release preparation).
+
+Current status: v0.4.0 Task Management Core is in release preparation. The previous released baseline is v0.3.1; v0.4.0 is not yet released or deployed.
+
 `v0.3.0` is the released Application Foundation milestone. Epic 3 implementation, TA-41 validation, dev-to-main integration, post-merge validation, Git tagging, GitHub Release publication, Vercel Production deployment, and final repository/Jira/Confluence reconciliation were completed on 2026-09-02.
 
 `v0.3.1` is the released Foundation Hardening & QA Maintenance milestone. It was released on 2026-09-04 and contains:
@@ -50,9 +60,9 @@ It intentionally does not provide task CRUD, authentication, protected routes, t
 - TA-203 - Reconcile Postman assets with verified API contract.
 - TA-204 - Establish Centralized Application Logging Foundation.
 
-The maintenance scope strengthens the existing Application Foundation. The current working tree also contains unreleased v0.4.0 Task Management Core work: read-only list/detail views, pagination, search, filters, sorting, URL state, and controlled collection/detail states. TA-203 reconciles the permanent Postman collection, environment, execution scripts, API test documentation, and maintenance evidence with the verified API contract. TA-204 establishes centralized structured application logging, sanitization, environment-aware output, Axios diagnostics, and Error Boundary logging.
+The maintenance scope strengthens the existing Application Foundation. The current v0.4.0 release candidate contains the completed read-only Task Management Core work from TA-42 through TA-53: list/detail retrieval, pagination, search, filters, sorting, URL state, and controlled collection/detail states.
 
-Task CRUD, authentication, protected routes, frontend QA automation infrastructure, PWA work, and broader production-readiness remain future-roadmap scope. The package version remains v0.3.1 until release preparation.
+Task CRUD, authentication, protected routes, frontend QA automation infrastructure, PWA work, and broader production-readiness remain future-roadmap scope. v0.4.0 is not released or deployed until the main merge, tag, GitHub Release, and production verification steps are complete.
 
 Completed release records remain available in:
 

@@ -152,7 +152,7 @@ logo-on-light.svg
 logo-on-dark.svg
 ```
 
-Application icons retain their purpose-based names:
+The former application-icon names are historical only; app-icon.svg and app-icon-rounded.svg were removed during TA-53 Cleanup 8. Current brand source assets are logo-on-light.svg and logo-on-dark.svg, with public/favicon.svg as the derived browser asset.
 
 ```text
 app-icon.svg
@@ -289,29 +289,19 @@ Future enhancements may include:
 
 ```text
 public/
-└── favicon.svg
+  favicon.svg
 
 src/
-├── assets/
-│   ├── icons/
-│   ├── logos/
-│   └── index.ts
-│
-└── App.tsx
+  assets/
+    logos/
+      logo-on-light.svg
+      logo-on-dark.svg
+
+src/components/layout/AppLogo.tsx
+src/components/shared/Header.tsx
 ```
 
 ---
 
-## Related Documentation
-
-```text
-application-theme.md
-
-typography.md
-
-colors.md
-
-design-tokens.md
-```
-
+The icon system provides a consistent approach to using both interface icons and branding assets throughout the Todo Application. All future UI components should follow these guidelines to maintain visual consistency and accessibility.
 The icon system provides a consistent approach to using both interface icons and branding assets throughout the Todo Application. All future UI components should follow these guidelines to maintain visual consistency and accessibility.
