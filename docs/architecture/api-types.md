@@ -22,7 +22,7 @@ These shared types establish consistent contracts for:
 
 - paginated API metadata;
 - paginated collection responses;
-- single-resource responses;
+- verified endpoint-specific response structures;
 - standard API error responses.
 
 The types are based on API structures validated during API investigation rather than invented frontend response shapes.
@@ -103,7 +103,6 @@ src/types/api.ts
 │
 ├── PaginatedResponse<T>
 │
-├── SingleResponse<T>
 │
 └── ApiErrorResponse
 ```
@@ -181,41 +180,13 @@ TA-36 therefore establishes the response structure without implementing the task
 
 ---
 
-## Single Resource Response
+## Single-Resource Contract Policy
 
-The `SingleResponse<T>` interface represents the standard wrapper for a single API resource.
+The current shared response contracts represent verified endpoint shapes. The verified Task detail endpoint returns a bare Task, so this repository does not retain a generic single-resource wrapper.
 
-```ts
-export interface SingleResponse<T> {
-  data: T;
-}
-```
+Do not create or retain generic response wrappers solely for speculative future endpoints. If a future endpoint returns a single-resource envelope such as { data: T }, introduce the appropriate contract only after verifying that endpoint actual API shape.
 
-Like `PaginatedResponse<T>`, it uses a generic type parameter.
-
-Conceptually:
-
-```text
-SingleResponse<T>
-      │
-      └── data: T
-```
-
-This allows future feature services to reuse the response wrapper without creating duplicate infrastructure types.
-
-For example:
-
-```ts
-SingleResponse<Task>;
-```
-
-or:
-
-```ts
-SingleResponse<User>;
-```
-
-These examples demonstrate generic reuse only. Task and authentication domain models remain outside TA-36.
+The former generic single-resource interface was introduced during TA-36 as a future-capable abstraction, never gained an executable consumer, and was removed during TA-53 Cleanup 5.
 
 ---
 
@@ -237,7 +208,6 @@ even when each API response follows the same wrapper structure.
 Generics allow the infrastructure contract to remain reusable:
 
 ```text
-SingleResponse<T>
         │
         ├── Task
         ├── User
@@ -361,7 +331,6 @@ Shared API Types
 │
 ├── ApiPaginatedMeta
 ├── PaginatedResponse<T>
-├── SingleResponse<T>
 └── ApiErrorResponse
 ```
 
@@ -454,7 +423,7 @@ TA-36 includes:
 
 - shared pagination metadata;
 - generic paginated collection response structure;
-- generic single-resource response structure;
+- historical generic single-resource response structure (removed in TA-53 Cleanup 5);
 - shared API error response structure;
 - reusable generic TypeScript contracts.
 
@@ -550,10 +519,6 @@ Shared API Contract
         │     └── PaginatedResponse<T>
         │             ├── data: T[]
         │             └── ApiPaginatedMeta
-        │
-        ├── Single Resource
-        │     └── SingleResponse<T>
-        │             └── data: T
         │
         └── Error
               └── ApiErrorResponse

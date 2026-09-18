@@ -1,0 +1,15 @@
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
+
+import { taskQueryKeys } from "@/constants/taskQueryKeys";
+import { getTasks } from "@/services/taskService";
+import type { AppError } from "@/types/errors";
+import type { TaskCollectionResponse, TaskReadParams } from "@/types/tasks";
+
+// reusable hook for task collections(lists)
+export const useTasks = (params: TaskReadParams = {}) => {
+  return useQuery<TaskCollectionResponse, AppError>({
+    queryKey: taskQueryKeys.list(params),
+    queryFn: () => getTasks(params),
+    placeholderData: keepPreviousData,
+  });
+};

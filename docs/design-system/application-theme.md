@@ -1,3 +1,7 @@
+## TA-53 Cleanup 8 resolution
+
+Cleanup 8 branding integration: The horizontal wordmark uses logo-on-light.svg or logo-on-dark.svg. The approved Todo brand mark is the check-circle symbol extracted from the wordmark artwork, and public/favicon.svg uses that mark for the browser favicon. The obsolete app-icon.svg and app-icon-rounded.svg assets were removed. Header owns consumer-specific wordmark sizing with constrained height and automatic width. Broader device favicon variants remain deferred to Epic 10 Production Readiness.
+
 # Application Theme
 
 ---
@@ -122,12 +126,13 @@ typography.md
 
 ## Color System
 
-The application's visual identity is built around two primary brand colors.
+The application's visual identity is anchored by canonical navy with a restrained teal family.
 
-| Token     | Value   | Purpose                                    |
-| --------- | ------- | ------------------------------------------ |
-| Primary   | #0D235E | Primary actions, navigation, branding      |
-| Secondary | #38D6B2 | Accent color, highlights, success emphasis |
+| Token      | Value   | Purpose                                |
+| ---------- | ------- | -------------------------------------- |
+| Primary    | #0F2458 | Primary actions, navigation, branding  |
+| Brand Teal | #38D6B2 | Restrained brand highlights            |
+| UI Teal    | #0F766E | Focus and accessible teal interactions |
 
 Supporting interface colors provide consistency throughout the application.
 
@@ -211,19 +216,14 @@ icons.md
 
 ## Brand Assets
 
-All branding assets are centralized under the assets directory.
+Branding assets are stored by purpose under the assets directory.
 
 ```text
 src/
 └── assets/
-    ├── icons/
-    │   ├── app-icon.svg
-    │   └── app-icon-rounded.svg
-    │
     └── logos/
-        ├── logo.svg
-        ├── logo-horizontal.svg
-        └── logo-icon.svg
+        ├── logo-on-light.svg
+        └── logo-on-dark.svg
 
 public/
 └── favicon.svg
@@ -231,14 +231,27 @@ public/
 
 Asset usage standards:
 
-| Asset                | Usage                        |
-| -------------------- | ---------------------------- |
-| favicon.svg          | Browser tab                  |
-| app-icon.svg         | Application icon             |
-| app-icon-rounded.svg | Rounded application icon     |
-| logo-icon.svg        | Compact branding             |
-| logo-horizontal.svg  | Navigation and documentation |
-| logo.svg             | Master logo                  |
+| Asset             | Usage                                                        |
+| ----------------- | ------------------------------------------------------------ |
+| favicon.svg       | Browser tab favicon                                          |
+| logo-on-light.svg | Navy `#0F2458` artwork for light backgrounds; current Header |
+| logo-on-dark.svg  | White artwork for dark backgrounds                           |
+
+The canonical background rule is:
+
+```text
+Light background
+→ logo-on-light.svg
+→ navy #0F2458 artwork
+
+Dark background
+→ logo-on-dark.svg
+→ white artwork
+```
+
+The application currently runs in light theme only, and `AppLogo` directly imports `logo-on-light.svg`. `logo-on-dark.svg` is the approved counterpart for dark surfaces, but runtime dark-theme switching is not implemented.
+
+No asset barrel is currently required. Direct imports are the repository convention and make the selected logo context explicit.
 
 ---
 
@@ -300,11 +313,17 @@ When creating new components:
 - Use `--font-heading` for headings.
 - Use `--font-body` for body content.
 - Use Lucide React icons.
-- Use SVG assets from the centralized asset library.
+- Directly import the specific SVG asset required for its usage context.
 - Reuse existing utility classes before creating new ones.
 - Follow the established spacing and border radius tokens.
 
 ---
+
+## TA-205 Scope Boundary
+
+TA-205 reconciles application tokens and the existing Header and Footer. Button and component
+standardization remains owned by TA-24 / Epic 7. Systematic accessibility hardening remains owned
+by TA-25 / Epic 8. Runtime theme switching requires a separately scoped future Jira ticket.
 
 ## Future Improvements
 

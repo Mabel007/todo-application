@@ -42,14 +42,17 @@ Color System
 
 ## Brand Colors
 
-These colors represent the primary visual identity of the Todo Application.
+These colors represent the primary visual identity of the Todo Application. TA-205 supersedes
+the earlier application UI navy #0D235E with the approved canonical navy #0F2458. Legacy logo
+artwork is temporarily exempt and is not application color authority.
 
-| Token           | Value   | Usage                                 |
-| --------------- | ------- | ------------------------------------- |
-| Primary         | #0D235E | Branding, primary buttons, navigation |
-| Primary Hover   | #16357F | Hover state for primary actions       |
-| Secondary       | #38D6B2 | Accent elements, highlights           |
-| Secondary Hover | #25C79F | Hover state for accent elements       |
+| Token          | Value   | Usage                                 |
+| -------------- | ------- | ------------------------------------- |
+| Primary        | #0F2458 | Branding, primary actions, navigation |
+| Primary Hover  | #183A78 | Hover reference for primary actions   |
+| Primary Active | #0A193D | Active reference for primary actions  |
+| Brand Teal     | #38D6B2 | Restrained brand highlights           |
+| UI Teal        | #0F766E | Focus and accessible teal interaction |
 
 ---
 
@@ -72,15 +75,27 @@ Surface colors define the application's layout and content areas.
 
 Reusable interface colors.
 
-| Token             | Value   | Usage                |
-| ----------------- | ------- | -------------------- |
-| Border            | #E2E8F0 | Borders and dividers |
-| Input             | #E2E8F0 | Form inputs          |
-| Ring              | #38D6B2 | Focus ring           |
-| Muted             | #F1F5F9 | Muted backgrounds    |
-| Muted Foreground  | #64748B | Secondary text       |
-| Accent            | #38D6B2 | Accent surfaces      |
-| Accent Foreground | #FFFFFF | Accent text          |
+| Token             | Value   | Usage                 |
+| ----------------- | ------- | --------------------- |
+| Border            | #E2E8F0 | Borders and dividers  |
+| Border Strong     | #64748B | Meaningful boundaries |
+| Input             | #FFFFFF | Form input surface    |
+| Ring              | #0F766E | Focus ring            |
+| Muted             | #F1F5F9 | Muted backgrounds     |
+| Muted Foreground  | #475569 | Secondary text        |
+| Accent            | #CCFBF1 | Accent surfaces       |
+| Accent Foreground | #115E59 | Accent text           |
+
+Current shared semantic action/navigation references:
+
+| Token                       | Value                       | Usage                              |
+| --------------------------- | --------------------------- | ---------------------------------- |
+| Secondary                   | #F1F5F9                     | Neutral secondary surface          |
+| Secondary Foreground        | #0F2458                     | Secondary content                  |
+| Link / Hover / Active       | #0F2458 / #183A78 / #0A193D | Destination states                 |
+| Navigation Foreground       | #475569                     | Default application navigation     |
+| Navigation Active Indicator | #0F766E                     | Non-color-supported route marker   |
+| Ring Offset                 | #FFFFFF                     | Deterministic light-surface offset |
 
 ---
 
@@ -88,11 +103,11 @@ Reusable interface colors.
 
 Status colors communicate feedback and application state.
 
-| Token       | Value   | Usage                          |
-| ----------- | ------- | ------------------------------ |
-| Success     | #22C55E | Successful actions             |
-| Warning     | #F59E0B | Warnings                       |
-| Destructive | #EF4444 | Errors and destructive actions |
+| Token       | Value             | Usage                        |
+| ----------- | ----------------- | ---------------------------- |
+| Success     | #166534 / #F0FDF4 | Success foreground / surface |
+| Warning     | #854D0E / #FFFBEB | Warning foreground / surface |
+| Destructive | #B91C1C / #FEF2F2 | Error foreground / surface   |
 
 ---
 
@@ -104,12 +119,12 @@ Dedicated colors for future sidebar components.
 | -------------------------- | ------- |
 | Sidebar                    | #FFFFFF |
 | Sidebar Foreground         | #0F172A |
-| Sidebar Primary            | #0D235E |
+| Sidebar Primary            | #0F2458 |
 | Sidebar Primary Foreground | #FFFFFF |
-| Sidebar Accent             | #38D6B2 |
-| Sidebar Accent Foreground  | #FFFFFF |
+| Sidebar Accent             | #CCFBF1 |
+| Sidebar Accent Foreground  | #115E59 |
 | Sidebar Border             | #E2E8F0 |
-| Sidebar Ring               | #38D6B2 |
+| Sidebar Ring               | #0F766E |
 
 ---
 
@@ -119,17 +134,19 @@ Reserved for future dashboards and analytics.
 
 | Token   | Value   |
 | ------- | ------- |
-| Chart 1 | #0D235E |
-| Chart 2 | #38D6B2 |
-| Chart 3 | #16357F |
-| Chart 4 | #25C79F |
+| Chart 1 | #0F2458 |
+| Chart 2 | #0F766E |
+| Chart 3 | #183A78 |
+| Chart 4 | #38D6B2 |
 | Chart 5 | #94A3B8 |
 
 ---
 
 ## Dark Theme
 
-The application includes a dark theme token set to support future theme switching.
+The repository retains a pre-TA-205 dark token block as future-facing groundwork. Runtime theme
+switching is not implemented or supported by TA-205. Its values are not a final approved dark
+theme contract and must be reconciled by a separately scoped future Jira ticket.
 
 Dark mode:
 
