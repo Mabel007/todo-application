@@ -1,6 +1,6 @@
-## Current release-preparation state
+## Current released state
 
-This document records the completed Epic 4 implementation and TA-53 validation. The current release candidate is v0.4.0 Task Management Core and remains unreleased until the release branch is merged to main, tagged, published, and deployed successfully. Any removed filenames, dependencies, or contracts listed below are historical cleanup evidence, not active architecture.
+This document records the completed and released Epic 4 implementation and TA-53 validation. v0.4.0 is released through main; removed filenames, dependencies, and contracts listed below are historical cleanup evidence, not active architecture.
 
 # Task Management Core Validation
 
@@ -776,7 +776,7 @@ targeted for:
 v0.4.0
 ```
 
-The application version should not be changed prematurely as part of an individual validation cleanup unless the release workflow reaches the appropriate release-preparation step.
+The application version is 0.4.0 as part of the completed v0.4.0 release workflow.
 
 The release continues to follow:
 
